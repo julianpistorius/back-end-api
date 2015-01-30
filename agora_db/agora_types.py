@@ -1,0 +1,45 @@
+__author__ = 'Marnee Dearman'
+
+
+class AgoraRelationship(object):
+    INTERESTED_IN = "INTERESTED_IN"
+    SPECIALIZED_IN = "SPECIALIZED_IN"
+    IS_A = "IS_A"
+    LEADS = "LEADS"
+    MEMBER_OF = "MEMBER_OF"
+    STUDIES_WITH = "STUDIES_WITH"
+    LEARNING = "LEARNING"
+    LOCATED_IN = "LOCATED_IN"
+    HEADS = "HEADS"
+    ACHIEVED = "ACHIEVED"
+    HAS_GOAL = "HAS_GOAL"
+    GOAL_FOR = "GOAL_FOR"
+    ACHIEVEMENT_IN = "ACHIEVEMENT_IN"
+
+
+class AgoraLabel(object):
+    ACHIEVEMENT = "ACHIEVEMENT"
+    GOAL = "GOAL"
+    INTEREST = "INTEREST"
+    LOCATION = "LOCATION"
+    HEAD = "HEAD"
+    STUDYGROUP = "STUDYGROUP"
+    USER = "USER"
+    LOCATIONS = "LOCATIONS"
+    ASSOCIATION = "ASSOCIATION"
+    ADMIN = "ADMIN"
+    ORGANIZATION = "ORGANIZATION"
+
+# class AgoraRelationship(Enum):
+# INTERESTED_IN = "INTERESTED_IN",
+#     SPECIALIZED_IN = "SPECIALIZED_IN",
+#     IS_A = "IS_A",
+#     LEADS = "LEADS",
+#     MEMBER_OF = "MEMBER_OF",
+#     STUDIES = "STUDIES",
+#     LEARNING = "LEARNING",
+#     LOCATED_IN = "LOCATED_IN",
+#     HEADS = "HEADS",
+#     ACHIEVED = "ACHIEVED"
+#
+# class Agora
