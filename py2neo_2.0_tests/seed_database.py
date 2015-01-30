@@ -46,7 +46,7 @@ python_id = interest.id
 
 
 #USERS
-#Marnee, Julian, Chris, Dan, Megan, Liz, Frank
+#Marnee, Julian, Chris, Dan, Liz, Frank
 marnee = AgoraUser()
 marnee.email = 'marnee@agorasociety.com'
 marnee.name = 'Marnee'
