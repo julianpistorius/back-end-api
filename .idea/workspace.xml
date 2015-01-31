@@ -3,44 +3,44 @@
   <component name="ChangeListManager">
     <list default="true" id="c589c3ed-722a-4a93-920a-b5066fe0117f" name="Default" comment="">
       <change type="DELETED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\__init__.py" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\__init__.py" afterPath="$PROJECT_DIR$/agora/agora_db/__init__.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\__init__.py" afterPath="$PROJECT_DIR$/agora/falcon_api/__init__.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\agora_types.py" afterPath="$PROJECT_DIR$/agora/agora_db/agora_types.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_achievement.py" afterPath="$PROJECT_DIR$/agora/agora_db/py2neo_achievement.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_goal.py" afterPath="$PROJECT_DIR$/agora/agora_db/py2neo_goal.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_group.py" afterPath="$PROJECT_DIR$/agora/agora_db/py2neo_group.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_interest.py" afterPath="$PROJECT_DIR$/agora/agora_db/py2neo_interest.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_location.py" afterPath="$PROJECT_DIR$/agora/agora_db/py2neo_location.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_organization.py" afterPath="$PROJECT_DIR$/agora/agora_db/py2neo_organization.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_samples.py" afterPath="$PROJECT_DIR$/agora/agora_db/py2neo_samples.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_user.py" afterPath="$PROJECT_DIR$/agora/agora_db/py2neo_user.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_goals_tests.py" afterPath="$PROJECT_DIR$/agora/agora_tests/agora_goals_tests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_groups_tests.py" afterPath="$PROJECT_DIR$/agora/agora_tests/agora_groups_tests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_orgs_tests.py" afterPath="$PROJECT_DIR$/agora/agora_tests/agora_orgs_tests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_users_tests.py" afterPath="$PROJECT_DIR$/agora/agora_tests/agora_users_tests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\behave\environment.py" afterPath="$PROJECT_DIR$/agora/behave/environment.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\behave\setup_user_account.feature" afterPath="$PROJECT_DIR$/agora/behave/setup_user_account.feature" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\app.py" afterPath="$PROJECT_DIR$/agora/falcon_api/app.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\authentication.py" afterPath="$PROJECT_DIR$/agora/falcon_api/authentication.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\goals.py" afterPath="$PROJECT_DIR$/agora/falcon_api/goals.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\groups.py" afterPath="$PROJECT_DIR$/agora/falcon_api/groups.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\images.py" afterPath="$PROJECT_DIR$/agora/falcon_api/images.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\interests.py" afterPath="$PROJECT_DIR$/agora/falcon_api/interests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\locations.py" afterPath="$PROJECT_DIR$/agora/falcon_api/locations.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\organizations.py" afterPath="$PROJECT_DIR$/agora/falcon_api/organizations.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\run.py" afterPath="$PROJECT_DIR$/agora/falcon_api/run.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\serializers.py" afterPath="$PROJECT_DIR$/agora/falcon_api/serializers.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\users.py" afterPath="$PROJECT_DIR$/agora/falcon_api/users.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\clear_db.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/clear_db.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\create_rel_int_loc.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/create_rel_int_loc.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\cypher_queries.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/cypher_queries.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\group_test.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/group_test.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\location_test.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/location_test.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\seed_database.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/seed_database.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\stackoverflow.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/stackoverflow.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\update_nodes.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/update_nodes.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\update_rels.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/update_rels.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\user_test.py" afterPath="$PROJECT_DIR$/agora/py2neo_2.0_tests/user_test.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\__init__.py" afterPath="$PROJECT_DIR$/agora_db/__init__.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\__init__.py" afterPath="$PROJECT_DIR$/falcon_api/__init__.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\agora_types.py" afterPath="$PROJECT_DIR$/agora_db/agora_types.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_achievement.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_achievement.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_goal.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_goal.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_group.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_group.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_interest.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_interest.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_location.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_location.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_organization.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_organization.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_samples.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_samples.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_user.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_user.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_goals_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_goals_tests.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_groups_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_groups_tests.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_orgs_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_orgs_tests.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_users_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_users_tests.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\behave\environment.py" afterPath="$PROJECT_DIR$/behave/environment.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\behave\setup_user_account.feature" afterPath="$PROJECT_DIR$/behave/setup_user_account.feature" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\app.py" afterPath="$PROJECT_DIR$/falcon_api/app.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\authentication.py" afterPath="$PROJECT_DIR$/falcon_api/authentication.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\goals.py" afterPath="$PROJECT_DIR$/falcon_api/goals.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\groups.py" afterPath="$PROJECT_DIR$/falcon_api/groups.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\images.py" afterPath="$PROJECT_DIR$/falcon_api/images.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\interests.py" afterPath="$PROJECT_DIR$/falcon_api/interests.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\locations.py" afterPath="$PROJECT_DIR$/falcon_api/locations.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\organizations.py" afterPath="$PROJECT_DIR$/falcon_api/organizations.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\run.py" afterPath="$PROJECT_DIR$/falcon_api/run.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\serializers.py" afterPath="$PROJECT_DIR$/falcon_api/serializers.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\users.py" afterPath="$PROJECT_DIR$/falcon_api/users.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\clear_db.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/clear_db.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\create_rel_int_loc.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/create_rel_int_loc.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\cypher_queries.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/cypher_queries.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\group_test.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/group_test.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\location_test.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/location_test.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\seed_database.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\stackoverflow.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/stackoverflow.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\update_nodes.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/update_nodes.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\update_rels.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/update_rels.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\user_test.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/user_test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="back-end-api.iws" />
@@ -65,31 +65,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="seed_database.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/agora/py2neo_2.0_tests/seed_database.py">
+      <file leaf-file-name="seed_database.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3264">
-              <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.13709678" vertical-offset="0" max-vertical-offset="3264">
+              <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/agora/__init__.py">
+      <file leaf-file-name="py2neo_organization.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/agora_db/py2neo_organization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="119">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1802">
+              <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.23367697" vertical-offset="0" max-vertical-offset="582">
-              <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+              <caret line="7" column="53" selection-start-line="7" selection-start-column="53" selection-end-line="7" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -127,9 +127,9 @@
         <option value="$PROJECT_DIR$/travis.yml" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/agora/py2neo_2.0_tests/seed_database.py" />
-        <option value="$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py" />
         <option value="$PROJECT_DIR$/agora/__init__.py" />
         <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py" />
       </list>
     </option>
   </component>
@@ -189,7 +189,21 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="agora" />
+              <option name="myItemId" value="py2neo_2.0_tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="back-end-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="back-end-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="agora_tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -388,7 +402,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893288" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -401,6 +415,27 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893288" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2494577" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -431,7 +466,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/agora/behave/environment.py">
+    <entry file="file://$PROJECT_DIR$/behave/environment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20913884" vertical-offset="0" max-vertical-offset="646">
           <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
@@ -439,23 +474,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/agora/behave/setup_user_account.feature">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="582">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/agora/py2neo_2.0_tests/seed_database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3264">
-          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/agora/__init__.py">
+    <entry file="file://$PROJECT_DIR$/behave/setup_user_account.feature">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="582">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -471,10 +490,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_organization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1802">
+          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23367697" vertical-offset="0" max-vertical-offset="582">
-          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+          <caret line="7" column="53" selection-start-line="7" selection-start-column="53" selection-end-line="7" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13709678" vertical-offset="0" max-vertical-offset="3264">
+          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
           <folding />
         </state>
       </provider>
