@@ -7,4 +7,4 @@ services:
 install: "pip install -r requirements.txt"
 before_script: "export PYTHONPATH=$PYTHONPATH:$(pwd)"
 # command to run tests, e.g. python setup.py test
-script:  "python agora/py2neo_2.0_tests/seed_database.py test"
+script:  "python py2neo_2.0_tests/seed_database.py test"
