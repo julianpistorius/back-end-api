@@ -1,11 +1,11 @@
 __author__ = 'Marnee Dearman'
-from agora_db.py2neo_user import AgoraUser
-from agora_db.py2neo_interest import AgoraInterest
-from agora_db.agora_types import AgoraLabel, AgoraRelationship
-from agora_db.py2neo_group import AgoraGroup
-from agora_db.py2neo_location import AgoraLocation
-from agora_db.py2neo_goal import AgoraGoal
-from agora_db.py2neo_organization import AgoraOrganization
+from agora.agora_db.py2neo_user import AgoraUser
+from agora.agora_db.py2neo_interest import AgoraInterest
+from agora.agora_db.agora_types import AgoraLabel, AgoraRelationship
+from agora.agora_db.py2neo_group import AgoraGroup
+from agora.agora_db.py2neo_location import AgoraLocation
+from agora.agora_db.py2neo_goal import AgoraGoal
+from agora.agora_db.py2neo_organization import AgoraOrganization
 import datetime
 from py2neo import Graph
 
