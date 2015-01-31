@@ -9,6 +9,8 @@ from agora_db.py2neo_organization import AgoraOrganization
 import datetime
 from py2neo import Graph
 
+print Graph().neo4j_version
+
 Graph().delete_all()
 
 #locations
@@ -102,7 +104,7 @@ experience = {
 
 #link to interests and locations
 marnee.add_interest(kettlebells_id, experience)
-print marnee.user_interests
+# print marnee.user_interests
 marnee.add_interest(startup_id, experience)
 marnee.add_interest(python_id, experience)
 marnee.add_location(tucson.place_id)
@@ -165,7 +167,7 @@ marnee.add_goal(marnee_goal.id)
 # chris.add_goal(goal.id)
 # frank.add_goal(goal.id)
 
-print marnee.get_local_users_shared_interests_near_location()
+# print marnee.get_local_users_shared_interests_near_location()
 
 #organization
 evo_fit = AgoraOrganization()
