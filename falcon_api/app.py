@@ -8,7 +8,26 @@ import users, interests, locations, groups, organizations
 def crossdomain(req, resp):
     resp.set_header('Access-Control-Allow-Origin', '*')
 
-api = application = falcon.API(after=[crossdomain])
+def cors_middleware(request, response, params):
+    response.set_header(
+        'Access-Control-Allow-Origin',
+        '*'
+    )
+    response.set_header(
+        'Access-Control-Allow-Credentials',
+        'true'
+    )
+    response.set_header(
+        'Access-Control-Allow-Headers',
+        'X-Auth-User, X-Auth-Key, Content-Type'
+    )
+    response.set_header(
+        'Access-Control-Allow-Methods',
+        'GET, PUT, POST, DELETE, OPTIONS'
+    )
+
+
+api = application = falcon.API(after=[crossdomain], before=[cors_middleware])
 
 user_profile = users.UserProfile()
 user_interests = users.UserInterests()
@@ -34,6 +53,8 @@ organization = organizations.Organization()
 org_users = organizations.OrganizationUsers()
 org_interests = organizations.OrganizationInterests()
 
+
+# api.add_route('/login/{token}')
 
 #USER SPECIFIC
 # api.add_route('/users/profile/{email}', user_profile)

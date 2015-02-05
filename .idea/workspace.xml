@@ -2,45 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c589c3ed-722a-4a93-920a-b5066fe0117f" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\__init__.py" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\__init__.py" afterPath="$PROJECT_DIR$/agora_db/__init__.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\__init__.py" afterPath="$PROJECT_DIR$/falcon_api/__init__.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\agora_types.py" afterPath="$PROJECT_DIR$/agora_db/agora_types.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_achievement.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_achievement.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_goal.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_goal.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_group.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_group.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_interest.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_interest.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_location.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_location.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_organization.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_organization.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_samples.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_samples.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_db\py2neo_user.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_user.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_goals_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_goals_tests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_groups_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_groups_tests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_orgs_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_orgs_tests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\agora_tests\agora_users_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_users_tests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\behave\environment.py" afterPath="$PROJECT_DIR$/behave/environment.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\behave\setup_user_account.feature" afterPath="$PROJECT_DIR$/behave/setup_user_account.feature" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\app.py" afterPath="$PROJECT_DIR$/falcon_api/app.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\authentication.py" afterPath="$PROJECT_DIR$/falcon_api/authentication.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\goals.py" afterPath="$PROJECT_DIR$/falcon_api/goals.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\groups.py" afterPath="$PROJECT_DIR$/falcon_api/groups.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\images.py" afterPath="$PROJECT_DIR$/falcon_api/images.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\interests.py" afterPath="$PROJECT_DIR$/falcon_api/interests.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\locations.py" afterPath="$PROJECT_DIR$/falcon_api/locations.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\organizations.py" afterPath="$PROJECT_DIR$/falcon_api/organizations.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\run.py" afterPath="$PROJECT_DIR$/falcon_api/run.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\serializers.py" afterPath="$PROJECT_DIR$/falcon_api/serializers.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\falcon_api\users.py" afterPath="$PROJECT_DIR$/falcon_api/users.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\clear_db.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/clear_db.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\create_rel_int_loc.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/create_rel_int_loc.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\cypher_queries.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/cypher_queries.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\group_test.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/group_test.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\location_test.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/location_test.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\seed_database.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\stackoverflow.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/stackoverflow.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\update_nodes.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/update_nodes.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\update_rels.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/update_rels.py" />
-      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora\py2neo_2.0_tests\user_test.py" afterPath="$PROJECT_DIR$/py2neo_2.0_tests/user_test.py" />
+      <change type="DELETED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora_tests\agora_goals_tests.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora_tests\agora_groups_tests.py" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora_tests\agora_orgs_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_orgs.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora_tests\agora_users_tests.py" afterPath="$PROJECT_DIR$/agora_tests/agora_users.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\clear_db.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/clear_db.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\create_rel_int_loc.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/create_rel_int_loc.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\cypher_queries.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/cypher_queries.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\group_test.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/group_test.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\location_test.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/location_test.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\seed_database.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/seed_database.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\stackoverflow.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/stackoverflow.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\update_nodes.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/update_nodes.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\update_rels.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/update_rels.py" />
+      <change type="MOVED" beforePath="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\py2neo_2.0_tests\user_test.py" afterPath="$PROJECT_DIR$/agora_tests/py2neo_2.0/user_test.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/falcon_api/app.py" afterPath="$PROJECT_DIR$/falcon_api/app.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agora_db/py2neo_user.py" afterPath="$PROJECT_DIR$/agora_db/py2neo_user.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="back-end-api.iws" />
@@ -64,58 +42,116 @@
     <favorites_list name="back-end-api" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="seed_database.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3462963" vertical-offset="0" max-vertical-offset="3298">
-              <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="py2neo_organization.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/agora_db/py2neo_organization.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1802">
-              <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.travis.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
-              <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
-              <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1088">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/falcon_api/app.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="884" max-vertical-offset="1989">
+                  <caret line="73" column="74" selection-start-line="73" selection-start-column="74" selection-end-line="73" selection-end-column="74" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="component.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/falcon_api/component.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+                  <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="authentication.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/falcon_api/authentication.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
+                  <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="py2neo_register.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/agora_db/py2neo_register.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.4864865" vertical-offset="34" max-vertical-offset="833">
+                  <caret line="20" column="33" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="py2neo_user.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/agora_db/py2neo_user.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="159" max-vertical-offset="8534">
+                  <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="py2neo_register.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/agora_db/py2neo_register.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
+                  <caret line="35" column="12" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="test_register_user.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/agora_tests/test_register_user.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.02647975" vertical-offset="0" max-vertical-offset="642">
+                  <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/agora_services/__init__.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="119">
+                  <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="smtp.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/agora_services/smtp.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="617" max-vertical-offset="1377">
+                  <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="smtp_tests.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/agora_tests/services_test/smtp_tests.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
+                  <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -125,18 +161,34 @@
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/travis.yml" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/agora/py2neo_2.0_tests/seed_database.py" />
         <option value="$PROJECT_DIR$/agora/__init__.py" />
-        <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/falcon_api/login.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/misc/falcon_storage.py" />
+        <option value="$PROJECT_DIR$/misc/__init__.py" />
+        <option value="$PROJECT_DIR$/misc/falcon_token_auth.py" />
+        <option value="$PROJECT_DIR$/falcon_api/config.py" />
+        <option value="$PROJECT_DIR$/agora_db/py2neo_login.py" />
+        <option value="$PROJECT_DIR$/falcon_api/app.py" />
+        <option value="$PROJECT_DIR$/falcon_api/component.py" />
+        <option value="$PROJECT_DIR$/agora_db/py2neo_user.py" />
+        <option value="$PROJECT_DIR$/agora_notifications/__init__.py" />
+        <option value="$PROJECT_DIR$/agora_db/py2neo_register.py" />
+        <option value="$PROJECT_DIR$/agora_notifications/smtp.py" />
+        <option value="$PROJECT_DIR$/agora_tests/services_test/smtp_tests.py" />
+        <option value="$PROJECT_DIR$/agora_tests/register_user.py" />
+        <option value="$PROJECT_DIR$/agora_tests/test_register_user.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="960" />
-    <option name="width" value="960" />
-    <option name="height" value="1040" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -161,6 +213,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -189,7 +242,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="py2neo_2.0_tests" />
+              <option name="myItemId" value="agora_tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -206,14 +259,45 @@
               <option name="myItemId" value="agora_tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services_test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="back-end-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="back-end-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="agora_services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="back-end-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="back-end-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="agora_db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../little-todo" />
     <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -226,11 +310,12 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora_tests" />
       <recent name="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api" />
       <recent name="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.seed_database">
+  <component name="RunManager" selected="Python tests.Unittest test_answer">
     <configuration default="false" name="seed_database" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -246,6 +331,68 @@
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="seed_database (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/agora_tests/py2neo_2.0_tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="back-end-api" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/agora_tests/py2neo_2.0_tests/seed_database.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="smtp" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/agora_notifications" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="back-end-api" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/agora_notifications/smtp.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittest test_answer" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/agora_tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="back-end-api" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/agora_tests/test_register_user.py" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="test_answer" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_FUNCTION" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
@@ -372,12 +519,18 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
-    <list size="1">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.seed_database" />
+      <item index="1" class="java.lang.String" itemvalue="Python.seed_database (1)" />
+      <item index="2" class="java.lang.String" itemvalue="Python.smtp" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest test_answer" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Python.seed_database" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittest test_answer" />
+        <item index="1" class="java.lang.String" itemvalue="Python.smtp" />
+        <item index="2" class="java.lang.String" itemvalue="Python.seed_database (1)" />
+        <item index="3" class="java.lang.String" itemvalue="Python.seed_database" />
       </list>
     </recent_temporary>
   </component>
@@ -392,43 +545,43 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="960" y="0" width="960" height="1040" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893288" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2494577" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12118019" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27567568" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893288" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893288" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2494577" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2494577" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -458,11 +611,145 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="255">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="1666">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_register.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="493">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6900" max-vertical-offset="8517">
+          <caret line="425" column="13" selection-start-line="425" selection-start-column="13" selection-end-line="425" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_tests/py2neo_2.0/seed_database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="3298">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_location.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="1190">
+          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/login.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="153">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="153">
+          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_tests/py2neo_2.0/seed_database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="3298">
+          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_organization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="1802">
+          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="255">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="1666">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_register.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="493">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_location.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="1190">
+          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/login.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/behave/environment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20913884" vertical-offset="0" max-vertical-offset="646">
           <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -470,15 +757,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="582">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
-          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -486,7 +764,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1802">
           <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -494,22 +771,156 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="882">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
-          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/py2neo_2.0_tests/seed_database.py">
+    <entry file="file://$PROJECT_DIR$/falcon_api/users.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3462963" vertical-offset="0" max-vertical-offset="3298">
-          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="5678">
+          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08831169" vertical-offset="0" max-vertical-offset="385">
+          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/authentication.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="488">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13972603" vertical-offset="0" max-vertical-offset="365">
+          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="402">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/component.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_tests/py2neo_2.0/seed_database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14529915" vertical-offset="0" max-vertical-offset="3298">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_location.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.508547" vertical-offset="85" max-vertical-offset="1190">
+          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/login.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21794872" vertical-offset="0" max-vertical-offset="234">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/falcon_api/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="884" max-vertical-offset="1989">
+          <caret line="73" column="74" selection-start-line="73" selection-start-column="74" selection-end-line="73" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/agora-back-end/Lib/site-packages/itsdangerous.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="12701" max-vertical-offset="14926">
+          <caret line="762" column="6" selection-start-line="762" selection-start-column="6" selection-end-line="762" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_services/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="760">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_services/smtp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="617" max-vertical-offset="1377">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/smtplib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.019736841" vertical-offset="11307" max-vertical-offset="14773">
+          <caret line="666" column="0" selection-start-line="666" selection-start-column="0" selection-end-line="666" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_tests/services_test/smtp_tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="159" max-vertical-offset="8534">
+          <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_tests/test_register_user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.02647975" vertical-offset="0" max-vertical-offset="642">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/py2neo_register.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4864865" vertical-offset="34" max-vertical-offset="833">
+          <caret line="20" column="33" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
           <folding />
         </state>
       </provider>

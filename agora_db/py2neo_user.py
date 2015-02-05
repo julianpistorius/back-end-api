@@ -28,7 +28,8 @@ class AgoraUser(object):
         self.is_admin = False
         self.password = ''
         self.salt = ''
-        self.temp_auth_token = ''
+        self.permanent_web_token = ''
+        self.temporary_web_token = ''
         self.join_date = None
         self.graph_db = Graph()
 
@@ -421,6 +422,10 @@ class AgoraUser(object):
         self.graph_db.create_unique(user_location_relationship)
         # except:
         #     pass
+
+#TODO create permanent token
+    def issue_permanent_token(self, email=None):
+        pass
 
     def user_relationships_for_json(self):
         root = self.user_profile_for_json()
