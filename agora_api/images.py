@@ -2,7 +2,7 @@ __author__ = 'Marnee Dearman'
 import os
 import time
 import uuid
-import falcon_api
+import agora_api
 import msgpack_pure
 import json
 
@@ -21,7 +21,7 @@ class Resource(object):
     def on_get(self, req, resp):
         resp.data = msgpack_pure.packb({'message': 'Hello world!'})
         resp.content_type = 'application/msgpack'
-        resp.status = falcon_api.HTTP_200
+        resp.status = agora_api.HTTP_200
 
     def on_post(self, req, resp):
         image_id = _generate_id()
@@ -38,5 +38,5 @@ class Resource(object):
 
                 image_file.write(chunk)
         image_file.close()
-        resp.status = falcon_api.HTTP_201
+        resp.status = agora_api.HTTP_201
         resp.location = '/images/' + image_id
