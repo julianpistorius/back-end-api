@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c589c3ed-722a-4a93-920a-b5066fe0117f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.shippable.yml" afterPath="$PROJECT_DIR$/.shippable.yml" />
     </list>
     <ignored path="back-end-api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,10 +48,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="true">
+          <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/.travis.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.26532888" vertical-offset="0" max-vertical-offset="897">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
                   <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
                   <folding />
                 </state>
@@ -68,11 +68,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name=".shippable.yml" pinned="false" current-in-tab="false">
+          <file leaf-file-name=".shippable.yml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/.shippable.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
-                  <caret line="11" column="23" selection-start-line="0" selection-start-column="0" selection-end-line="11" selection-end-column="57" />
+                <state vertical-scroll-proportion="0.2122588" vertical-offset="0" max-vertical-offset="881">
+                  <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
                   <folding />
                 </state>
               </provider>
@@ -85,7 +85,7 @@
           <file leaf-file-name="py2neo_register.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/agora_db/py2neo_register.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.75" vertical-offset="34" max-vertical-offset="918">
+                <state vertical-scroll-proportion="0.7638249" vertical-offset="34" max-vertical-offset="918">
                   <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
                   <folding />
                 </state>
@@ -180,16 +180,15 @@
         <option value="$PROJECT_DIR$/agora_db/py2neo_register.py" />
         <option value="$PROJECT_DIR$/agora_behave/features/register_user.feature" />
         <option value="$PROJECT_DIR$/agora_db/config.py" />
-        <option value="$PROJECT_DIR$/.shippable.yml" />
         <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/.shippable.yml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="960" />
+    <option name="width" value="960" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -515,7 +514,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="960" y="0" width="960" height="1040" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -947,24 +946,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/agora_db/py2neo_register.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75" vertical-offset="34" max-vertical-offset="918">
+        <state vertical-scroll-proportion="0.7638249" vertical-offset="34" max-vertical-offset="918">
           <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.shippable.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
-          <caret line="11" column="23" selection-start-line="0" selection-start-column="0" selection-end-line="11" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26532888" vertical-offset="0" max-vertical-offset="897">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
           <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.shippable.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2122588" vertical-offset="0" max-vertical-offset="881">
+          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
           <folding />
         </state>
       </provider>
