@@ -9,7 +9,7 @@ from email.mime.text import MIMEText
 class AgoraSmtp(object):
     def __init__(self):
         self.recipients = []
-        self.sender = ''
+        self.sender = 'agora.dev.testing@gmail.com'
         self.message = 'WELCOME TO THE AGORA'
         self.subject = 'TESTING NOTIFICATIONS'
         self.html_file = None
@@ -19,6 +19,7 @@ class AgoraSmtp(object):
 
     def send_by_gmail(self):
         # Credentials (if needed)
+        #TODO put in config file?
         username = 'agora.dev.testing@gmail.com'
         password = 'b~}.82yK;Zr&'
 

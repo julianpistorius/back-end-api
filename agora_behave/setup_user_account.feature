@@ -1,3 +1,0 @@
-Feature: get user
-
-  Scenario:

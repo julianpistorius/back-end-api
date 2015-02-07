@@ -2,6 +2,7 @@ __author__ = 'Marnee Dearman'
 import uuid
 from py2neo import Node, Graph, Relationship
 from agora_db.py2neo_user import AgoraUser
+from agora_services import smtp
 from agora_types import AgoraRelationship, AgoraLabel
 from itsdangerous import (TimedJSONWebSignatureSerializer as TokenSerializer, SignatureExpired, BadSignature)
 
@@ -17,23 +18,27 @@ class AgoraRegisterUser(object):
         user = AgoraUser()
         user.email = email
         user.get_user()
+        message = smtp.AgoraSmtp()
+        web_token = TokenSerializer(secret_key="devkey")
+        message.recipients = email
         if user.id == '':
-            #send welcome message
+            #send registration message
+            user.temporary_web_token = web_token
+            #TODO setup message with URL and token
+            message.send_by_gmail()
+            #if successful
+            user.create_user()
         else:
             #send login message
-
-
-    def check_token(self, token):
-        pass
-
-    def find_user_by_email(self):
-        pass
-
-    def get_temporary_token(self):
-        pass
+            user.permanent_web_token = web_token
+            message.send_by_gmail()
+            #if successful
+            user.update_user()
 
     def construct_url(self):
         pass
+
+
 
 
 # 1 check for existing user by email

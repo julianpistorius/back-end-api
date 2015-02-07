@@ -13,17 +13,17 @@ def cors_middleware(request, response, params):
         'Access-Control-Allow-Origin',
         '*'
     )
-    response.set_header(
-        'Access-Control-Allow-Credentials',
-        'true'
-    )
+    # response.set_header(
+    #     'Access-Control-Allow-Credentials',
+    #     'true'
+    # )
     response.set_header(
         'Access-Control-Allow-Headers',
         'X-Auth-User, X-Auth-Key, Content-Type'
     )
     response.set_header(
         'Access-Control-Allow-Methods',
-        'GET, PUT, POST, DELETE, OPTIONS'
+        'GET, PUT, POST, PATCH, DELETE, OPTIONS'
     )
 
 
