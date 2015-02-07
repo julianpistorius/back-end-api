@@ -12,7 +12,7 @@ install:
     - pip install -r requirements.txt
 
 env:
-    - NEO4J_VERSION="2.0"
+    - NEO4J_VERSION="2.1.7"
 
 before_install:
     - wget dist.neo4j.org/neo4j-community-$NEO4J_VERSION-unix.tar.gz
