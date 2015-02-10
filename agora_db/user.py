@@ -2,12 +2,13 @@ _author__ = 'Marnee Dearman'
 import uuid
 import datetime
 import sys
+import settings
 from py2neo import Node, Graph, Relationship, Path, Rev
-from py2neo_interest import AgoraInterest
-from py2neo_goal import AgoraGoal
-from py2neo_group import AgoraGroup
-from py2neo_location import AgoraLocation
-from py2neo_organization import AgoraOrganization
+from interest import AgoraInterest
+from goal import AgoraGoal
+from group import AgoraGroup
+from location import AgoraLocation
+from organization import AgoraOrganization
 # from simplecrypt import encrypt, decrypt
 # from py2neo import neo4j
 from agora_types import AgoraRelationship, AgoraLabel
@@ -31,7 +32,7 @@ class AgoraUser(object):
         self.permanent_web_token = ''
         self.temporary_web_token = ''
         self.join_date = None
-        self.graph_db = Graph()
+        self.graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def user_properties(self):
@@ -448,7 +449,8 @@ class AgoraUser(object):
             'is_tutor': self.is_tutor,
             'is_visible': self.is_visible,
             'is_available_for_in_person': self.is_available_for_in_person,
-            'temp_auth_token': self.temp_auth_token,
+            'temp_web_token': self.temporary_web_token,
+            'permanent_web_token': self.permanent_web_token,
             'about': self.about
         }
 

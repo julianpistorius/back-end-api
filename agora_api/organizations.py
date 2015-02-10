@@ -1,8 +1,8 @@
 __author__ = 'Marnee Dearman'
 import falcon
-from agora_db.py2neo_organization import AgoraOrganization
-from agora_db.py2neo_user import AgoraUser
-from agora_db.py2neo_interest import AgoraInterest
+from agora_db.organization import AgoraOrganization
+from agora_db.user import AgoraUser
+from agora_db.interest import AgoraInterest
 import simplejson
 from serializers import OrganizationResponder
 

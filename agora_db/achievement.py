@@ -1,5 +1,6 @@
 __author__ = 'Marnee Dearman'
 import uuid
+import settings
 
 from py2neo import Graph, Node
 
@@ -13,7 +14,7 @@ class AgoraAchievement(object):
         self.title = None
         self.is_visible = True
         self.date = None
-        self.graph_db = Graph()
+        self.graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def achievement_node(self):

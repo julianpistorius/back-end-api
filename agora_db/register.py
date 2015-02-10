@@ -1,18 +1,17 @@
 __author__ = 'Marnee Dearman'
 import uuid
+import settings
 from py2neo import Node, Graph, Relationship
-from agora_db.py2neo_user import AgoraUser
+from user import AgoraUser
 from agora_services import smtp
 from agora_types import AgoraRelationship, AgoraLabel
 from itsdangerous import (TimedJSONWebSignatureSerializer as TokenSerializer, SignatureExpired, BadSignature)
 
-
 # config = importlib.import_module('config')
-
 
 class AgoraRegisterUser(object):
     def __init__(self):
-        self.graph_db = Graph()
+        self.graph_db = Graph(settings.DATABASE_URL)
 
     def register_user(self, email):
         user = AgoraUser()

@@ -7,11 +7,12 @@ from agora_db.location import AgoraLocation
 from agora_db.goal import AgoraGoal
 from agora_db.organization import AgoraOrganization
 import datetime
+import settings
 from py2neo import Graph
 
-print Graph().neo4j_version
+print Graph(settings.DATABASE_URL).neo4j_version
 
-Graph().delete_all()
+Graph(settings.DATABASE_URL).delete_all()
 
 #locations
 tucson = AgoraLocation()

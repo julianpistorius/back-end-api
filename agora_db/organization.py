@@ -1,10 +1,10 @@
 __author__ = 'Marnee Dearman'
 import uuid
-
+import settings
 from py2neo import Graph, Node, Relationship
 
 from agora_types import AgoraRelationship, AgoraLabel
-from agora_db.py2neo_interest import AgoraInterest
+from interest import AgoraInterest
 # from agora_db.py2neo_user import AgoraUser
 
 
@@ -18,7 +18,7 @@ class AgoraOrganization(object):
         self.is_open = False
         self.is_invite_only = False
         self.website = ''
-        self.graph_db = Graph()
+        self.graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def org_node(self):

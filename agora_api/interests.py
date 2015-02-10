@@ -4,8 +4,8 @@ __author__ = 'Marnee Dearman'
 # import uuid
 import falcon
 # import msgpack_pure
-from agora_db.py2neo_user import AgoraUser
-from agora_db.py2neo_interest import AgoraInterest
+from agora_db.user import AgoraUser
+from agora_db.interest import AgoraInterest
 import simplejson
 from serializers import InterestResponder
 

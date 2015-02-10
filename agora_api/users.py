@@ -4,13 +4,13 @@ __author__ = 'Marnee Dearman'
 # import uuid
 import falcon
 # import msgpack_pure
-from agora_db.py2neo_user import AgoraUser
-from agora_db.py2neo_interest import AgoraInterest
-from agora_db.py2neo_goal import AgoraGoal
-from agora_db.py2neo_location import AgoraLocation
-from agora_db.py2neo_group import AgoraGroup
-from agora_db.py2neo_organization import AgoraOrganization
-from agora_db.py2neo_achievement import AgoraAchievement
+from agora_db.user import AgoraUser
+from agora_db.interest import AgoraInterest
+from agora_db.goal import AgoraGoal
+from agora_db.location import AgoraLocation
+from agora_db.group import AgoraGroup
+from agora_db.organization import AgoraOrganization
+from agora_db.achievement import AgoraAchievement
 from serializers import UserResponder, \
     UserInterestResponder, UserGoalsResponder, UserLocationsResponder, \
     UserSharedInterestsResponder, UserProfileResponder, UserGroupsResponder, \
@@ -163,7 +163,7 @@ class UserInterests(object):
     def on_post(self, request, response, email, interest_id=None):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.create_add_interest(result_json['interest'], email)
+        self.create_add_interests(result_json['interests'], email)
         response.status = falcon.HTTP_201
         response.body = simplejson.dumps(result_json, encoding='utf-8')
 
@@ -183,18 +183,20 @@ class UserInterests(object):
         # .respond(user_interests)
         return response
 
-    def create_add_interest(self, interest_json, email):
-        interest = AgoraInterest()
-        # interest.set_interest_attributes(interest_json)
-        interest.name = interest_json['name']
-        interest.description = interest_json['description']
-        interest.create_interest()
-        user = get_user(email)
-        rel_properties = {}
-        rel_properties['experience'] = interest_json['experience']
-        rel_properties['time'] = interest_json['time']
-        user.add_interest(interest.id, rel_properties)
-        json = user.user_interests_for_json()
+    def create_add_interests(self, interests_json, email):
+        #TODO create interests in batches not just singly
+        for interest in interests_json:
+            interest = AgoraInterest()
+            # interest.set_interest_attributes(interest_json)
+            interest.name = interests_json['name']
+            interest.description = interests_json['description']
+            interest.create_interest()
+            user = get_user(email)
+            rel_properties = {}
+            rel_properties['experience'] = interests_json['experience']
+            rel_properties['time'] = interests_json['time']
+            user.add_interest(interest.id, rel_properties)
+            json = user.user_interests_for_json()
         return json
 
     # def get_user_interest_goals_groups_organizations(self, interest_id):
@@ -254,13 +256,17 @@ class UserGoals(object):
         user = get_user(email)
         user.get_user()
         goal = AgoraGoal()
-        goal.title = goal_json['title']
-        goal.description = goal_json['description']
-        goal.start_date = goal_json['start_date']
-        goal.end_date = goal_json['end_date']
-        goal.is_public = goal_json['is_public']
-        goal.create_goal()
-        goal_interests = goal_json['interests']
+        goal.set_goal_properties(goal_json)
+        # goal.title = goal_json['title']
+        # goal.description = goal_json['description']
+        # goal.start_date = goal_json['start_date']
+        # goal.end_date = goal_json['end_date']
+        # goal.is_public = goal_json['is_public']
+        # goal.achieved = goal_json['achieved']
+        # goal.create_goal()
+        # goal_interests = goal_json['interests']
+        # for interest in goal_interests:
+        #     goal.add_interest(interest['id'])
         # for key, value in goal_interests.iteritems():
         #     goal.add_interest()
 

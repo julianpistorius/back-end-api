@@ -1,5 +1,5 @@
 __author__ = 'Marnee Dearman'
-from agora_db.py2neo_group import AgoraGroup
+from agora_db.group import AgoraGroup
 from serializers import GroupResponder
 import simplejson
 

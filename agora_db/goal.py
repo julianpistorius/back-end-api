@@ -3,9 +3,10 @@ import py2neo
 import datetime
 import sys
 import uuid
+import settings
 import collections
 from py2neo import Graph, Node, Relationship, Path
-from py2neo_interest import AgoraInterest
+from interest import AgoraInterest
 from agora_types import AgoraRelationship, AgoraLabel
 
 class AgoraGoal(object):
@@ -18,7 +19,8 @@ class AgoraGoal(object):
         self.created_date = None
         self.is_public = True
         self.achieved = False
-        self.graph_db = Graph()
+        self.interests = [] #list of interest dictionaries id:value
+        self.graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def goal_properties(self):
@@ -81,6 +83,8 @@ class AgoraGoal(object):
         new_goal_node = Node.cast(AgoraLabel.GOAL, new_goal_properties)
         try:
             self.graph_db.create(new_goal_node)
+            for interest in self.interests:
+                self.add_interest(interest['id'])
         except:
             print sys.exc_info()
         return new_goal_node

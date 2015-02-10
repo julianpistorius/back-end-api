@@ -1,6 +1,6 @@
 __author__ = 'Marnee Dearman'
 import uuid
-
+import settings
 from py2neo import Node, Graph, Relationship
 
 from agora_types import AgoraRelationship, AgoraLabel
@@ -13,7 +13,7 @@ class AgoraLocation(object):
         # self.country = False
         # self.locality = True
         self.id = None  #place_id
-        self.graph_db = Graph()
+        self.graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def location_properties(self):

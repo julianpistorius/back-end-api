@@ -1,9 +1,9 @@
 __author__ = 'Marnee Dearman'
 import uuid
-
+import settings
 from py2neo import Graph, Node, Relationship
-from py2neo_interest import AgoraInterest
-from py2neo_location import AgoraLocation
+from interest import AgoraInterest
+from location import AgoraLocation
 # from py2neo_user import AgoraUser
 from agora_types import AgoraRelationship, AgoraLabel
 
@@ -24,7 +24,7 @@ class AgoraGroup(object):
         self.creator = '' #by email
         self.moderators = [] #by email
         self.website = ''
-        self.graph_db = Graph()
+        self.graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def group_properties(self):

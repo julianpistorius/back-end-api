@@ -1,5 +1,5 @@
 __author__ = 'Marnee Dearman'
-from agora_db.py2neo_goal import AgoraGoal
+from agora_db.goal import AgoraGoal
 import simplejson
 from serializers import GoalResponder
 import falcon

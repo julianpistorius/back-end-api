@@ -1,6 +1,6 @@
 __author__ = 'Marnee Dearman'
 import uuid
-
+import settings
 from py2neo import Graph, Node
 
 # from py2neo import neo4j
@@ -12,7 +12,7 @@ class AgoraInterest(object):
         self.name = None
         self.id = None
         self.description = None
-        self.graph_db = Graph()
+        self.graph_db = Graph(settings.DATABASE_URL)
         #neo4j.GraphDatabaseService("http://localhost:7474/db/data/")
 
     @property

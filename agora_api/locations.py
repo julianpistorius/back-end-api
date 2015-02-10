@@ -5,7 +5,7 @@ __author__ = 'Marnee Dearman'
 # import falcon_api
 # import msgpack_pure
 # from agora_db.py2neo_user import AgoraUser
-from agora_db.py2neo_location import AgoraLocation
+from agora_db.location import AgoraLocation
 import simplejson
 
 def get_location(name=None, postal_code=None, place_id=None):
