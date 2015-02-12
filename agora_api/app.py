@@ -59,6 +59,7 @@ org_interests = organizations.OrganizationInterests()
 #USER SPECIFIC
 # api.add_route('/users/profile/{email}', user_profile)
 #get all the stuff related to my user
+api.add_route('/users/', user)
 api.add_route('/users/{email}', user)
 api.add_route('/users/{email}/locations', user_locations)
 api.add_route('/users/{email}/interests', user_interests)

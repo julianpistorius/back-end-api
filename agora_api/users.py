@@ -11,6 +11,7 @@ from agora_db.location import AgoraLocation
 from agora_db.group import AgoraGroup
 from agora_db.organization import AgoraOrganization
 from agora_db.achievement import AgoraAchievement
+from agora_db.register import AgoraRegisterUser
 from serializers import UserResponder, \
     UserInterestResponder, UserGoalsResponder, UserLocationsResponder, \
     UserSharedInterestsResponder, UserProfileResponder, UserGroupsResponder, \
@@ -48,7 +49,10 @@ class User(object):
     def on_post(self, request, response, email=None):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.create_user(result_json['user'])
+        if email is None:
+            self.register_user(result_json)
+        else:
+            self.create_user(result_json['user'])
         response.status = falcon.HTTP_201
         response.body = simplejson.dumps(result_json, encoding='utf-8')
 
@@ -67,6 +71,11 @@ class User(object):
                                                         'goals': user_data['goals'],
                                                         'organizations': user_data['organizations']})
         return json
+
+    def register_user(self, user_result_json):
+        register = AgoraRegisterUser()
+        email = user_result_json['email']
+        register.register_user(email=email)
 
     def create_user(self, user_result_json):
         new_user = AgoraUser()

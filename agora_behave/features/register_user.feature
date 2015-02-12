@@ -1,10 +1,16 @@
-Feature: register user
-  If user wants access to all features he will need to register with the site first
+Feature: Register new user
 
-  Scenario: user registers
-    Given user email does not exist
-    When user registers
-    Then user should be created
-    And temporary web token is added to user
-    And user is sent an email with url to complete registration
+  Background:
+    Given I am a new user
 
+  Scenario: Register new user
+    Given I am a new user
+    When I POST to URL "/users" with the body:
+    """
+      {
+        "users": {
+          "email": "email@example.com"
+        }
+      }
+    """
+    Then I should get a 201 Created status code
