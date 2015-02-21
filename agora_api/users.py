@@ -52,7 +52,7 @@ class User(object):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
         if email is None:
-            self.register_user(result_json['user'])
+            self.register_user(result_json['user']['email'])
         else:
             self.create_user(result_json['user'])
         response.status = falcon.HTTP_201
