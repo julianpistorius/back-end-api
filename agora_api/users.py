@@ -51,10 +51,10 @@ class User(object):
     def on_post(self, request, response, email=None):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        # if email is None:
-        #     self.register_user(result_json['user'])
-        # else:
-        self.create_user(result_json['user'])
+        if email is None:
+            self.register_user(result_json['user'])
+        else:
+            self.create_user(result_json['user'])
         response.status = falcon.HTTP_201
         response.body = simplejson.dumps(result_json, encoding='utf-8')
 
@@ -75,10 +75,10 @@ class User(object):
                                                         'organizations': user_data['organizations']})
         return json
 
-    # def register_user(self, user_result_json):
-    #     register = AgoraRegisterUser()
-    #     email = user_result_json['email']
-    #     register.register_user(email=email)
+    def register_user(self, user_result_json):
+        register = AgoraUser()
+        email = user_result_json['email']
+        register.register_user(email=email)
 
     def create_user(self, user_result_json):
         new_user = AgoraUser()
@@ -354,7 +354,7 @@ class ActivateUser(object):
         response.content_type = 'application/json'
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        user_json = result_json['users']
+        user_json = result_json['user']
         email = user_json['email']
         try:
             user.activate_user(payload=payload, email=email)

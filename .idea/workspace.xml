@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="069b3870-54d6-451f-92f5-c907becb04be" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/dev.py" afterPath="$PROJECT_DIR$/settings/dev.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agora_services/smtp.py" afterPath="$PROJECT_DIR$/agora_services/smtp.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agora_tests/test_register_user.py" afterPath="$PROJECT_DIR$/agora_tests/test_register_user.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agora_api/users.py" afterPath="$PROJECT_DIR$/agora_api/users.py" />
     </list>
     <ignored path="back-end-api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,11 +39,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="users.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="users.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/agora_api/users.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="5698" max-vertical-offset="6477">
-                  <caret line="363" column="26" selection-start-line="363" selection-start-column="26" selection-end-line="363" selection-end-column="26" />
+                <state vertical-scroll-proportion="0.7252174" vertical-offset="926" max-vertical-offset="6477">
+                  <caret line="79" column="41" selection-start-line="79" selection-start-column="41" selection-end-line="79" selection-end-column="41" />
                   <folding />
                 </state>
               </provider>
@@ -60,11 +59,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="dev.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="dev.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/settings/dev.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.3180272" vertical-offset="0" max-vertical-offset="588">
-                  <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
+                  <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
                   <folding />
                 </state>
               </provider>
@@ -74,21 +73,31 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="user.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="user.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/agora_db/user.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="7170" max-vertical-offset="8976">
-                  <caret line="435" column="34" selection-start-line="435" selection-start-column="34" selection-end-line="435" selection-end-column="34" />
+                <state vertical-scroll-proportion="0.3321739" vertical-offset="7068" max-vertical-offset="8976">
+                  <caret line="427" column="8" selection-start-line="427" selection-start-column="8" selection-end-line="427" selection-end-column="8" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="smtp.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="smtplib.py" pinned="false" current-in-tab="false">
+            <entry file="file://C:/Python27/Lib/smtplib.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="10248" max-vertical-offset="14773">
+                  <caret line="614" column="0" selection-start-line="614" selection-start-column="0" selection-end-line="614" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="smtp.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/agora_services/smtp.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.3469388" vertical-offset="0" max-vertical-offset="1428">
-                  <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1428">
+                  <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
                   <folding />
                 </state>
               </provider>
@@ -98,7 +107,7 @@
             <entry file="file://$PROJECT_DIR$/agora_tests/test_register_user.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-                  <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+                  <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
                   <folding />
                 </state>
               </provider>
@@ -176,15 +185,15 @@
         <option value="$PROJECT_DIR$/agora_api/serializers.py" />
         <option value="$PROJECT_DIR$/agora_api/app.py" />
         <option value="$PROJECT_DIR$/agora_db/user.py" />
-        <option value="$PROJECT_DIR$/agora_api/users.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/schema/activated_user.json" />
         <option value="$PROJECT_DIR$/features/activate_user.feature" />
         <option value="$PROJECT_DIR$/agora_tests/json_schema/validate_json.py" />
         <option value="$PROJECT_DIR$/features/steps/activate_user.py" />
         <option value="$PROJECT_DIR$/agora_tests/test_register_user.py" />
-        <option value="$PROJECT_DIR$/settings/dev.py" />
         <option value="$PROJECT_DIR$/agora_services/smtp.py" />
+        <option value="$PROJECT_DIR$/settings/dev.py" />
+        <option value="$PROJECT_DIR$/agora_api/users.py" />
       </list>
     </option>
   </component>
@@ -287,7 +296,7 @@
       <recent name="C:\Users\Marnee Dearman\PycharmProjects\agora\back-end-api\agora_db\archive" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.behave features/activate_user.feature">
+  <component name="RunManager" selected="Python.test_register_user">
     <configuration default="false" name="run" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -562,9 +571,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.validate_json" />
-        <item index="1" class="java.lang.String" itemvalue="Python.run" />
-        <item index="2" class="java.lang.String" itemvalue="Python.test_register_user" />
+        <item index="0" class="java.lang.String" itemvalue="Python.test_register_user" />
+        <item index="1" class="java.lang.String" itemvalue="Python.validate_json" />
+        <item index="2" class="java.lang.String" itemvalue="Python.run" />
         <item index="3" class="java.lang.String" itemvalue="Python.activate_user" />
         <item index="4" class="java.lang.String" itemvalue="Python.URL_serializer" />
       </list>
@@ -701,13 +710,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/agora_api/component.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/agora_api/goals.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="731">
@@ -1034,14 +1036,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/agora_api/users.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5907" max-vertical-offset="6477">
-          <caret line="363" column="26" selection-start-line="363" selection-start-column="26" selection-end-line="363" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/agora_tests/json_schema/validate_json.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
@@ -1066,34 +1060,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/agora_tests/test_register_user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/agora_db/user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7170" max-vertical-offset="8976">
-          <caret line="435" column="34" selection-start-line="435" selection-start-column="34" selection-end-line="435" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/agora_services/smtp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3469388" vertical-offset="0" max-vertical-offset="1428">
-          <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1428">
+          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/smtplib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="10248" max-vertical-offset="14773">
+          <caret line="614" column="0" selection-start-line="614" selection-start-column="0" selection-end-line="614" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/settings/dev.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3180272" vertical-offset="0" max-vertical-offset="588">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
+          <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_tests/test_register_user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_db/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3321739" vertical-offset="7068" max-vertical-offset="8976">
+          <caret line="427" column="8" selection-start-line="427" selection-start-column="8" selection-end-line="427" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agora_api/users.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7252174" vertical-offset="926" max-vertical-offset="6477">
+          <caret line="79" column="41" selection-start-line="79" selection-start-column="41" selection-end-line="79" selection-end-column="41" />
           <folding />
         </state>
       </provider>
