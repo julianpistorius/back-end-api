@@ -54,7 +54,7 @@ class User(object):
         if email is None:
             self.register_user(result_json['user']['email'])
         else:
-            self.create_user(result_json['user'])
+            self.update_user(result_json['user'])
         response.status = falcon.HTTP_201
         response.body = simplejson.dumps(result_json, encoding='utf-8')
 
