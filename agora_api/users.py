@@ -39,6 +39,7 @@ def get_group(id):
     agora_group.get_group()
     return agora_group
 
+
 class User(object):
     def __init__(self):
         pass
@@ -52,7 +53,7 @@ class User(object):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
         if email is None:
-            self.register_user(result_json['user']['email'])
+            self.register_user(result_json['user'])
         else:
             self.update_user(result_json['user'])
         response.status = falcon.HTTP_201
