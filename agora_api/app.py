@@ -61,8 +61,9 @@ activate = users.ActivateUser()
 #USER SPECIFIC
 # api.add_route('/users/profile/{email}', user_profile)
 #get all the stuff related to my user
-api.add_route('/users/activate/{payload}', activate)
+# api.add_route('/users/activate/{payload}', activate)
 # api.add_route('/users/register/{email}')
+api.add_route('/activate/', activate)
 api.add_route('/users/', user)  # TODO can post to this to register user or use above?
 api.add_route('/users/{email}', user)
 api.add_route('/users/{email}/locations', user_locations)

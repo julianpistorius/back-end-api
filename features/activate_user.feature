@@ -7,15 +7,31 @@ Feature: Activate a user because user tokens are not in browser local storage.
 
   Scenario: Complete authorization with valid token
 #    Given I have an activation URL with valid token
-    Given I have a valid token
-    When I go to the activation URL with the token
-    Then I should get a 201 Created response
+    Given URL payload is valid
+    When Client POST to "/users/activation" with body:
+    """
+    {
+      "user": {
+          "email": "email@example.com",
+          "payload": "dlgkdshgflkghsdlfkghfdlkghdflkghfgh"
+      }
+    }
+    """
+    Then The response should be HTTP 201 Created
     And The response is valid according to the "activated_user" schema
 
   Scenario: Complete activation with invalid token
 #    Given I have an activation URL with invalid token
-    Given I have an invalid token
-    When I go to the activation URL with the token
-    Then I should get a 400 Bad request response to redirect to the registration page
+    Given URL payload is invalid
+    When Client POST to "/users/activation" with body:
+    """
+    {
+      "user": {
+          "email": "email@example.com",
+          "payload": "dlgkdshgflkghsdlfkghfdlkghdflkghfgh"
+      }
+    }
+    """
+    Then The response should be 400 Bad request
 
 

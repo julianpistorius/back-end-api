@@ -350,16 +350,18 @@ class ActivateUser(object):
     def __init__(self):
         pass
 
-    def on_post(self, request, response, payload):
+    def on_post(self, request, response):
         user = AgoraUser()
         response.content_type = 'application/json'
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
         user_json = result_json['user']
         email = user_json['email']
+        payload = user_json['payload']
         try:
             user.activate_user(payload=payload, email=email)
-            response.data = ActivatedUserResponder.respond(user.activated_user_for_json())   # UserProfileResponder.respond(user.user_profile_for_json())
+            response.data = ActivatedUserResponder.respond(user.activated_user_for_json())
+            # UserProfileResponder.respond(user.user_profile_for_json())
             response.status = falcon.HTTP_201  #created
         except BadSignature as e:
             response.status = falcon.HTTP_400
