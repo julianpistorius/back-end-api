@@ -451,7 +451,7 @@ class AgoraUser(object):
 
 
     def construct_verification_url(self, payload):
-        return settings.SITE_URL + "/" + settings.ACTIVATION_ROUTE + "/%s" % payload
+        return settings.SITE_URL + settings.ACTIVATION_ROUTE + "/%s" % payload
 
     def create_web_token(self):
         s = URLSafeSerializer(secret_key=settings.TOKEN_SECRET_KEY)
