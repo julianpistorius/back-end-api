@@ -2,7 +2,9 @@ __author__ = 'Marnee Dearman'
 # import os
 # import time
 # import uuid
+import sys
 import falcon
+from itsdangerous import BadSignature, BadTimeSignature
 # import msgpack_pure
 from agora_db.user import AgoraUser
 from agora_db.interest import AgoraInterest
@@ -11,11 +13,11 @@ from agora_db.location import AgoraLocation
 from agora_db.group import AgoraGroup
 from agora_db.organization import AgoraOrganization
 from agora_db.achievement import AgoraAchievement
-from agora_db.register import AgoraRegisterUser
+
 from serializers import UserResponder, \
     UserInterestResponder, UserGoalsResponder, UserLocationsResponder, \
     UserSharedInterestsResponder, UserProfileResponder, UserGroupsResponder, \
-    GoalResponder, GroupResponder
+    GoalResponder, GroupResponder, ActivatedUserResponder
 import simplejson
 from marshmallow import Schema, fields
 
@@ -49,10 +51,10 @@ class User(object):
     def on_post(self, request, response, email=None):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        if email is None:
-            self.register_user(result_json)
-        else:
-            self.create_user(result_json['user'])
+        # if email is None:
+        #     self.register_user(result_json['user'])
+        # else:
+        self.create_user(result_json['user'])
         response.status = falcon.HTTP_201
         response.body = simplejson.dumps(result_json, encoding='utf-8')
 
@@ -60,6 +62,7 @@ class User(object):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
         # self.create_user(result_json['user'])
+        self.update_user(result_json['user'])
         response.status = falcon.HTTP_201
         response.body = simplejson.dumps(result_json, encoding='utf-8')
 
@@ -72,10 +75,10 @@ class User(object):
                                                         'organizations': user_data['organizations']})
         return json
 
-    def register_user(self, user_result_json):
-        register = AgoraRegisterUser()
-        email = user_result_json['email']
-        register.register_user(email=email)
+    # def register_user(self, user_result_json):
+    #     register = AgoraRegisterUser()
+    #     email = user_result_json['email']
+    #     register.register_user(email=email)
 
     def create_user(self, user_result_json):
         new_user = AgoraUser()
@@ -194,18 +197,18 @@ class UserInterests(object):
 
     def create_add_interests(self, interests_json, email):
         #TODO create interests in batches not just singly
+        user = get_user(email=email)
         for interest in interests_json:
             interest = AgoraInterest()
             # interest.set_interest_attributes(interest_json)
             interest.name = interests_json['name']
             interest.description = interests_json['description']
             interest.create_interest()
-            user = get_user(email)
             rel_properties = {}
             rel_properties['experience'] = interests_json['experience']
             rel_properties['time'] = interests_json['time']
             user.add_interest(interest.id, rel_properties)
-            json = user.user_interests_for_json()
+        json = user.user_interests_for_json()
         return json
 
     # def get_user_interest_goals_groups_organizations(self, interest_id):
@@ -336,8 +339,37 @@ class UserOrganizations(object):
     def __int__(self):
         pass
 
+
 class UserInterestGoals(object):
     def __init__(self):
         pass
 
 
+class ActivateUser(object):
+    def __init__(self):
+        pass
+
+    def on_post(self, request, response, payload):
+        user = AgoraUser()
+        response.content_type = 'application/json'
+        raw_json = request.stream.read()
+        result_json = simplejson.loads(raw_json, encoding='utf-8')
+        user_json = result_json['users']
+        email = user_json['email']
+        try:
+            user.activate_user(payload=payload, email=email)
+            response.data = ActivatedUserResponder.respond(user.activated_user_for_json())   # UserProfileResponder.respond(user.user_profile_for_json())
+            response.status = falcon.HTTP_201  #created
+        except BadSignature as e:
+            response.status = falcon.HTTP_400
+
+# class RegisterUser(object):
+#     def __init__(self):
+#         pass
+#
+#     def on_post(self, request, response):
+#         user = AgoraUser()
+#         raw_json = request.stream.read()
+#         result_json = simplejson.loads(raw_json, encoding='utf-8')
+#         user.register_user(result_json['email'])
+#         response.status = falcon.HTTP_202  # ok

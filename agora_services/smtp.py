@@ -48,7 +48,8 @@ class AgoraSmtp(object):
         "To: " + ", ".join(self.recipients),
         "Subject: " + self.subject,
         "",
-        self.message
+        self.message,
+        self.url
         ])
         print msg
         server.sendmail(self.sender, self.recipients, msg)

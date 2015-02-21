@@ -13,6 +13,9 @@ from organization import AgoraOrganization
 # from py2neo import neo4j
 from agora_types import AgoraRelationship, AgoraLabel
 # import time
+from itsdangerous import URLSafeSerializer, URLSafeTimedSerializer, BadSignature, BadTimeSignature
+from agora_services import smtp
+
 
 class AgoraUser(object):
     def __init__(self, graph_db=None):
@@ -50,8 +53,8 @@ class AgoraUser(object):
 
     def get_user(self):
         user_node = self.user_node
-        user_properties = dict(user_node.properties)
-        if not user_node is None:
+        if user_node is not None:
+            user_properties = dict(user_node.properties)
             for key, value in user_properties.iteritems():
                 setattr(self, key, value)
 
@@ -65,7 +68,6 @@ class AgoraUser(object):
         self.id = str(uuid.uuid4())
         if not user_properties is None:
             self.set_user_properties(user_properties)
-        #TODO Encrypt password with salt
         # new_user_node = Node.cast(AgoraLabel.USER, self.user_properties)
 
         new_user_node = Node.cast(AgoraLabel.USER, self.user_properties)
@@ -370,7 +372,6 @@ class AgoraUser(object):
 
         self.graph_db.delete(user_group_relationship)
 
-
     def delete_group(self, group_id):
         pass
 
@@ -424,9 +425,37 @@ class AgoraUser(object):
         # except:
         #     pass
 
-#TODO create permanent token
-    def issue_permanent_token(self, email=None):
-        pass
+    def register_user(self, email):
+        verification_email = smtp.AgoraSmtp()
+        verification_email.recipients = [email]
+        s = URLSafeTimedSerializer(secret_key=settings.TOKEN_SECRET_KEY)
+        payload = s.dumps(email)
+        verification_email.subject = settings.ACTIVATION_SUBJECT
+        verification_email.message = settings.ACTIVATION_MESSAGE
+        verification_email.url = self.construct_verification_url(payload=payload)
+        verification_email.send_by_gmail()
+
+    def activate_user(self, payload, email):
+        s = URLSafeTimedSerializer(secret_key=settings.TOKEN_SECRET_KEY)
+        payload_email = s.loads(payload, max_age=settings.TOKEN_EXPIRES_IN)  # 10 minutes
+        if email == payload_email:
+            self.email = email
+            self.get_user()
+            self.permanent_web_token = self.create_web_token()
+            if self.id == '':
+                self.create_user()
+            else:
+                self.update_user()
+        else:
+            raise BadSignature('bad email')
+
+
+    def construct_verification_url(self, payload):
+        return settings.SITE_URL + "/" + settings.ACTIVATION_ROUTE + "/%s" % payload
+
+    def create_web_token(self):
+        s = URLSafeSerializer(secret_key=settings.TOKEN_SECRET_KEY)
+        return s.dumps(self.id)
 
     def user_relationships_for_json(self):
         root = self.user_profile_for_json()
@@ -438,21 +467,9 @@ class AgoraUser(object):
         return root
 
     def user_profile_for_json(self):
-        root = {}
-        return {
-            '__class': self.__class__.__name__,
-            'id': self.id,
-            'name': self.name,
-            'email': self.email,
-            'mission_statement': self.mission_statement,
-            'is_mentor': self.is_mentor,
-            'is_tutor': self.is_tutor,
-            'is_visible': self.is_visible,
-            'is_available_for_in_person': self.is_available_for_in_person,
-            'temp_web_token': self.temporary_web_token,
-            'permanent_web_token': self.permanent_web_token,
-            'about': self.about
-        }
+        root = self.user_properties
+        return root
+
 
     def user_interests_for_json(self):
         root = {}
@@ -494,5 +511,12 @@ class AgoraUser(object):
         root['id'] = self.id
         root['email'] = self.email
         root['users'] = self.get_local_users_shared_interests_near_location()
+        return root
+
+    def activated_user_for_json(self):
+        root = {}
+        root['__class'] = self.__class__.__name__
+        root['id'] = self.id
+        root['permanent_web_token'] = self.permanent_web_token
         return root
 

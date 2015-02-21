@@ -2,6 +2,7 @@ __author__ = 'Marnee Dearman'
 from marshmallow import Schema, fields
 from hyp.marshmallow import Responder
 
+
 class UserSchema(Schema):
     id = fields.String()
     name = fields.String()
@@ -30,6 +31,7 @@ class UserProfileSchema(Schema):
     is_available = fields.Boolean()
     is_admin = fields.Boolean()
     about = fields.String()
+    permanent_web_token = fields.String()
 
 
 class UsersSharedInterestsSchema(Schema):
@@ -42,7 +44,7 @@ class UserInterestSchema(Schema):
     id = fields.String()
     email = fields.String()
     # interests = fields.String()
-    #InterestSchema(Schema)        #fields.List(fields.String)
+    # InterestSchema(Schema)        #fields.List(fields.String)
 
 
 class InterestSchema(Schema):
@@ -52,8 +54,9 @@ class InterestSchema(Schema):
     experience = fields.String()
     time = fields.String()
 
+
 # class SharedInterstsSchems(Schema):
-#     interests_users = fields.String()
+# interests_users = fields.String()
 
 
 class UserGoalsSchema(Schema):
@@ -76,7 +79,6 @@ class GoalInterestSchema(Schema):
     id = fields.String()
     goal_id = fields.String()
     name = fields.String()
-
 
 
 class GroupSchema(Schema):
@@ -126,11 +128,22 @@ class LocationSchema(Schema):
     formatted_address = fields.String()
 
 
+class ActivatedUserSchema(Schema):
+    id = fields.String()
+    permanent_web_token = fields.String()
+
+
 class SingleResponder(Responder):
     TYPE = None
+
     def __init__(self):
         super(SingleResponder, self).__init__()
         self.root = self.TYPE
+
+
+class ActivatedUserResponder(Responder):
+    TYPE = 'user'
+    SERIALIZER = ActivatedUserSchema
 
 
 class UserProfileResponder(Responder):
@@ -144,13 +157,13 @@ class InterestResponder(Responder):
 
 
 class UserInterestResponder(Responder):
-    TYPE = 'users'
+    TYPE = 'user'
     SERIALIZER = UserInterestSchema
     LINKS = {
         'interests': {
             'responder': InterestResponder,
             'href': 'http://localhost:8000/interests/{interests.id}'
-        },
+        }
     }
 
 
@@ -171,23 +184,23 @@ class GoalInterestResponder(Responder):
 
 
 class UserGoalsResponder(Responder):
-    TYPE = 'usergoals'
+    TYPE = 'user'
     SERIALIZER = UserGoalsSchema
     LINKS = {
         'goals': {
             'responder': GoalResponder,
-            'href': 'http://localhost:8000/users/'
+            'href': 'http://localhost:8000/users/{user.email}/goals/{goal.id}'
         }
     }
 
 
 class UserLocationsResponder(Responder):
-    TYPE = 'userlocations'
+    TYPE = 'user'
     SERIALIZER = UserLocationsSchema
 
 
 class UserSharedInterestsResponder(Responder):
-    TYPE = 'sharedusers'
+    TYPE = 'user'
     SERIALIZER = UsersSharedInterestsSchema
 
 
@@ -195,8 +208,8 @@ class GroupResponder(Responder):
     TYPE = 'groups'
     SERIALIZER = GroupSchema
     # LINKS = {
-    #     'interests': InterestResponder,
-    #     'users': UserResponder
+    # 'interests': InterestResponder,
+    # 'users': UserResponder
     # }
 
 
@@ -206,7 +219,7 @@ class LocationResponder(Responder):
 
 
 class UserGroupsResponder(Responder):
-    TYPE = 'users'
+    TYPE = 'user'
     SERIALIZER = UserGroupsSchema
     LINKS = {
         'groups': {
@@ -229,23 +242,45 @@ class UserOrganizationsResponder(Responder):
         }
     }
 
+
 class UserResponder(Responder):
     TYPE = 'user'
     SERIALIZER = UserSchema
-    LINKS = {
-        'interests': {
-            'responder': InterestResponder,
-        },
-        'groups': {
-            'responder': GroupResponder
-        },
-        'locations': {
-            'responder': LocationResponder
-        },
-        'goals': {
-            'responder': GoalResponder
-        },
-        'organizations': {
-            'responder': OrganizationResponder
-        }
+
+
+GroupResponder.LINKS = {
+    'interests': {
+        'responder': InterestResponder,
+        'href': 'http://localhost:8000/interests/{interest.id}'
+    },
+    'users': {
+        'responder': UserResponder,
+        'href': 'http://localhost:8000/users/{user.email}'
     }
+}
+
+UserResponder.LINKS = {
+    'interests': {
+        'responder': InterestResponder,
+        'href': 'http://localhost:8000/interests/{interest.id}'
+
+    },
+    'groups': {
+        'responder': GroupResponder,
+        'href': 'http://localhost:8000/groups/{group.id}'
+    },
+    'locations': {
+        'responder': LocationResponder,
+        'href': 'http://localhost:8000/locations/{location.id}'
+    },
+    'goals': {
+        'responder': GoalResponder,
+        'href': 'http://localhost:8000/goals/{goal.id}'
+    },
+    'organizations': {
+        'responder': OrganizationResponder,
+        'href': 'http://localhost:8000/organizations/{organization.id}'
+    }
+}
+
+

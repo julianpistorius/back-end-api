@@ -13,4 +13,4 @@ Feature: Register new user
         }
       }
     """
-    Then I should get a 201 Created status code
+    Then I should get a 200 OK status code

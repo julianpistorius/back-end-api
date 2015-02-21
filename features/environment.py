@@ -2,14 +2,19 @@ __author__ = 'Marnee Dearman'
 import os
 from behaving import environment as benv
 
-PERSONAS = {}
+PERSONAS = {
+    'new_user': dict(
+        email='newuser@agorasociety.com'
+    )
+
+}
 
 def before_all(context):
     # import falcon_test
     # context.attachment_dir = os.path.join(os.path.dirname(falcon_test.__file__), 'tests/data')
     # context.sms_path = os.path.join(os.path.dirname(falcon_test.__file__), '../../var/sms/')
     # context.mail_path = os.path.join(os.path.dirname(falcon_test.__file__), '../../var/mail/')
-    context.base_url = "http:localhost:9000"
+    context.base_url = "http://localhost:8000"
     benv.before_all(context)
 
 

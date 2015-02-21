@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "",
+  "type": "object",
+  "properties": {
+    "user": {
+      "id": "/user",
+      "type": "object",
+      "properties": {
+        "permanent_web_token": {
+          "id": "/user/permanent_web_token",
+          "type": "string"
+        },
+        "id": {
+          "id": "/user/id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "permanent_web_token",
+        "id"
+      ]
+    }
+  },
+  "required": [
+    "user"
+  ]
+}

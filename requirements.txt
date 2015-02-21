@@ -1,4 +1,4 @@
-falcon==0.1.10
+falcon==0.2
 python-mimeparse==0.1.4
 six==1.9.0
 py2neo==2.0.4
@@ -8,4 +8,6 @@ marshmallow>=1.0-a
 schematics>=1.0
 behave==1.2.5
 behaving==1.1
+itsdangerous==0.24
+requests
 

@@ -3,8 +3,7 @@ import os
 import time
 import uuid
 import agora_api
-import msgpack_pure
-from agora_db.py2neo_user import AgoraUser
+from agora_db import user
 import simplejson
 
 #TODO add authentication logic
