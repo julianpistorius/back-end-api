@@ -5,10 +5,12 @@ from agora_db import user
 myPath = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, myPath + '/../')
 
+email = 'marnee.dearman@gmail.com'
+
 recipients = []
-recipients.append("marnee.dearman@gmail.com")
+recipients.append(email)
 print ", ".join(recipients)
 
 reg_user = user.AgoraUser()
-reg_user.register_user("marnee.dearman@gmail.com")
+reg_user.register_user(email)
 
