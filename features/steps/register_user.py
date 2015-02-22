@@ -1,33 +1,34 @@
 __author__ = 'Marnee Dearman'
 
-import httplib
-
+import sys
+import os
+from jsonschema import validate
+import requests
+import settings
 from behave import when, then, given
 
 
-@given(u'I am a new user')
-def step_impl(context):
-    # this is where I do something?  I dont know.
-    #setup a non-registered user?  to use in the rest of the tests.  can I do that here
-    raise NotImplementedError(u'STEP: Given I am a new user')
+@given(u'the user is new user with persona "new_user"')
+def new_user(context):
+    context.user = context.personas['new_user']
 
+@given(u'the user is existing user with persona "marnee"')
+def existing_user(context):
+    context.user = context.personas['marnee']
 
-@when(u'I POST to URL "/users" with the body')
+@when(u'the client requests POST to route "/users" with the body')
 def step_impl(context):
     user_json = {
-        "users": {
-            "email": "email@example.com"
+        "user": {
+            "email": context.user['email']
         }
     }
-
     # application/json
     headers = {"Content-type": "application/json",
                "Accept": "application/json"}
-    conn = httplib.HTTPConnection("localhost", "8000")
-    conn.request("POST", "/users", user_json, headers)
-    # raise NotImplementedError(u'STEP: When I POST to URL "/users" with the body')
+    context.response = requests.post(url=context.base_url + "/users", json=user_json)
 
-
-@then(u'I should get a 201 Created status code')
+@then(u'the response code is 201 Created')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should get a 201 Created status code')
+    assert context.response.status_code == 201, \
+        "status code: %s != %s" % (context.response.status_code, '201')

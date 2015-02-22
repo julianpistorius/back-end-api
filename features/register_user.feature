@@ -1,16 +1,25 @@
-Feature: Register new user
-
-  Background:
-    Given I am a new user
+Feature: Register new user or login existing users
 
   Scenario: Register new user
-    Given I am a new user
-    When I POST to URL "/users" with the body:
+    Given the user is new user with persona "new_user"
+    When the client requests POST to route "/users" with the body:
     """
       {
-        "users": {
+        "user": {
           "email": "email@example.com"
         }
       }
     """
-    Then I should get a 200 OK status code
+    Then the response code is 201 Created
+
+  Scenario: Activate existing user
+    Given the user is existing user with persona "marnee"
+    When the client requests POST to route "/users" with the body:
+    """
+      {
+        "user": {
+          "email": "marnee@agorasociety.com"
+        }
+      }
+    """
+    Then the response code is 201 Created
