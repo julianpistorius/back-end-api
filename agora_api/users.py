@@ -199,15 +199,15 @@ class UserInterests(object):
     def create_add_interests(self, interests_json, email):
         #TODO create interests in batches not just singly
         user = get_user(email=email)
-        for interest in interests_json:
+        for interest_dict in interests_json:
             interest = AgoraInterest()
             # interest.set_interest_attributes(interest_json)
-            interest.name = interests_json['name']
-            interest.description = interests_json['description']
+            interest.name = interest_dict['name']
+            interest.description = interest_dict['description']
             interest.create_interest()
             rel_properties = {}
-            rel_properties['experience'] = interests_json['experience']
-            rel_properties['time'] = interests_json['time']
+            rel_properties['experience'] = interest_dict['experience']
+            rel_properties['time'] = interest_dict['time']
             user.add_interest(interest.id, rel_properties)
         json = user.user_interests_for_json()
         return json

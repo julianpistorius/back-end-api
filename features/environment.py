@@ -1,7 +1,7 @@
 __author__ = 'Marnee Dearman'
 import os
 from behaving import environment as benv
-from py2neo import Node, Graph
+from py2neo import Node, Graph, Relationship
 import settings
 from agora_db import user
 
@@ -10,7 +10,16 @@ PERSONAS = {
         email='newuser@agorasociety.com'
     ),
     'marnee': dict(
-        email='marnee@agorasociety.com'
+        email='marnee@agorasociety.com',
+        interest_route='/users/marnee@agorasociety.com/interests',
+        label='USER',
+        key='email'
+    ),
+    'interest': dict(
+        name='New Interest',
+        description='New interests testing',
+        experience='Just adding a test interest',
+        time='100 years'
     )
 }
 
@@ -24,6 +33,10 @@ def before_all(context):
     # graph_db.delete_all()
     new_user_node = Node('USER', email='newuser@agorasociety.com')
     graph_db.delete(new_user_node)
+    interest_node = Node('INTEREST', name='New Interest')
+    interest_relationships = Relationship(None, 'INTERESTED_IN', interest_node)
+    graph_db.delete(interest_relationships)
+    graph_db.delete(interest_node)
     context.base_url = "http://localhost:8000"
     benv.before_all(context)
 
