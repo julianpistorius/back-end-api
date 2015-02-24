@@ -7,7 +7,7 @@ import falcon
 from agora_db.user import AgoraUser
 from agora_db.interest import AgoraInterest
 import simplejson
-from serializers import InterestResponder
+from api_serializers import InterestResponder
 
 
 class Interest(object):

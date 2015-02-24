@@ -4,7 +4,7 @@ from agora_db.organization import AgoraOrganization
 from agora_db.user import AgoraUser
 from agora_db.interest import AgoraInterest
 import simplejson
-from serializers import OrganizationResponder
+from api_serializers import OrganizationResponder
 
 class Organization(object):
     def __init__(self):

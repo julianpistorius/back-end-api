@@ -3,7 +3,7 @@ from agora_db.interest import AgoraInterest
 
 __author__ = 'Marnee Dearman'
 from agora_db.group import AgoraGroup
-from serializers import GroupResponder
+from api_serializers import GroupResponder
 import simplejson
 
 def get_group(group_id):

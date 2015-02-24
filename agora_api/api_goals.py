@@ -1,7 +1,7 @@
 __author__ = 'Marnee Dearman'
 from agora_db.goal import AgoraGoal
 import simplejson
-from serializers import GoalResponder
+from api_serializers import GoalResponder
 import falcon
 import simplejson
 
@@ -28,10 +28,14 @@ class Goal(object):
 
     def on_put(self, request, response):
         pass
+    #TODO add logic to update goal
 
 
     def get_goal_json(self, goal_id):
         goal = get_goal(goal_id).goal_for_json()
         json = GoalResponder.respond(goal, links={'interests': goal['interests']})
         return json
+
+    def create_goal(self, goal_json):
+        pass
 

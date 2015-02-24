@@ -14,7 +14,7 @@ from agora_db.group import AgoraGroup
 from agora_db.organization import AgoraOrganization
 from agora_db.achievement import AgoraAchievement
 
-from serializers import UserResponder, \
+from api_serializers import UserResponder, \
     UserInterestResponder, UserGoalsResponder, UserLocationsResponder, \
     UserSharedInterestsResponder, UserProfileResponder, UserGroupsResponder, \
     GoalResponder, GroupResponder, ActivatedUserResponder
@@ -164,6 +164,7 @@ class UserInterests(object):
     def on_get(self, request, response, email, interest_id=None):
         # if not interest_id is None:
         #     response.data = self.
+        auth_header = request.auth
         if interest_id is None:
             response.data = self.get_user_interests_json(email)
         else:
@@ -183,7 +184,7 @@ class UserInterests(object):
     def on_put(self, request, response, email):
         pass
 
-    def get_user_interests_json(self, email):
+    def get_user_interests_json(self, email, auth_header):
         """
 
         :param email:

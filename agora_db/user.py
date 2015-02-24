@@ -68,8 +68,6 @@ class AgoraUser(object):
         self.id = str(uuid.uuid4())
         if not user_properties is None:
             self.set_user_properties(user_properties)
-        # new_user_node = Node.cast(AgoraLabel.USER, self.user_properties)
-
         new_user_node = Node.cast(AgoraLabel.USER, self.user_properties)
         try:
             self.graph_db.create(new_user_node)

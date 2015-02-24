@@ -1,6 +1,11 @@
 Feature: Users can create goals and associate them with their relevant interests
 
-  Scenario: User creates a goal with interests
+  Background:
+    Given goal entity from persona "goal"
+    And user entity from persona "marnee"
+    And route to POST goals to user entity
+
+  Scenario: Client POST request to create goal for user
     Given I am a registered user with a valid permanent web token
     When I POST to URL "/users/{user_id}/goals" with the body:
     """

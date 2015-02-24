@@ -2,7 +2,7 @@ __author__ = 'Marnee Dearman'
 import falcon
 # import os
 # import images
-import users, interests, locations, groups, organizations
+import api_users, api_interests, api_locations, api_groups, api_organizations
 #import interest
 
 def crossdomain(req, resp):
@@ -29,31 +29,31 @@ def cors_middleware(request, response, params):
 
 api = application = falcon.API(after=[crossdomain], before=[cors_middleware])
 
-user_profile = users.UserProfile()
-user_interests = users.UserInterests()
-user = users.User()
-user_goals = users.UserGoals()
-user_interest_goals = users.UserInterestGoals()
-local_shared_users = users.LocalUsersSharedInterests()
-user_locations = users.UserLocations()
-user_groups = users.UserGroups()
-user_organizations = users.UserOrganizations()
-interest = interests.Interest()
-location = locations.Location()
-location_interests = locations.LocationInterests()
-location_users = locations.LocationUsers()
-location_groups = locations.LocationGroups()
-location_organizations = locations.LocationOrganizations()
-group = groups.Group()
-group_users = groups.GroupUsers()
-group_interests = groups.GroupInterests()
-group_goals = groups.GroupGoals()
-group_achievements = groups.GroupAchievements()
-organization = organizations.Organization()
-org_users = organizations.OrganizationUsers()
-org_interests = organizations.OrganizationInterests()
+user_profile = api_users.UserProfile()
+user_interests = api_users.UserInterests()
+user = api_users.User()
+user_goals = api_users.UserGoals()
+user_interest_goals = api_users.UserInterestGoals()
+local_shared_users = api_users.LocalUsersSharedInterests()
+user_locations = api_users.UserLocations()
+user_groups = api_users.UserGroups()
+user_organizations = api_users.UserOrganizations()
+interest = api_interests.Interest()
+location = api_locations.Location()
+location_interests = api_locations.LocationInterests()
+location_users = api_locations.LocationUsers()
+location_groups = api_locations.LocationGroups()
+location_organizations = api_locations.LocationOrganizations()
+group = api_groups.Group()
+group_users = api_groups.GroupUsers()
+group_interests = api_groups.GroupInterests()
+group_goals = api_groups.GroupGoals()
+group_achievements = api_groups.GroupAchievements()
+organization = api_organizations.Organization()
+org_users = api_organizations.OrganizationUsers()
+org_interests = api_organizations.OrganizationInterests()
 
-activate = users.ActivateUser()
+activate = api_users.ActivateUser()
 # register = users.RegisterUser()
 
 # api.add_route('/login/{token}')
@@ -64,7 +64,7 @@ activate = users.ActivateUser()
 # api.add_route('/users/activate/{payload}', activate)
 # api.add_route('/users/register/{email}')
 api.add_route('/activate/', activate)
-api.add_route('/users/', user)  # TODO can post to this to register user or use above?
+api.add_route('/users/', user)  # use this route to register/login users
 api.add_route('/users/{email}', user)
 api.add_route('/users/{email}/locations', user_locations)
 api.add_route('/users/{email}/interests', user_interests)

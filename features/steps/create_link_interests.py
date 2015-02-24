@@ -8,7 +8,7 @@ import requests
 import falcon
 import settings
 from py2neo import Graph, Node, Relationship
-from agora_api.users import AgoraUser
+from agora_api.api_users import AgoraUser
 
 myPath = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, myPath + '/../')
