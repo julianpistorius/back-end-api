@@ -31,11 +31,18 @@ def before_all(context):
     # clear database
     graph_db = Graph(settings.DATABASE_URL)
     # graph_db.delete_all()
-    new_user_node = Node('USER', email='newuser@agorasociety.com')
+    new_user_node = graph_db.find_one('USER',
+                                      property_key='email',
+                                      property_value='newuser@agorasociety.com')
     graph_db.delete(new_user_node)
-    interest_node = Node('INTEREST', name='New Interest')
-    interest_relationships = Relationship(None, 'INTERESTED_IN', interest_node)
-    graph_db.delete(interest_relationships)
+    interest_node = graph_db.find_one('INTEREST', property_key='name',
+                                      property_value=PERSONAS['interest']['name'])
+        # Node('INTEREST', name='New Interest')
+    interest_relationships = graph_db.match(start_node=None,
+                                            rel_type='INTERESTED_IN',
+                                            end_node=interest_node)
+    for relationship in interest_relationships:
+        graph_db.delete(relationship)
     graph_db.delete(interest_node)
     context.base_url = "http://localhost:8000"
     benv.before_all(context)

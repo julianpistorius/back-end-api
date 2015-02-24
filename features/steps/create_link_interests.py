@@ -52,8 +52,5 @@ def check_interest_created_linked(context):
                                                    property_value=context.entity[context.entity['key']])
     interest = Graph(settings.DATABASE_URL).find_one('INTEREST', property_key='name',
                                                      property_value=context.personas['interest']['name'])
-        # Node(context.personas['interest']['name'])
-    # relationship = Relationship(entity, 'INTERESTED_IN', interest)
-    # relationship =
     for relationship in Graph(settings.DATABASE_URL).match(start_node=entity, rel_type='INTERESTED_IN', end_node=interest):
         assert relationship is not None
