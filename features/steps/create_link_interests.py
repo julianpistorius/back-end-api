@@ -31,7 +31,11 @@ def setup_interest(context):
 def setup_marnee(context):
     context.entity = context.personas['marnee']
 
-@given (u'route to entity')
+@given(u'entity persona "group"')
+def setup_group(context):
+    context.entity = context.personas['group']
+
+@given(u'route to entity')
 def setup_route(context):
     context.route = context.entity['interest_route']
 
@@ -44,9 +48,8 @@ def check_response(context):
     assert context.response.status_code == 201, \
         'status code: %s != %s' % (context.response.status_code, falcon.HTTP_201)
 
-@then(u'the "interest" is created and linked to entity')
+@then(u'the "interest" is created and linked to the entity')
 def check_interest_created_linked(context):
-    email = context.entity['email']
     entity = Graph(settings.DATABASE_URL).find_one(context.entity['label'],
                                                    property_key=context.entity['key'],
                                                    property_value=context.entity[context.entity['key']])

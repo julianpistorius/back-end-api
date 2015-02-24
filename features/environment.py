@@ -15,6 +15,12 @@ PERSONAS = {
         label='USER',
         key='email'
     ),
+    'group': dict(
+        id='7e7ce64b-08d8-4df1-82ac-f0456bc7df15',
+        interest_route='/groups/7e7ce64b-08d8-4df1-82ac-f0456bc7df15/interests',
+        label='STUDYGROUP',
+        key='id'
+    ),
     'interest': dict(
         name='New Interest',
         description='New interests testing',
@@ -37,7 +43,6 @@ def before_all(context):
     graph_db.delete(new_user_node)
     interest_node = graph_db.find_one('INTEREST', property_key='name',
                                       property_value=PERSONAS['interest']['name'])
-        # Node('INTEREST', name='New Interest')
     interest_relationships = graph_db.match(start_node=None,
                                             rel_type='INTERESTED_IN',
                                             end_node=interest_node)
