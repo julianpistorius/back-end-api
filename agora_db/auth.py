@@ -2,23 +2,21 @@ __author__ = 'Marnee Dearman'
 import os
 import time
 import uuid
-import agora_api
-from agora_db import user
 import simplejson
 from itsdangerous import URLSafeSerializer, URLSafeTimedSerializer, BadSignature, BadTimeSignature
 import settings
+from agora_db.user import AgoraUser
 
-#TODO add authentication logic
 class Auth(object):
-    def __init__(self, auth_header, user_id):
+    def __init__(self, auth_header):
         self.auth_header = auth_header
-        self.user_id = id
-
-    def is_authorized_user(self):
         s = URLSafeSerializer(secret_key=settings.TOKEN_SECRET_KEY)
-        auth_payload = s.loads(self.auth_header['x-auth-key'])
-        if self.user_id == auth_payload:
-            return True
+        self.auth_key = s.loads(self.auth_header['x-auth-key'])
+        self.user_key = s.loads(self.auth_header['x-auth-user'])
+        user = AgoraUser()
+        user.id = self.user_key
+        user.get_user()
+        self.is_authorized_user = user.permanent_web_token == self.auth_key  # users auth key is valid
 
-    def is_owner(self):
+    def is_user_owner(self, user_id):
         pass

@@ -10,9 +10,9 @@ Feature: Register new user or login existing users
         }
       }
     """
-    Then the response code is 201 Created
+    Then the response code is 200 OK
 
-  Scenario: Activate existing user
+  Scenario: Register existing user
     Given the user is existing user with persona "marnee"
     When the client requests POST to route "/users" with the body:
     """
@@ -22,4 +22,4 @@ Feature: Register new user or login existing users
         }
       }
     """
-    Then the response code is 201 Created
+    Then the response code is 200 OK

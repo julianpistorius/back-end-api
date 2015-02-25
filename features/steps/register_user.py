@@ -28,7 +28,7 @@ def step_impl(context):
                "Accept": "application/json"}
     context.response = requests.post(url=context.base_url + "/users", json=user_json)
 
-@then(u'the response code is 201 Created')
+@then(u'the response code is 200 OK')
 def step_impl(context):
-    assert context.response.status_code == 201, \
+    assert context.response.status_code == 200, \
         "status code: %s != %s" % (context.response.status_code, '201')

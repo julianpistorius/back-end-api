@@ -6,6 +6,7 @@ import sys
 import falcon
 from itsdangerous import BadSignature, BadTimeSignature
 # import msgpack_pure
+from agora_db.auth import Auth
 from agora_db.user import AgoraUser
 from agora_db.interest import AgoraInterest
 from agora_db.goal import AgoraGoal
@@ -40,12 +41,19 @@ def get_group(id):
     return agora_group
 
 
+def user_auth(auth_header):
+    auth = Auth(auth_header=auth_header)
+    return auth
+
+
 class User(object):
     def __init__(self):
         pass
 
+    # TODO use user.id instead of email
     def on_get(self, request, response, email):
-        response.data = self.get_user_json(email)
+        auth = user_auth(request.auth)
+        response.data = self.get_user_json(email=email, user_id=auth.user_key)
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
@@ -54,21 +62,29 @@ class User(object):
         result_json = simplejson.loads(raw_json, encoding='utf-8')
         if email is None:
             self.register_user(result_json['user'])
+            response.status = falcon.HTTP_200
         else:
-            self.update_user(result_json['user'])
-        response.status = falcon.HTTP_201
-        response.body = simplejson.dumps(result_json, encoding='utf-8')
+            auth = user_auth(request.auth)
+            if auth.is_authorized_user(request.auth):
+                self.update_user(user_result_json=result_json['user'], email=email, auth_id=auth.user_key)
+                response.status = falcon.HTTP_201
+                response.body = simplejson.dumps(result_json, encoding='utf-8')
+            else:
+                response.status = falcon.HTTP_401  # unauthorized
 
     def on_put(self, request, response, email):
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        # self.create_user(result_json['user'])
-        self.update_user(result_json['user'])
-        response.status = falcon.HTTP_201
-        response.body = simplejson.dumps(result_json, encoding='utf-8')
+        auth = user_auth(request.auth)
+        if auth.is_authorized_user(request.auth):
+            raw_json = request.stream.read()
+            result_json = simplejson.loads(raw_json, encoding='utf-8')
+            self.update_user(user_result_json=result_json['user'], email=email, auth_id=auth.user_key)
+            response.status = falcon.HTTP_201
+            response.body = simplejson.dumps(result_json, encoding='utf-8')
+        else:
+            response.status = falcon.HTTP_401  # unauthorized
 
-    def get_user_json(self, email):
-        user_data = get_user(email).user_relationships_for_json()
+    def get_user_json(self, email, user_id):
+        user_data = get_user(email).user_relationships_for_json(user_id=user_id)
         json = UserResponder.respond(user_data, linked={'interests': user_data['interests'],
                                                         'groups': user_data['groups'],
                                                         'locations': user_data['locations'],
@@ -81,14 +97,16 @@ class User(object):
         email = user_result_json['email']
         register.register_user(email=email)
 
-    def create_user(self, user_result_json):
-        new_user = AgoraUser()
-        new_user.set_user_properties(user_result_json)
-        new_user.create_user()
+    # #TODO not used because we create the user through activation process
+    # def create_user(self, user_result_json, auth_id):
+    #     new_user = AgoraUser()
+    #     new_user.set_user_properties(user_result_json)
+    #     new_user.create_user()
 
-    def update_user(self, user_result_json, email):
+    def update_user(self, user_result_json, email, auth_id):
         user = AgoraUser()
         user.email = email
+        # TODO use user.id instead of email
         user.get_user()
         user.set_user_properties(user_result_json)
         user.update_user()

@@ -66,7 +66,7 @@ class AgoraUser(object):
         #TODO exception handling
         self.join_date = datetime.date.today()
         self.id = str(uuid.uuid4())
-        if not user_properties is None:
+        if user_properties is not None:
             self.set_user_properties(user_properties)
         new_user_node = Node.cast(AgoraLabel.USER, self.user_properties)
         try:
@@ -455,16 +455,18 @@ class AgoraUser(object):
         s = URLSafeSerializer(secret_key=settings.TOKEN_SECRET_KEY)
         return s.dumps(self.id)
 
-    def user_relationships_for_json(self):
+    def user_relationships_for_json(self, user_id):
         root = self.user_profile_for_json()
         root['interests'] = self.user_interests
         root['locations'] = self.user_locations
         root['goals'] = self.user_goals
         root['groups'] = self.user_groups
         root['organizations'] = self.user_orgs
+        root['allow_edit'] = (user_id == self.id)
+        root['allow_message'] = (user_id is not None)
         return root
 
-    def user_profile_for_json(self):
+    def user_profile_for_json(self, user_id):
         root = self.user_properties
         return root
 
