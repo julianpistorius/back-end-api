@@ -8,5 +8,5 @@ SITE_URL = "http://localhost:9000"
 ACTIVATION_ROUTE = "/activate"
 ACTIVATION_SUBJECT = "Agora -- Verify Login/Register"
 ACTIVATION_MESSAGE = "Thank you for registering with the Agora.  Please click this link to verify your account."
-GMAIL_PASSWORD = 'b~}.82yK;Zr&'
-GMAIL_USER = 'agora.dev.testing@gmail.com'
+GMAIL_PASSWORD = ''
+GMAIL_USER = ''

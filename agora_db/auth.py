@@ -10,7 +10,7 @@ import settings
 
 #TODO add authentication logic
 class Auth(object):
-    def __init__(self, auth_header, id):
+    def __init__(self, auth_header, user_id):
         self.auth_header = auth_header
         self.user_id = id
 
@@ -19,3 +19,6 @@ class Auth(object):
         auth_payload = s.loads(self.auth_header['x-auth-key'])
         if self.user_id == auth_payload:
             return True
+
+    def is_owner(self):
+        pass
