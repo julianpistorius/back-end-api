@@ -39,9 +39,22 @@ def setup_group(context):
 def setup_route(context):
     context.route = context.entity['interest_route']
 
+@given(u'the header contains a matching x-auth-key and x-auth-user')
+def setup_headers(context):
+    context.headers = {
+        'X-Auth-Key': context.entity['x_auth_key']
+    }
+
 @when(u'the client requests POST to entity route with the body')
 def post_interest_to_entity(context):
-    context.response = requests.post(url=context.base_url + context.route, json=context.interest_json)
+    s = requests.Session()
+    # s.auth = context.auth_headers
+    context.response = s.post(url=context.base_url + context.route,
+                              json=context.interest_json,
+                              headers=context.headers)
+        # requests.post(url=context.base_url + context.route,
+        #                              json=context.interest_json,
+        #                              auth=context.headers)
 
 @then(u'the response is 201 created status code')
 def check_response(context):

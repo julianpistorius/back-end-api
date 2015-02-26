@@ -1,3 +1,5 @@
+
+
 __author__ = 'Marnee Dearman'
 import uuid
 import settings
@@ -6,7 +8,7 @@ from interest import AgoraInterest
 from location import AgoraLocation
 # from py2neo_user import AgoraUser
 from agora_types import AgoraRelationship, AgoraLabel
-
+# from agora_db.user import AgoraUser
 
 class AgoraGroup(object):
     def __init__(self):
@@ -21,8 +23,8 @@ class AgoraGroup(object):
         self.next_meeting_time = None
         self.members = []
         self.interests = []
-        self.creator = '' #by email
-        self.moderators = [] #by email
+        self.creator = '' #by id
+        self.moderators = [] #by id
         self.website = ''
         self.graph_db = Graph(settings.DATABASE_URL)
 
@@ -152,8 +154,15 @@ class AgoraGroup(object):
             group_node[key] = self.group_properties[key]
         group_node.push()
 
+    # TODO close group
     def close_group(self):
         pass
+
+    # def get_group_owner(self):
+    #     user = AgoraUser()
+    #     user.id = self.creator
+    #     user.get_user()
+    #     return user
 
     def group_for_json(self):
         # self

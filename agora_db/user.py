@@ -83,9 +83,15 @@ class AgoraUser(object):
         get a user Node
         :return: py2neo Node
         """
-        return self.graph_db.find_one(AgoraLabel.USER,
-                                      property_key='email',
-                                      property_value=self.email)
+        if self.email != '':
+            return self.graph_db.find_one(AgoraLabel.USER,
+                                          property_key='email',
+                                          property_value=self.email)
+        elif self.id != '':
+            return self.graph_db.find_one(AgoraLabel.USER,
+                                          property_key='id',
+                                          property_value=self.id)
+
         # return self.graph_db.get_or_create_indexed_node(index_name=AgoraLabel.USER,
         #                                                      key='email', value=self.email)
 

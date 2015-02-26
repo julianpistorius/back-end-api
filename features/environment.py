@@ -11,15 +11,18 @@ PERSONAS = {
     ),
     'marnee': dict(
         email='marnee@agorasociety.com',
-        interest_route='/users/marnee@agorasociety.com/interests',
+        interest_route='/users/09deb9f4-6feb-42e4-bcf2-55f82c26632f/interests',
         label='USER',
-        key='email'
+        key='email',
+        x_auth_key='IjA5ZGViOWY0LTZmZWItNDJlNC1iY2YyLTU1ZjgyYzI2NjMyZiI.VnlgmEXwW9eelZT5Xbs6uPtPQJE',
+        x_auth_user='09deb9f4-6feb-42e4-bcf2-55f82c26632f'
     ),
     'group': dict(
         id='7e7ce64b-08d8-4df1-82ac-f0456bc7df15',
         interest_route='/groups/7e7ce64b-08d8-4df1-82ac-f0456bc7df15/interests',
         label='STUDYGROUP',
-        key='id'
+        key='id',
+        x_auth_key='IjA5ZGViOWY0LTZmZWItNDJlNC1iY2YyLTU1ZjgyYzI2NjMyZiI.VnlgmEXwW9eelZT5Xbs6uPtPQJE'
     ),
     'interest': dict(
         name='New Interest',

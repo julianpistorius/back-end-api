@@ -8,9 +8,10 @@ Feature: Create interests and link them to users, groups, organizations, goals
 #    And goal persona "goal"
 #    And interest persona "interest"
 
-  Scenario: Create interests for user entity
+  Scenario: Create interests for user entity with matching headers
     Given entity persona "marnee"
     And route to entity
+    And the header contains a matching x-auth-key and x-auth-user
     When the client requests POST to entity route with the body:
     """
     {
@@ -30,6 +31,7 @@ Feature: Create interests and link them to users, groups, organizations, goals
   Scenario: Create interests for group entity
     Given entity persona "group"
     And route to entity
+    And the header contains a matching x-auth-key and x-auth-user
     When the client requests POST to entity route with the body:
     """
     {

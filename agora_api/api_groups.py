@@ -1,16 +1,31 @@
 import falcon
 from agora_db.interest import AgoraInterest
+from agora_db.user import AgoraUser
 
 __author__ = 'Marnee Dearman'
 from agora_db.group import AgoraGroup
+from agora_db.auth import Auth
 from api_serializers import GroupResponder
 import simplejson
+
 
 def get_group(group_id):
     agora_group = AgoraGroup()
     agora_group.id = group_id
     agora_group.get_group()
     return agora_group
+
+
+def get_group_user(user_id):
+    user = AgoraUser()
+    user.id = user_id
+    user.get_user()
+    return user
+
+
+def user_auth(auth_header):
+    auth = Auth(auth_header=auth_header)
+    return auth
 
 
 class Group(object):
@@ -52,11 +67,17 @@ class GroupInterests(object):
         pass
 
     def on_post(self, request, response, group_id):
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.create_add_interests(result_json['interests'], group_id)
-        response.status = falcon.HTTP_201
-        response.body = simplejson.dumps(result_json, encoding='utf-8')
+        auth = user_auth(request.headers)
+        group = get_group(group_id=group_id)
+        user = get_group_user(group.creator)
+        if auth.is_authorized_user and auth.auth_key == user.id:
+            raw_json = request.stream.read()
+            result_json = simplejson.loads(raw_json, encoding='utf-8')
+            self.create_add_interests(result_json['interests'], group_id)
+            response.status = falcon.HTTP_201
+            response.body = simplejson.dumps(result_json, encoding='utf-8')
+        else:
+            response.status = falcon.HTTP_401
 
     # def on_get(self, request, response, group_id):
     #     response.data = self.get_group_interests_json(group_id)
