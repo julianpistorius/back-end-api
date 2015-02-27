@@ -39,11 +39,18 @@ def setup_group(context):
 def setup_route(context):
     context.route = context.entity['interest_route']
 
-@given(u'the header contains a matching x-auth-key and x-auth-user')
-def setup_headers(context):
+@given(u'the header contains a good x-auth-key')
+def setup_good_headers(context):
     context.headers = {
-        'X-Auth-Key': context.entity['x_auth_key']
+        'X-Auth-Key': context.entity['x_auth_key_good']
     }
+
+@given(u'the header contains a bad x-auth-key')
+def setup_bad_headers(context):
+    context.headers = {
+        'X-Auth-Key': context.entity['x_auth_key_bad']
+    }
+
 
 @when(u'the client requests POST to entity route with the body')
 def post_interest_to_entity(context):
@@ -57,9 +64,14 @@ def post_interest_to_entity(context):
         #                              auth=context.headers)
 
 @then(u'the response is 201 created status code')
-def check_response(context):
+def check_good_response(context):
     assert context.response.status_code == 201, \
         'status code: %s != %s' % (context.response.status_code, falcon.HTTP_201)
+
+@then(u'the response is 401')
+def check_bad_response(context):
+    assert context.response.status_code == 401, \
+        'status code: %s != %s' % (context.response.status_code, falcon.HTTP_401)
 
 @then(u'the "interest" is created and linked to the entity')
 def check_interest_created_linked(context):
