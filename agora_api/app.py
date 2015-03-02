@@ -84,8 +84,8 @@ api.add_route('/locations/{place_id}/interests/{interest_id}/users', location_us
 api.add_route('/locations/{place_id}/interests/{interest_id}/groups', location_groups)
 api.add_route('/locations/{place_id}/interests/{interest_id}/organizations', location_organizations)
 
-api.add_route('/users/{email}/groups/{group_id}', user_groups)
-api.add_route('/users/{email}/groups', user_groups)
+api.add_route('/users/{user_id}/groups/{group_id}', user_groups)
+api.add_route('/users/{user_id}/groups', user_groups)
 
 api.add_route('/groups/{group_id}', group)
 api.add_route('/groups/{group_id}/goals', group_goals)

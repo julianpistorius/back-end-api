@@ -16,7 +16,9 @@ PERSONAS = {
         key='email',
         x_auth_key_good='IjA5ZGViOWY0LTZmZWItNDJlNC1iY2YyLTU1ZjgyYzI2NjMyZiI.VnlgmEXwW9eelZT5Xbs6uPtPQJE',
         x_auth_user='09deb9f4-6feb-42e4-bcf2-55f82c26632f',
-        x_auth_key_bad='bad'
+        x_auth_key_bad='bad',
+        group_join_route='/users/{user_id}/groups/{group_id}'
+
     ),
     'group': dict(
         id='7e7ce64b-08d8-4df1-82ac-f0456bc7df15',
@@ -24,7 +26,7 @@ PERSONAS = {
         label='STUDYGROUP',
         key='id',
         x_auth_key_good='IjA5ZGViOWY0LTZmZWItNDJlNC1iY2YyLTU1ZjgyYzI2NjMyZiI.VnlgmEXwW9eelZT5Xbs6uPtPQJE',
-        x_auth_key_bad='bad'
+        x_auth_key_bad='bad',
     ),
     'interest': dict(
         name='New Interest',

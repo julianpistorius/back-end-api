@@ -317,20 +317,34 @@ class UserGoals(object):
         # for key, value in goal_interests.iteritems():
         #     goal.add_interest()
 
+
 class UserGroups(object):
     def __init__(self):
         pass
 
-    def on_get(self, request, response, email, group_id=None):
-        if not group_id is None:
-            response.data = self.get_group_json(group_id)
-        else:
-            response.data = self.get_user_groups_json(email)
-        response.content_type = 'application/json'
-        response.status = falcon.HTTP_200
+    def on_get(self, request, response, user_id, group_id=None):
+        auth = user_auth(request.headers)
+        if auth.is_authorized_user and auth.auth_key == user_id:
+            if group_id is not None:
+                response.data = self.get_group_json(group_id)
+            else:
+                response.data = self.get_user_groups_json(user_id)
+            response.content_type = 'application/json'
+            response.status = falcon.HTTP_200
 
-    def get_user_groups_json(self, email):
-        user_groups = get_user_by_email(email).user_groups_for_json()
+    def on_post(self, request, response, user_id, group_id=None):
+        # user will join group
+        auth = user_auth(request.headers)
+        if auth.is_authorized_user and auth.auth_key == user_id:
+            user = get_user_by_id(user_id=user_id)
+            user.join_group(group_id=group_id)
+            response.status = falcon.HTTP_201
+            response.body = self.get_group_json(group_id=group_id)
+        else:
+            response.status = falcon.HTTP_401
+
+    def get_user_groups_json(self, user_id):
+        user_groups = get_user_by_id(user_id).user_groups_for_json()
         json = UserGroupsResponder.respond(user_groups, linked={'groups': user_groups['groups']})
         return json
 
