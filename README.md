@@ -1,5 +1,5 @@
 # back-end-api
-Repo for the Agora back-end API.  
+Repo for the Elmerly back-end API.  
 
 Built on
 
