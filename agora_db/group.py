@@ -21,10 +21,8 @@ class AgoraGroup(object):
         self.meeting_location = ''
         self.next_meeting_date = None
         self.next_meeting_time = None
-        self.members = []
-        self.interests = []
         self.creator = '' #by id
-        self.moderators = [] #by id
+        # self.moderators = [] #by id  #TODO change this to a relationship in the graph
         self.website = ''
         self.graph_db = Graph(settings.DATABASE_URL)
 
@@ -145,7 +143,7 @@ class AgoraGroup(object):
         except:
             pass
 
-        # TODO set properties on RELATIONSHIP
+        #TODO set properties on RELATIONSHIP
         return self.group_interests
 
     def update_group(self):
@@ -154,9 +152,41 @@ class AgoraGroup(object):
             group_node[key] = self.group_properties[key]
         group_node.push()
 
-    # TODO close group
+    #TODO close group
     def close_group(self):
         pass
+
+    def matched_groups(self, match_string, limit):
+        """
+
+        :param match_string:
+        :param limit:
+        :return: dictionary of search results
+        """
+        params = {
+            'match': '(?i)%s.*' % match_string,
+            'limit': limit
+        }
+        cypher_str = "MATCH (group:STUDYGROUP ) " \
+            "WHERE group.name =~ {match} " \
+            "RETURN group.name as name, group.id as id " \
+            "LIMIT {limit}"
+        match_results = self.graph_db.cypher.execute(statement=cypher_str, parameters=params)
+        root = {}
+        root['count'] = 0
+        group_found = {}
+        groups_list = []
+        for item in match_results:
+            group_found['id'] = item.id
+            group_found['name'] = item.name
+            # self.id = item['id']
+            # self.get_user()
+            # users_list.append(dict(self.user_properties))
+            groups_list.append(dict(group_found))
+            root['count'] += 1
+        root['groups'] = groups_list
+        return root
+
 
     # def get_group_owner(self):
     #     user = AgoraUser()

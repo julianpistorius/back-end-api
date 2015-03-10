@@ -4,30 +4,39 @@ __author__ = 'Marnee Dearman'
 # import uuid
 import falcon
 # import msgpack_pure
+from agora_db.auth import Auth
 from agora_db.user import AgoraUser
 from agora_db.interest import AgoraInterest
 import simplejson
-from api_serializers import InterestResponder
+from api_serializers import InterestResponder, SearchResponder
+
+
+def user_auth(request):
+    auth = Auth(auth_header=request.headers)
+    return auth
 
 
 class Interest(object):
     def __init__(self):
         pass
 
-
-    def check_token(self):
-        #TODO check tokens on api calls
-        pass
-
-    def on_get(self, request, response, interest_id):
+    def on_get(self, request, response, interest_id=None):
         """
-        get interest
+
         :param request:
         :param response:
         :param interest_id:
         :return:
         """
-        response.data = self.get_interest(interest_id)
+        if interest_id is not None:
+            response.data = self.get_interest(interest_id)
+        else:
+            match = request.params['match']
+            limit = int(request.params['limit'])
+            search_results = AgoraInterest().matched_interests(match_string=match,
+                                                               limit=limit)
+            response.data = SearchResponder.respond(search_results,
+                                                    linked={'interests': search_results['interests']})
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 

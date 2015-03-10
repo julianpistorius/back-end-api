@@ -15,10 +15,8 @@ from agora_db.group import AgoraGroup
 from agora_db.organization import AgoraOrganization
 from agora_db.achievement import AgoraAchievement
 
-from api_serializers import UserResponder, \
-    UserInterestResponder, UserGoalsResponder, UserLocationsResponder, \
-    UserSharedInterestsResponder, UserProfileResponder, UserGroupsResponder, \
-    GoalResponder, GroupResponder, ActivatedUserResponder
+from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
+    GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder
 import simplejson
 from marshmallow import Schema, fields
 
@@ -50,8 +48,8 @@ def get_group(id):
     return agora_group
 
 
-def user_auth(auth_header):
-    auth = Auth(auth_header=auth_header)
+def user_auth(request):
+    auth = Auth(auth_header=request.headers)
     return auth
 
 
@@ -59,41 +57,48 @@ class User(object):
     def __init__(self):
         pass
 
-    # TODO use user.id instead of email
-    def on_get(self, request, response, email):
-        auth = user_auth(request.auth)
-        response.data = self.get_user_json(email=email, user_id=auth.user_key)
+    def on_get(self, request, response, user_id=None):
+        auth = user_auth(request)
+        if user_id is not None:
+            response.data = self.get_user_json(user_id=user_id, auth_id=auth.auth_key)
+        else:
+            match = request.params['match']
+            limit = int(request.params['limit'])
+            search_results = AgoraUser().matched_users(match_string=match, limit=limit)
+            response.data = SearchResponder.respond(search_results,
+                                                    linked={'users': search_results['users']})
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
-    def on_post(self, request, response, email=None):
+    def on_post(self, request, response, user_id=None):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        if email is None:
+        if user_id is None:  # REGISTER USER -- does not create a user
             self.register_user(result_json['user'])
             response.status = falcon.HTTP_200
-        else:
+        else:  # UPDATE USER DATA
             auth = user_auth(request.auth)
-            if auth.is_authorized_user(request.auth):
-                self.update_user(user_result_json=result_json['user'], email=email, auth_id=auth.user_key)
+            if auth.is_authorized_user and user_id == auth.auth_key:
+                self.update_user(user_result_json=result_json['user'],
+                                 user_id=user_id)
                 response.status = falcon.HTTP_201
-                response.body = simplejson.dumps(result_json, encoding='utf-8')
+                response.body = self.get_user_json(user_id=user_id, auth_id=auth.auth_key)
             else:
                 response.status = falcon.HTTP_401  # unauthorized
 
-    def on_put(self, request, response, email):
+    def on_put(self, request, response, user_id):
         auth = user_auth(request.auth)
-        if auth.is_authorized_user(request.auth):
+        if auth.is_authorized_user and user_id == auth.auth_key:
             raw_json = request.stream.read()
             result_json = simplejson.loads(raw_json, encoding='utf-8')
-            self.update_user(user_result_json=result_json['user'], email=email, auth_id=auth.user_key)
+            self.update_user(user_result_json=result_json['user'], user_id=user_id)
             response.status = falcon.HTTP_201
             response.body = simplejson.dumps(result_json, encoding='utf-8')
         else:
             response.status = falcon.HTTP_401  # unauthorized
 
-    def get_user_json(self, email, user_id):
-        user_data = get_user_by_email(email).user_relationships_for_json(user_id=user_id)
+    def get_user_json(self, user_id, auth_id):
+        user_data = get_user_by_id(user_id=user_id).user_relationships_for_json(auth_id=auth_id)
         json = UserResponder.respond(user_data, linked={'interests': user_data['interests'],
                                                         'groups': user_data['groups'],
                                                         'locations': user_data['locations'],
@@ -101,69 +106,72 @@ class User(object):
                                                         'organizations': user_data['organizations']})
         return json
 
+    def get_users_json(self, match):
+        return {}
+
     def register_user(self, user_result_json):
         register = AgoraUser()
         email = user_result_json['email']
         register.register_user(email=email)
 
-    # #TODO not used because we create the user through activation process
+    #TODO not used because we create the user through activation process
     # def create_user(self, user_result_json, auth_id):
     #     new_user = AgoraUser()
     #     new_user.set_user_properties(user_result_json)
     #     new_user.create_user()
 
-    def update_user(self, user_result_json, email, auth_id):
+    def update_user(self, user_result_json, user_id):
         user = AgoraUser()
-        user.email = email
-        # TODO use user.id instead of email
+        user.user_id = user_id
+        #TODO use user.id instead of email
         user.get_user()
         user.set_user_properties(user_result_json)
         user.update_user()
 
-class UserProfile(object):
-    def __init__(self):
-        pass
-
-    def on_get(self, request, response, email):
-        response.data = self.get_user_json(email)
-        response.content_type = 'application/json'
-        response.status = falcon.HTTP_200
-
-    def on_post(self, request, response, email=None):
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.create_user(result_json['user'])
-        response.status = falcon.HTTP_201
-        response.body = simplejson.dumps(result_json, encoding='utf-8')
-
-    def on_put(self, request, response, email):
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.update_user(result_json['user'])
-        response.status = falcon.HTTP_202
-        response.body = simplejson.dumps(result_json, encoding='utf-8')
-
-    def get_user_json(self, email):
-        """
-        get agora user info and create dictionary for json response to client
-        :return: simplejson
-        """
-        user_details = get_user_by_email(email).user_profile_for_json()
-        json = UserProfileResponder.respond(user_details)
-        return json
-            # simplejson.dumps(get_user(email).user_details_for_json())
-
-    def update_user(self, user_result_json):
-        user = get_user_by_email(user_result_json['email'])
-        user.set_user_properties(user_result_json)
-        user.update_user()
-
-    def create_user(self, user_result_json):
-        #convert json to dictionary?
-        new_user = AgoraUser()
-        new_user.set_user_properties(user_result_json)
-        new_user.create_user()
-        # print new_user.name
+# class UserProfile(object):
+#     def __init__(self):
+#         pass
+#
+#     def on_get(self, request, response, email):
+#         response.data = self.get_user_json(email)
+#         response.content_type = 'application/json'
+#         response.status = falcon.HTTP_200
+#
+#     def on_post(self, request, response, email=None):
+#         raw_json = request.stream.read()
+#         result_json = simplejson.loads(raw_json, encoding='utf-8')
+#         self.create_user(result_json['user'])
+#         response.status = falcon.HTTP_201
+#         response.body = simplejson.dumps(result_json, encoding='utf-8')
+#
+#     def on_put(self, request, response, email):
+#         raw_json = request.stream.read()
+#         result_json = simplejson.loads(raw_json, encoding='utf-8')
+#         self.update_user(result_json['user'])
+#         response.status = falcon.HTTP_202
+#         response.body = simplejson.dumps(result_json, encoding='utf-8')
+#
+#     def get_user_json(self, email):
+#         """
+#         get agora user info and create dictionary for json response to client
+#         :return: simplejson
+#         """
+#         user_details = get_user_by_email(email).user_profile_for_json()
+#         json = UserResponder.respond(user_details)
+#         return json
+#             # simplejson.dumps(get_user(email).user_details_for_json())
+#
+#     def update_user(self, user_result_json):
+#         user = get_user_by_email(user_result_json['email'])
+#         user.set_user_properties(user_result_json)
+#         user.update_user()
+#
+#     def create_user(self, user_result_json):
+#         #convert json to dictionary?
+#         new_user = AgoraUser()
+#         new_user.set_user_properties(user_result_json)
+#         new_user.create_user()
+#         # print new_user.name
 
 class LocalUsersSharedInterests(object):
     def __init__(self):
@@ -181,7 +189,7 @@ class LocalUsersSharedInterests(object):
         :return: json API
         """
         user_details = get_user_by_email(email).local_users_with_shared_interests_for_json()
-        json = UserSharedInterestsResponder.respond(user_details, linked={'users': user_details['users']})
+        json = UserResponder.respond(user_details, linked={'users': user_details['users']})
         return json
 
 class UserInterests(object):
@@ -226,7 +234,7 @@ class UserInterests(object):
         user = get_user_by_id(user_id).user_interests_for_json()
         print user
         #TODO try doing this by building the interests separately -- probably dont need to do this
-        response = UserInterestResponder.respond(user, linked={'interests': user['interests']})
+        response = UserResponder.respond(user, linked={'interests': user['interests']})
         # .respond(user_interests)
         return response
 
@@ -292,7 +300,7 @@ class UserGoals(object):
     def get_user_goals_json(self, email):
         user_goals = get_user_by_email(email).user_goals_for_json()
 
-        json = UserGoalsResponder.respond(user_goals,
+        json = GoalResponder.respond(user_goals,
                                           linked={'goals': user_goals['goals']})
         return json
 
@@ -345,7 +353,7 @@ class UserGroups(object):
 
     def get_user_groups_json(self, user_id):
         user_groups = get_user_by_id(user_id).user_groups_for_json()
-        json = UserGroupsResponder.respond(user_groups, linked={'groups': user_groups['groups']})
+        json = UserResponder.respond(user_groups, linked={'groups': user_groups['groups']})
         return json
 
     def get_group_json(self, group_id):
@@ -366,17 +374,16 @@ class UserLocations(object):
     def __init__(self):
         pass
 
-    def on_get(self, request, response, email, location_id=None):
-        if not location_id is None:
-            response.data = self.get_location_json(email, location_id)
-        else:
-            response.data = self.get_user_locations_json(email)
+    def on_get(self, request, response, user_id, location_id):
+        auth = user_auth(request.auth)
+        response.data = self.get_user_locations_json(user_id=user_id, auth_id=auth.auth_key)
+        #TODO get location responder (all links not just a list of interests)
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
-    def get_user_locations_json(self, email):
-        user_locations = get_user_by_email(email).user_locations_for_json()
-        json = UserLocationsResponder.respond(user_locations)
+    def get_user_locations_json(self, user_id, auth_id):
+        user_locations = get_user_by_id(user_id).user_locations_for_json()
+        json = LocationResponder.respond(user_locations)
         return json
 
     def get_location_json(self, email, location_id):

@@ -13,7 +13,6 @@ class AgoraInterest(object):
         self.id = None
         self.description = None
         self.graph_db = Graph(settings.DATABASE_URL)
-        #neo4j.GraphDatabaseService("http://localhost:7474/db/data/")
 
     @property
     def interest_properties(self):
@@ -48,9 +47,8 @@ class AgoraInterest(object):
         create an interest node based on the class attributes
         :return: py2neo Node
         """
-        #TODO -- create as indexed node?
+        #TODO error handling
         self.id = str(uuid.uuid4())
-
         new_interest_node = Node.cast(AgoraLabel.INTEREST, self.interest_properties)
         try:
             self.graph_db.create(new_interest_node)
@@ -68,6 +66,31 @@ class AgoraInterest(object):
         #     return created_interest
         # else:
         #     return interest_node
+
+    def matched_interests(self, match_string, limit):
+        params = {
+            'match': '(?i)%s.*' % match_string,
+            'limit': limit
+        }
+        cypher_str = "MATCH (interest:INTEREST ) " \
+            "WHERE interest.name =~ {match} " \
+            "RETURN interest.name as name, interest.id as id " \
+            "LIMIT {limit}"
+        match_results = self.graph_db.cypher.execute(statement=cypher_str, parameters=params)
+        root = {}
+        root['count'] = 0
+        interest_found = {}
+        interests_list = []
+        for item in match_results:
+            interest_found['id'] = item.id
+            interest_found['name'] = item.name
+            # self.id = item['id']
+            # self.get_user()
+            # users_list.append(dict(self.user_properties))
+            interests_list.append(dict(interest_found))
+            root['count'] += 1
+        root['interests'] = interests_list
+        return root
 
     def get_interest_by_name(self):
         """
@@ -112,3 +135,4 @@ class AgoraInterest(object):
     #         self.description = interest_node["description"]
     #
     #     return interest_node
+
