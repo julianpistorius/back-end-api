@@ -7,6 +7,7 @@ import settings
 class UserSchema(Schema):
     id = fields.String()
     name = fields.String()
+    call_sign = fields.String()
     mission_statement = fields.String()
     about = fields.String()
     last_active_date = fields.Date()
@@ -46,7 +47,11 @@ class GroupSchema(Schema):
     about = fields.String()
     is_open = fields.Boolean()
     is_invite_only = fields.Boolean()
+    creator = fields.Boolean()
     website = fields.String()
+    meeting_location = fields.String()
+    next_meeting_date = fields.Date()
+    next_meeting_time = fields.String()
 
 
 class OrganizationSchema(Schema):

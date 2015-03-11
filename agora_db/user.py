@@ -20,6 +20,7 @@ from agora_services import smtp
 class AgoraUser(object):
     def __init__(self, graph_db=None):
         self.name = ''
+        self.call_sign = ''
         self.first_name = ''
         self.last_name = ''
         self.id = ''
@@ -60,7 +61,6 @@ class AgoraUser(object):
             user_properties = dict(user_node.properties)
             for key, value in user_properties.iteritems():
                 setattr(self, key, value)
-
 
     def create_user(self, user_properties=None):
         """
