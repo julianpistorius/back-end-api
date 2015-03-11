@@ -47,11 +47,7 @@ class GroupSchema(Schema):
     about = fields.String()
     is_open = fields.Boolean()
     is_invite_only = fields.Boolean()
-    creator = fields.Boolean()
     website = fields.String()
-    meeting_location = fields.String()
-    next_meeting_date = fields.Date()
-    next_meeting_time = fields.String()
 
 
 class OrganizationSchema(Schema):
