@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "linked": {
+      "id": "linked",
+      "type": "object",
+      "properties": {
+        "users": {
+          "id": "users",
+          "type": "array",
+          "items": {
+            "id": "0",
+            "type": "object",
+            "properties": {
+              "allow_edit": {
+                "id": "allow_edit",
+                "type": "null"
+              },
+              "is_visible": {
+                "id": "is_visible",
+                "type": "null"
+              },
+              "about": {
+                "id": "about",
+                "type": "string"
+              },
+              "last_active_date": {
+                "id": "last_active_date",
+                "type": "null"
+              },
+              "name": {
+                "id": "name",
+                "type": "string"
+              },
+              "is_tutor": {
+                "id": "is_tutor",
+                "type": "null"
+              },
+              "mission_statement": {
+                "id": "mission_statement",
+                "type": "string"
+              },
+              "is_owner": {
+                "id": "is_owner",
+                "type": "null"
+              },
+              "is_mentor": {
+                "id": "is_mentor",
+                "type": "null"
+              },
+              "join_date": {
+                "id": "join_date",
+                "type": "null"
+              },
+              "is_available": {
+                "id": "is_available",
+                "type": "null"
+              },
+              "is_admin": {
+                "id": "is_admin",
+                "type": "null"
+              },
+              "id": {
+                "id": "id",
+                "type": "string"
+              },
+              "allow_message": {
+                "id": "allow_message",
+                "type": "null"
+              }
+            },
+            "required": [
+              "allow_edit",
+              "is_visible",
+              "about",
+              "last_active_date",
+              "name",
+              "is_tutor",
+              "mission_statement",
+              "is_owner",
+              "is_mentor",
+              "join_date",
+              "is_available",
+              "is_admin",
+              "id",
+              "allow_message"
+            ]
+          },
+          "required": [
+            "0"
+          ]
+        }
+      },
+      "required": [
+        "users"
+      ]
+    },
+    "links": {
+      "id": "links",
+      "type": "object",
+      "properties": {
+        "results.users": {
+          "id": "results.users",
+          "type": "object",
+          "properties": {
+            "href": {
+              "id": "href",
+              "type": "string"
+            },
+            "type": {
+              "id": "type",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "results": {
+      "id": "results",
+      "type": "object",
+      "properties": {
+        "count": {
+          "id": "count",
+          "type": "integer"
+        },
+        "links": {
+          "id": "links",
+          "type": "object",
+          "properties": {
+            "users": {
+              "id": "users",
+              "type": "array",
+              "items": {
+                "id": "0",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "linked",
+    "links",
+    "results"
+  ]
+}

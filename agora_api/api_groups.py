@@ -5,7 +5,7 @@ from agora_db.user import AgoraUser
 __author__ = 'Marnee Dearman'
 from agora_db.group import AgoraGroup
 from agora_db.auth import Auth
-from api_serializers import GroupResponder
+from api_serializers import GroupResponder, SearchResponder
 import simplejson
 
 
@@ -23,8 +23,8 @@ def get_group_user(user_id):
     return user
 
 
-def user_auth(auth_header):
-    auth = Auth(auth_header=auth_header)
+def user_auth(request):
+    auth = Auth(auth_header=request.headers)
     return auth
 
 
@@ -32,9 +32,21 @@ class Group(object):
     def __init__(self):
         pass
 
-    def on_get(self, request, response, group_id):
-        #TODO get group details -- what should those be here?
-        return self.get_group_json(group_id)
+    def on_get(self, request, response, group_id=None):
+        #TODO get group details
+        auth = user_auth(request)
+        if group_id is not None:
+            pass
+        else:
+            match = request.params['match']
+            limit = int(request.params['limit'])
+            search_results = AgoraGroup().matched_groups(match_string=match,
+                                                         limit=limit)
+            response.data = SearchResponder.respond(search_results,
+                                                    linked={'groups': search_results['groups']})
+        response.content_type = 'application/json'
+        response.status = falcon.HTTP_200
+
 
     def on_post(self, request, response):
         #TODO create group

@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "linked": {
+      "id": "linked",
+      "type": "object",
+      "properties": {
+        "groups": {
+          "id": "groups",
+          "type": "array",
+          "items": {
+            "id": "0",
+            "type": "object",
+            "properties": {
+              "website": {
+                "id": "website",
+                "type": "string"
+              },
+              "about": {
+                "id": "about",
+                "type": "string"
+              },
+              "name": {
+                "id": "name",
+                "type": "string"
+              },
+              "is_open": {
+                "id": "is_open",
+                "type": "null"
+              },
+              "is_invite_only": {
+                "id": "is_invite_only",
+                "type": "null"
+              },
+              "id": {
+                "id": "id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "website",
+              "about",
+              "name",
+              "is_open",
+              "is_invite_only",
+              "id"
+            ]
+          },
+          "required": [
+            "0"
+          ]
+        }
+      },
+      "required": [
+        "groups"
+      ]
+    },
+    "links": {
+      "id": "links",
+      "type": "object",
+      "properties": {
+        "results.groups": {
+          "id": "results.groups",
+          "type": "object",
+          "properties": {
+            "href": {
+              "id": "href",
+              "type": "string"
+            },
+            "type": {
+              "id": "type",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "results": {
+      "id": "results",
+      "type": "object",
+      "properties": {
+        "count": {
+          "id": "count",
+          "type": "integer"
+        },
+        "links": {
+          "id": "links",
+          "type": "object",
+          "properties": {
+            "groups": {
+              "id": "groups",
+              "type": "array",
+              "items": {
+                "id": "0",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "linked",
+    "links",
+    "results"
+  ]
+}

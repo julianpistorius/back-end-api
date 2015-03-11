@@ -20,6 +20,8 @@ from agora_services import smtp
 class AgoraUser(object):
     def __init__(self, graph_db=None):
         self.name = ''
+        self.first_name = ''
+        self.last_name = ''
         self.id = ''
         self.mission_statement = ''
         self.about = ''
@@ -30,11 +32,12 @@ class AgoraUser(object):
         self.is_available_for_in_person = True
         # self._interests_list = None
         self.is_admin = False
-        self.password = ''
-        self.salt = ''
-        self.permanent_web_token = ''
-        self.temporary_web_token = ''
+        # self.password = ''
+        # self.salt = ''
+        # self.permanent_web_token = ''
+        # self.temporary_web_token = ''
         self.join_date = None
+        self.last_active_date = ''
         self.graph_db = Graph(settings.DATABASE_URL)
 
     @property
@@ -58,6 +61,7 @@ class AgoraUser(object):
             for key, value in user_properties.iteritems():
                 setattr(self, key, value)
 
+
     def create_user(self, user_properties=None):
         """
         create a new user based on the attributes
@@ -65,6 +69,7 @@ class AgoraUser(object):
         """
         #TODO exception handling
         self.join_date = datetime.date.today()
+        self.last_active_date = self.join_date
         self.id = str(uuid.uuid4())
         if user_properties is not None:
             self.set_user_properties(user_properties)
@@ -116,10 +121,9 @@ class AgoraUser(object):
         """ get user interests
         :return: list of interests
         """
-        #TODO add list of interests
+        #TODO do not need a list of interests -- HATEOAS -- MMD 3/8/2015
         user_goals = self.graph_db.match(start_node=self.user_node, rel_type=AgoraRelationship.HAS_GOAL,
                                          end_node=None)
-        #create a list of tuples of interests and the users's relationship to them
         goals_list = []
         goal_interests_list = []
         for rel in user_goals:
@@ -144,7 +148,7 @@ class AgoraUser(object):
         #TODO add list of related interests
         user_groups = self.graph_db.match(start_node=self.user_node, rel_type=AgoraRelationship.STUDIES_WITH,
                                           end_node=None)
-        #create a list of tuples of interests and the users's relationship to them
+        # create a list of tuples of interests and the users's relationship to them
         groups_list = []
         for rel in user_groups:
             group_properties = dict(rel.end_node.properties)
@@ -294,7 +298,7 @@ class AgoraUser(object):
         user_node = self.user_node
         user_properties = dict(self.user_properties)
         for key, value in user_properties.iteritems():
-            user_node[key] = value #user_properties[key]
+            user_node[key] = value  # user_properties[key]
         # self.user_node.properties = self.user_properties
         # print self.graph_db.uri
         # user_node.bind(self.graph_db.uri)
@@ -313,7 +317,7 @@ class AgoraUser(object):
         #TODO exception handling
         goal = AgoraGoal()
         goal.id = goal_id
-        #create relationship between user and interest node
+        # create relationship between user and interest node
         user_goal_relationship = Relationship(self.user_node,
                                               AgoraRelationship.HAS_GOAL,
                                               goal.goal_node)
@@ -326,7 +330,7 @@ class AgoraUser(object):
         user_node = self.user_node
         goal = AgoraGoal()
         goal.id = goal_id
-        #have to remove all relationships before deleteing a node
+        # have to remove all relationships before deleteing a node
         goal.delete_all_interests()
         goal_node = goal.goal_node
         user_goal_rel = self.graph_db.match_one(start_node=user_node,
@@ -344,7 +348,7 @@ class AgoraUser(object):
         #TODO exception handling
         group = AgoraGroup()
         group.id = group_id
-        #relationship properties
+        # relationship properties
         join_properties = {
             'join_date': datetime.date.today()
         }
@@ -429,6 +433,38 @@ class AgoraUser(object):
         # except:
         #     pass
 
+    # @staticmethod
+    def matched_users(self, match_string, limit):
+        """
+
+        :param match_string:
+        :param limit:
+        :return: dictionary of search results
+        """
+        params = {
+            'match': '(?i)%s.*' % match_string,
+            'limit': limit
+        }
+        cypher_str = "MATCH (user:USER ) " \
+            "WHERE user.name =~ {match} " \
+            "RETURN user.name as name, user.id as id " \
+            "LIMIT {limit}"
+        match_results = self.graph_db.cypher.execute(statement=cypher_str, parameters=params)
+        root = {}
+        root['count'] = 0
+        user_found = {}
+        users_list = []
+        for item in match_results:
+            user_found['id'] = item.id
+            user_found['name'] = item.name
+            # self.id = item['id']
+            # self.get_user()
+            # users_list.append(dict(self.user_properties))
+            users_list.append(dict(user_found))
+            root['count'] += 1
+        root['users'] = users_list
+        return root
+
     def register_user(self, email):
         verification_email = smtp.AgoraSmtp()
         verification_email.recipients = [email]
@@ -453,6 +489,12 @@ class AgoraUser(object):
         else:
             raise BadSignature('bad email')
 
+    def update_last_active_date(self):
+        self.last_active_date = datetime.date.today()
+        user_node = self.user_node
+        user_node['last_active_date'] = self.last_active_date
+        user_node.push()
+
 
     def construct_verification_url(self, payload):
         return settings.SITE_URL + settings.ACTIVATION_ROUTE + "/%s" % payload
@@ -461,21 +503,22 @@ class AgoraUser(object):
         s = URLSafeSerializer(secret_key=settings.TOKEN_SECRET_KEY)
         return s.dumps(self.id)
 
-    def user_relationships_for_json(self, user_id):
+    def user_relationships_for_json(self, auth_id):
         root = self.user_profile_for_json()
+        root['__class'] = self.__class__.__name__
         root['interests'] = self.user_interests
         root['locations'] = self.user_locations
         root['goals'] = self.user_goals
         root['groups'] = self.user_groups
         root['organizations'] = self.user_orgs
-        root['allow_edit'] = (user_id == self.id)
-        root['allow_message'] = (user_id is not None)
+        root['is_owner'] = (auth_id == self.id)
+        root['allow_edit'] = (auth_id == self.id)
+        root['allow_message'] = (auth_id is not None)
         return root
 
-    def user_profile_for_json(self, user_id):
+    def user_profile_for_json(self):
         root = self.user_properties
         return root
-
 
     def user_interests_for_json(self):
         root = {}
@@ -503,12 +546,12 @@ class AgoraUser(object):
         return root
 
 
-    def user_locations_for_json(self):
+    def user_locations_for_json(self, auth_id):
         root = {}
         root['__class'] = self.__class__.__name__
         root['id'] = self.id
-        root['email'] = self.email
-        root['locations'] = self.user_locations
+        if self.id == auth_id:
+            root ['allow_edit'] = True
         return root
 
     def local_users_with_shared_interests_for_json(self):
@@ -522,7 +565,6 @@ class AgoraUser(object):
     def activated_user_for_json(self):
         root = {}
         root['__class'] = self.__class__.__name__
-        root['id'] = self.id
-        root['permanent_web_token'] = self.permanent_web_token
+        root['x_auth_key'] = self.permanent_web_token
         return root
 

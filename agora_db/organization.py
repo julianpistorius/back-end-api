@@ -14,9 +14,9 @@ class AgoraOrganization(object):
         self.id = ''
         self.mission_statement = ''
         self.about = ''
-        self.email = ''
         self.is_open = False
         self.is_invite_only = False
+        self.is_visible = True
         self.website = ''
         self.graph_db = Graph(settings.DATABASE_URL)
 
