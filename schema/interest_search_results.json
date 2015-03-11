@@ -1,0 +1,27 @@
+{
+    "linked": {
+        "interests": [
+            {
+                "id": "aab7539e-c143-4b38-9409-406e8ebe410f",
+                "name": "Kettlebells",
+                "description": "",
+                "experience": "",
+                "time": ""
+            }
+        ]
+    },
+    "links": {
+        "results.interests": {
+            "href": "http://localhost:9000/interests/{interests.id}",
+            "type": "interests"
+        }
+    },
+    "results": {
+        "count": 1,
+        "links": {
+            "interests": [
+                "aab7539e-c143-4b38-9409-406e8ebe410f"
+            ]
+        }
+    }
+}

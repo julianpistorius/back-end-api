@@ -10,4 +10,4 @@ behave==1.2.5
 behaving==1.1
 itsdangerous==0.24
 requests
-
+jsonschema==2.4.0
