@@ -1,7 +1,4 @@
 __author__ = 'Marnee Dearman'
-# import os
-# import time
-# import uuid
 import sys
 import falcon
 from itsdangerous import BadSignature, BadTimeSignature
@@ -18,7 +15,6 @@ from agora_db.achievement import AgoraAchievement
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
     GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder
 import simplejson
-from marshmallow import Schema, fields
 
 def get_user_by_email(email):
     agora_user = AgoraUser()

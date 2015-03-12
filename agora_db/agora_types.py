@@ -15,7 +15,10 @@ class AgoraRelationship(object):
     HAS_GOAL = "HAS_GOAL"
     GOAL_FOR = "GOAL_FOR"
     ACHIEVEMENT_IN = "ACHIEVEMENT_IN"
-
+    IS_ATTENDING = "IS_ATTENDING"
+    HAS_MEETING = "HAS_MEETING"
+    CREATED = "CREATED"
+    MODERATES = "MODERATES"
 
 class AgoraLabel(object):
     ACHIEVEMENT = "ACHIEVEMENT"
@@ -29,6 +32,7 @@ class AgoraLabel(object):
     ASSOCIATION = "ASSOCIATION"
     ADMIN = "ADMIN"
     ORGANIZATION = "ORGANIZATION"
+    MEETING = "MEETING"
 
 # class AgoraRelationship(Enum):
 # INTERESTED_IN = "INTERESTED_IN",

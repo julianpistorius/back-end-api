@@ -68,6 +68,15 @@ class LocationSchema(Schema):
     formatted_address = fields.String()
 
 
+class MeetingSchema(Schema):
+    id = fields.String()
+    name = fields.String()
+    description = fields.String()
+    where = fields.String()
+    date = fields.Date()
+    time = fields.Time()
+
+
 class ActivatedUserSchema(Schema):
     x_auth_key = fields.String()
 
@@ -114,6 +123,11 @@ class LocationResponder(Responder):
 class OrganizationResponder(Responder):
     TYPE = 'organizations'
     SERIALIZER = OrganizationSchema
+
+
+class MeetingResponder(Responder):
+    TYPE = 'meetings'
+    SERIALIZER = MeetingSchema
 
 
 SearchResponder.LINKS = {
@@ -228,6 +242,16 @@ UserResponder.LINKS = {
     }
 }
 
+MeetingResponder.LINKS = {
+    'groups': {
+        'responder': GroupResponder,
+        'href': '%s/groups/{groups.id}' % (settings.SITE_URL)
+    },
+    'attendees': {
+        'responder': UserResponder,
+        'href': '%s/users/{users.id}'
+    }
+}
 
 # class UserInterestsResponder(Responder):
 # TYPE = 'users'
