@@ -114,6 +114,10 @@ api.add_route('/groups/{group_id}/users', group_users)
 api.add_route('/groups/{group_id}/interests', group_interests)
 # api.add_route('/groups/{group_id}/meetings', meetings)  #TODO
 
+# GROUP MEETINGS COLLECTIONS
+api.add_route('/groups/{group_id}/meetings', meetings)
+api.add_route('/groups/{group_id}/meetings/{meeting_id}', meetings)
+
 
 # ORGANIZATION COLLECTIONS
 
@@ -124,8 +128,8 @@ api.add_route('/organizations/{org_id}/users', org_users)
 
 
 # MEETING COLLECTIONS
-api.add_route('/meetings/{meeting_id}', meetings)  #get meeting details, put update to meeting
-api.add_route('/meetings/', meetings)  #post new meeting
+# api.add_route('/meetings/{meeting_id}', meetings)  #get meeting details, put update to meeting
+# api.add_route('/meetings/', meetings)  #post new meeting
 
 # get users with shared interests with shared location
 # api.add_route('/locations/{place_id}/interests/{interest_id}/users', )

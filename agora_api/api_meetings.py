@@ -4,6 +4,7 @@ import falcon
 from itsdangerous import BadSignature, BadTimeSignature
 from agora_db.auth import Auth
 from agora_db.meeting import AgoraMeeting
+from agora_db.group import AgoraGroup
 from api_serializers import MeetingResponder
 import simplejson
 
@@ -23,7 +24,7 @@ class Meeting(object):
     def __init__(self):
         pass
 
-    def on_get(self, request, response, meeting_id=None):
+    def on_get(self, request, response, group_id, meeting_id=None):
         auth = user_auth(request)
         if meeting_id is not None:
             meeting = AgoraMeeting()
@@ -33,15 +34,30 @@ class Meeting(object):
             response.data = MeetingResponder.respond(meeting_data,
                                                      linked={'groups': meeting_data['groups'],
                                                              'attendees': meeting_data['attendees']})
-            response.content_type = 'application/json'
-            response.status = falcon.HTTP_200
+        else:  # get list of meetings order by date top 5
+            pass
+        response.content_type = 'application/json'
+        response.status = falcon.HTTP_200
 
-    def on_post(self, request, response, meeting_id=None):
+    def on_post(self, request, response, group_id):
         auth = user_auth(request)
         if auth.is_authorized_user:
-            pass
-        #TODO create new meeting
+            group = AgoraGroup()
+            group.id = group_id
+            if group.allow_edit(auth_key=auth.auth_key):
+                raw_json = request.stream.read()
+                result_json = simplejson.loads(raw_json, encoding='utf-8')
+                #TODO check against json schema -- when is best to do this?
+                meeting = AgoraMeeting()
+                meeting.set_meeting_properties(result_json['meeting'])
+                meeting.create_meeting()
+            else:
+                response.status = falcon.HTTP_401
+        else:
+            response.status = falcon.HTTP_401
 
-    def on_put(self, request, response, meeting_id):
+
+
+    def on_put(self, request, response, group_id, meeting_id):
         pass
         #TODO update meeting

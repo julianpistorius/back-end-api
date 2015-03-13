@@ -9,6 +9,7 @@ from goal import AgoraGoal
 from group import AgoraGroup
 from location import AgoraLocation
 from organization import AgoraOrganization
+from group import AgoraGroup
 from agora_types import AgoraRelationship, AgoraLabel
 
 #TODO exception handling
@@ -87,12 +88,13 @@ class AgoraMeeting(object):
             for key, value in meeting_properties.iteritems():
                 setattr(self, key, value)
 
-    def create_meeting(self, meeting_properties=None):
+    def create_meeting(self, group_id, meeting_properties=None):
         """
 
         :param meeting_properties:
         :return:
         """
+        #TODO exception handling
         self.created_date = datetime.date.today()
         self.id = str(uuid.uuid4())
         if meeting_properties is not None:
@@ -100,6 +102,13 @@ class AgoraMeeting(object):
         new_meeting_node = Node.cast(AgoraLabel.MEETING, self.meeting_properties)
         try:
             self.graph_db.create(new_meeting_node)
+            group = AgoraGroup()
+            group.id = group_id
+            group_node = group.group_node
+            meeting_group_relationship = Relationship(group_node,
+                                                     AgoraRelationship.HAS_MEETING,
+                                                     self.meeting_node)
+            self.graph_db.create_unique(meeting_group_relationship)
         except:
             pass
         return new_meeting_node

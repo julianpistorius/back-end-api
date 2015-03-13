@@ -181,6 +181,22 @@ class AgoraGroup(object):
             group_node[key] = self.group_properties[key]
         group_node.push()
 
+    def allow_edit(self, auth_key):
+        """
+
+        :return:
+        """
+        allow = False
+        moderators = self.group_moderators
+        creator = self.group_creator
+        if auth_key == creator['id']:
+            allow = True
+        else:
+            for mod in moderators:
+                if auth_key == mod['id']:
+                    allow = True
+        return allow
+
     #TODO close group
     def close_group(self):
         pass

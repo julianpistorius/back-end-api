@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "meeting": {
+      "id": "meeting",
+      "type": "object",
+      "properties": {
+        "name": {
+          "id": "name",
+          "type": "string"
+        },
+        "description": {
+          "id": "description",
+          "type": "string"
+        },
+        "where": {
+          "id": "where",
+          "type": "string"
+        },
+        "date": {
+          "id": "date",
+          "type": "string"
+        },
+        "time": {
+          "id": "time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "where",
+        "date",
+        "time"
+      ]
+    }
+  },
+  "required": [
+    "meeting"
+  ]
+}
