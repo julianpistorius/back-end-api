@@ -124,7 +124,6 @@ api.add_route('/groups/{group_id}/meetings/{meeting_id}', meetings)  #PUT
 api.add_route('/organizations/{org_id}', organization)
 api.add_route('/organizations/{org_id}/interests', org_interests)
 api.add_route('/organizations/{org_id}/users', org_users)
-# api.add_route('/organizations/{org_id}/meetings', meetings)  #TODO
 
 
 # MEETING COLLECTIONS
