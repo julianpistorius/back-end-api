@@ -115,8 +115,8 @@ api.add_route('/groups/{group_id}/interests', group_interests)
 # api.add_route('/groups/{group_id}/meetings', meetings)
 
 # GROUP MEETINGS COLLECTIONS
-api.add_route('/groups/{group_id}/meetings', meetings)  #GET and POST
-api.add_route('/groups/{group_id}/meetings/{meeting_id}', meetings)  #PUT
+api.add_route('/groups/{group_id}/meetings', meetings)  # GET and POST
+api.add_route('/groups/{group_id}/meetings/{meeting_id}', meetings)  # PUT
 
 
 # ORGANIZATION COLLECTIONS
@@ -124,6 +124,12 @@ api.add_route('/groups/{group_id}/meetings/{meeting_id}', meetings)  #PUT
 api.add_route('/organizations/{org_id}', organization)
 api.add_route('/organizations/{org_id}/interests', org_interests)
 api.add_route('/organizations/{org_id}/users', org_users)
+
+# ORG MEETINGS COLLECTIONS
+#TODO meetings should be added through orgs and groups not the meetings agora-db class
+api.add_route('/organizations/{org_id}/meetings', meetings)  # GET and POST
+api.add_route('/organizations/{org_id}/meetings/{meeting_id}', meetings)  # PUT
+
 
 
 # MEETING COLLECTIONS
