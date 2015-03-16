@@ -115,8 +115,8 @@ api.add_route('/groups/{group_id}/interests', group_interests)
 # api.add_route('/groups/{group_id}/meetings', meetings)  #TODO
 
 # GROUP MEETINGS COLLECTIONS
-api.add_route('/groups/{group_id}/meetings', meetings)
-api.add_route('/groups/{group_id}/meetings/{meeting_id}', meetings)
+api.add_route('/groups/{group_id}/meetings', meetings)  #GET and POST
+api.add_route('/groups/{group_id}/meetings/{meeting_id}', meetings)  #PUT
 
 
 # ORGANIZATION COLLECTIONS
