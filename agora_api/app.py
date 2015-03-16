@@ -112,7 +112,7 @@ api.add_route('/groups/{group_id}/goals', group_goals)
 api.add_route('/groups/{group_id}/achievements', group_achievements)
 api.add_route('/groups/{group_id}/users', group_users)
 api.add_route('/groups/{group_id}/interests', group_interests)
-# api.add_route('/groups/{group_id}/meetings', meetings)  #TODO
+# api.add_route('/groups/{group_id}/meetings', meetings)
 
 # GROUP MEETINGS COLLECTIONS
 api.add_route('/groups/{group_id}/meetings', meetings)  #GET and POST

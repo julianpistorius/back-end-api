@@ -67,6 +67,7 @@ class Meeting(object):
             meeting.id = meeting_id
             group = AgoraGroup()
             group.id = group_id
+            #TODO check against json schema -- when is best to do this?
             if group.allow_edit(auth_key=auth.auth_key):
                 raw_json = request.stream.read()
                 result_json = simplejson.loads(raw_json, encoding='utf-8')
