@@ -8,6 +8,7 @@ from agora_db.group import AgoraGroup
 from api_serializers import MeetingResponder
 import simplejson
 
+
 def get_meeting_by_id(meeting_id):
     meeting = AgoraMeeting()
     meeting.id = meeting_id
