@@ -58,8 +58,6 @@ class Meeting(object):
         response.content_type = 'application/json'
         response.status = falcon.HTTP_201
 
-
-
     def on_put(self, request, response, group_id, meeting_id):
         auth = user_auth(request)
         if auth.is_authorized_user:
