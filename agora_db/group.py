@@ -18,10 +18,10 @@ class AgoraGroup(object):
         self.mission_statement = ''
         self.is_open = None
         self.is_invite_only = False
-        self.meeting_location = ''
-        self.next_meeting_date = None
-        self.next_meeting_time = None
-        self.creator = '' #by id
+        # self.meeting_location = ''
+        # self.next_meeting_date = None
+        # self.next_meeting_time = None
+        # self.creator = '' #by id
         # self.moderators = [] #by id  #TODO change this to a relationship in the graph
         self.website = ''
         self.graph_db = Graph(settings.DATABASE_URL)
@@ -107,10 +107,39 @@ class AgoraGroup(object):
             member_dict = {}
             # member = AgoraUser()
             # member.id = rel.end_node['id']
-            member_dict = dict(rel.end_node.properties)
-            members_list.append(member_dict)
+            # member_dict = dict(rel.end_node.properties)
+            members_list.append(dict(rel.end_node.properties))
             # members_list.append((member_node.end_node["name"], member_node.end_node["id"]))
         return members_list
+
+    @property
+    def group_creator(self):
+        """
+
+        :return: dictionary object with creator user information
+        """
+        group_creator = self.graph_db.match(start_node=self.group_node,
+                                                 rel_type=AgoraRelationship.CREATED,
+                                                 end_node=None)
+        creator_dict = {}
+        for rel in group_creator:
+            creator_dict = dict(rel.end_node.properties)
+        return creator_dict
+
+    @property
+    def group_moderators(self):
+        """
+
+        :return: list of user dictionary objects where the users are moderators
+        """
+        group_moderators = self.graph_db.match(start_node=self.group_node,
+                                               rel_type=AgoraRelationship.MODERATES,
+                                               end_node=None)
+        moderators_list = []
+        for rel in group_moderators:
+            moderators_list.append(dict(rel.end_node.properties))
+        return moderators_list
+
 
     def create_group(self):
         """
@@ -151,6 +180,22 @@ class AgoraGroup(object):
         for key in self.group_properties.keys():
             group_node[key] = self.group_properties[key]
         group_node.push()
+
+    def allow_edit(self, auth_key):
+        """
+
+        :return:
+        """
+        allow = False
+        moderators = self.group_moderators
+        creator = self.group_creator
+        if auth_key == creator['id']:
+            allow = True
+        else:
+            for mod in moderators:
+                if auth_key == mod['id']:
+                    allow = True
+        return allow
 
     #TODO close group
     def close_group(self):

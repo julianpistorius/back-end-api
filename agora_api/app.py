@@ -2,7 +2,7 @@ __author__ = 'Marnee Dearman'
 import falcon
 # import os
 # import images
-import api_users, api_interests, api_locations, api_groups, api_organizations
+import api_users, api_interests, api_locations, api_groups, api_organizations, api_meetings
 #import interest
 
 def crossdomain(req, resp):
@@ -52,6 +52,8 @@ group_achievements = api_groups.GroupAchievements()
 organization = api_organizations.Organization()
 org_users = api_organizations.OrganizationUsers()
 org_interests = api_organizations.OrganizationInterests()
+
+meetings = api_meetings.Meeting()
 
 activate = api_users.ActivateUser()
 # register = users.RegisterUser()
@@ -110,12 +112,24 @@ api.add_route('/groups/{group_id}/goals', group_goals)
 api.add_route('/groups/{group_id}/achievements', group_achievements)
 api.add_route('/groups/{group_id}/users', group_users)
 api.add_route('/groups/{group_id}/interests', group_interests)
+# api.add_route('/groups/{group_id}/meetings', meetings)  #TODO
+
+# GROUP MEETINGS COLLECTIONS
+api.add_route('/groups/{group_id}/meetings', meetings)
+api.add_route('/groups/{group_id}/meetings/{meeting_id}', meetings)
+
 
 # ORGANIZATION COLLECTIONS
 
 api.add_route('/organizations/{org_id}', organization)
 api.add_route('/organizations/{org_id}/interests', org_interests)
 api.add_route('/organizations/{org_id}/users', org_users)
+# api.add_route('/organizations/{org_id}/meetings', meetings)  #TODO
+
+
+# MEETING COLLECTIONS
+# api.add_route('/meetings/{meeting_id}', meetings)  #get meeting details, put update to meeting
+# api.add_route('/meetings/', meetings)  #post new meeting
 
 # get users with shared interests with shared location
 # api.add_route('/locations/{place_id}/interests/{interest_id}/users', )

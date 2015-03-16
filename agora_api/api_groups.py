@@ -50,29 +50,18 @@ class Group(object):
 
     def on_post(self, request, response):
         #TODO create group
+        #TODO check against json schema -- when is best to do this?
         pass
 
     def on_put(self, requests, response):
         #TODO update group
+        #TODO check against json schema -- when is best to do this?
         pass
 
     def get_group_json(self, group_id):
         group_details = get_group(group_id).group_for_json()
         json = GroupResponder.respond(group_details)
         return json
-
-
-class GroupUsers(object):
-    def __init__(self):
-        pass
-
-    def on_get(self, request, response, group_id):
-        #TODO get groups members
-        pass
-
-    def get_group_members_json(self, group_id):
-        pass
-
 
 class GroupInterests(object):
     def __init__(self):
