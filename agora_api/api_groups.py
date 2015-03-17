@@ -90,6 +90,12 @@ class Group(object):
     def update_group(self, group_json, auth_id):
         pass
 
+
+class GroupMembers(object):
+    def __init__(self):
+        pass
+
+
 class GroupInterests(object):
     def __init__(self):
         pass

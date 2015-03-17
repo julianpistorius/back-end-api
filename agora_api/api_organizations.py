@@ -1,17 +1,20 @@
 __author__ = 'Marnee Dearman'
 import falcon
 from agora_db.organization import AgoraOrganization
+from agora_db.auth import Auth
 from agora_db.user import AgoraUser
 from agora_db.interest import AgoraInterest
 import simplejson
 from api_serializers import OrganizationResponder
+from validators import validate_organization_schema
+
+def user_auth(request):
+    auth = Auth(auth_header=request.headers)
+    return auth
+
 
 class Organization(object):
     def __init__(self):
-        pass
-
-    #TODO check tokens on api calls
-    def check_token(self):
         pass
 
     def on_get(self, request, response, org_id=None):
@@ -22,11 +25,12 @@ class Organization(object):
         :param org_id:
         :return:
         """
+        #TODO get list of orgs
         response.data = self.get_org(org_id)
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
-    def on_post(self, request, response, org_id=None):
+    def on_post(self, request, response):
         """
         create organization
         :param request:
@@ -34,12 +38,16 @@ class Organization(object):
         :param org_id:
         :return:
         """
+        #TODO check authorizes user
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.create_org(result_json['organization'])
-        response.status = falcon.HTTP_202
+        if validate_organization_schema.validate_organization(result_json):
+            self.create_org(result_json['organization'])
+            response.status = falcon.HTTP_201
+        else:
+            response.status = falcon.HTTP_400
 
-    def on_put(self, request, response, org_id=None):
+    def on_put(self, request, response, org_id):
         """
         update organization
         :param request:
@@ -49,8 +57,12 @@ class Organization(object):
         """
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.update_org(result_json['organization'])
-        response.status = falcon.HTTP_202
+        #TODO check authorized user
+        if validate_organization_schema.validate_organization(result_json):
+            self.update_org(result_json['organization'])
+            response.status = falcon.HTTP_201
+        else:
+            response.status = falcon.HTTP_400
 
     def get_org(self, org_id):
         org = AgoraOrganization()
@@ -63,13 +75,15 @@ class Organization(object):
 
     def create_org(self, org_json):
         org = AgoraOrganization()
-        org.set_org_attributes(org_json)
-
+        org.set_organization_attributes(org_json)
+        #TODO create org
+        #TODO link org to creator
 
     def update_org(self, org_json):
         org = AgoraOrganization()
-        org.set_org_attributes(org_json)
+        org.set_organization_attributes(org_json)
         #TODO update org
+        #CHECK can edit org (see group)
 
 
 class OrganizationUsers(object):

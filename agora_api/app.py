@@ -34,10 +34,11 @@ user_locations = api_users.UserLocations()
 
 user_interests = api_users.UserInterests()
 user_goals = api_users.UserGoals()
-user_interest_goals = api_users.UserInterestGoals()
+# user_interest_goals = api_users.UserInterestGoals()
 local_shared_users = api_users.LocalUsersSharedInterests()
-user_groups = api_users.UserGroups()
-user_organizations = api_users.UserOrganizations()
+# user_groups = api_users.UserGroups()
+# user_organizations = api_users.UserOrganizations()
+group_members = api_groups.GroupMembers()
 interests = api_interests.Interest()
 location = api_locations.Location()
 location_interests = api_locations.LocationInterests()
@@ -80,17 +81,18 @@ api.add_route('/users/{user_id}/interests', user_interests)
 # GET a list of interests for the user
 api.add_route('/users/{user_id}/interests/{interest_id}', user_interests)
 # GET a view of the
-api.add_route('/users/{user_id}/interests/{interest_id}/goals', user_interest_goals)
-api.add_route('/users/{user_id}/interests/{interest_id}/goals/{goal_id}', user_interest_goals)
-api.add_route('/users/{user_id}/interests/{interest_id}/goals', user_interest_goals)
+#TODO may not need this for now
+# api.add_route('/users/{user_id}/interests/{interest_id}/goals', user_interest_goals)
+# api.add_route('/users/{user_id}/interests/{interest_id}/goals/{goal_id}', user_interest_goals)
+# api.add_route('/users/{user_id}/interests/{interest_id}/goals', user_interest_goals)
 
 # USER GOALS
 api.add_route('/users/{user_id}/goals/{goal_id}', user_goals)
 api.add_route('/users/{user_id}/goals', user_goals)
 
 # USER GROUPS
-api.add_route('/users/{user_id}/groups/{group_id}', user_groups)
-api.add_route('/users/{user_id}/groups', user_groups)
+# api.add_route('/users/{user_id}/groups/{group_id}', user_groups)
+# api.add_route('/users/{user_id}/groups', user_groups)
 
 #INTERESTS
 api.add_route('/interests', interests)
@@ -110,7 +112,7 @@ api.add_route('/groups/', groups)
 api.add_route('/groups/{group_id}', groups)
 api.add_route('/groups/{group_id}/goals', group_goals)
 api.add_route('/groups/{group_id}/achievements', group_achievements)
-api.add_route('/groups/{group_id}/users', group_users)
+api.add_route('/groups/{group_id}/members', group_members)
 api.add_route('/groups/{group_id}/interests', group_interests)
 # api.add_route('/groups/{group_id}/meetings', meetings)
 
