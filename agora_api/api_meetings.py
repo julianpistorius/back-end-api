@@ -6,6 +6,7 @@ from agora_db.auth import Auth
 from agora_db.meeting import AgoraMeeting
 from agora_db.group import AgoraGroup
 from api_serializers import MeetingResponder
+from validators import validate_meeting_schema
 import simplejson
 
 
@@ -48,16 +49,19 @@ class Meeting(object):
             if group.allow_edit(auth_key=auth.auth_key):
                 raw_json = request.stream.read()
                 result_json = simplejson.loads(raw_json, encoding='utf-8')
-                #TODO check against json schema -- when is best to do this?
-                meeting = AgoraMeeting()
-                meeting.set_meeting_properties(result_json['meeting'])
-                meeting.create_meeting(group_id=group_id)
+                if validate_meeting_schema.validate_meeting(result_json):
+                    meeting = AgoraMeeting()
+                    meeting.set_meeting_properties(result_json['meeting'])
+                    meeting.create_meeting(group_id=group_id)
+                    response.content_type = 'application/json'
+                    response.status = falcon.HTTP_201
+                else:
+                    response.status = falcon.HTTP_400
             else:
                 response.status = falcon.HTTP_401
         else:
             response.status = falcon.HTTP_401
-        response.content_type = 'application/json'
-        response.status = falcon.HTTP_201
+
 
     def on_put(self, request, response, group_id, meeting_id):
         auth = user_auth(request)
@@ -70,12 +74,16 @@ class Meeting(object):
             if group.allow_edit(auth_key=auth.auth_key):
                 raw_json = request.stream.read()
                 result_json = simplejson.loads(raw_json, encoding='utf-8')
-                meeting.set_meeting_properties(result_json['meeting'])
-                meeting.update_meeting()
+                if validate_meeting_schema.validate_meeting(result_json):
+                    meeting.set_meeting_properties(result_json['meeting'])
+                    meeting.update_meeting()
+                    response.content_type = 'application/json'
+                    response.status = falcon.HTTP_201
+                else:
+                    response.status = falcon.HTTP_400
             else:
                 response.status = falcon.HTTP_401
         else:
             response.status = falcon.HTTP_401
-        response.content_type = 'application/json'
-        response.status = falcon.HTTP_201
+
 
