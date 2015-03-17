@@ -19,7 +19,7 @@ class AgoraGoal(object):
         self.created_date = None
         self.is_public = True
         self.achieved = False
-        self.interests = [] #list of interest dictionaries id:value
+        # self.interests = [] #list of interest dictionaries id:value
         self.graph_db = Graph(settings.DATABASE_URL)
 
     @property

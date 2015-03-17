@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "conversation": {
+      "id": "conversation",
+      "type": "object",
+      "properties": {
+        "subject": {
+          "id": "subject",
+          "type": "string"
+        },
+        "message": {
+          "id": "message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject",
+        "message"
+      ]
+    }
+  },
+  "required": [
+    "conversation"
+  ]
+}
+
+//{
+//  "conversation": {
+//    "subject": "subject",
+//    "message": "message"
+//  }
+//}
