@@ -1,3 +1,5 @@
+from agora_api import api_conversations
+
 __author__ = 'Marnee Dearman'
 import falcon
 # import os
@@ -41,10 +43,10 @@ local_shared_users = api_users.LocalUsersSharedInterests()
 group_members = api_groups.GroupMembers()
 interests = api_interests.Interest()
 location = api_locations.Location()
-location_interests = api_locations.LocationInterests()
-location_users = api_locations.LocationUsers()
-location_groups = api_locations.LocationGroups()
-location_organizations = api_locations.LocationOrganizations()
+# location_interests = api_locations.LocationInterests()
+# location_users = api_locations.LocationUsers()
+# location_groups = api_locations.LocationGroups()
+# location_organizations = api_locations.LocationOrganizations()
 groups = api_groups.Group()
 # group_users = api_groups.GroupUsers()
 group_interests = api_groups.GroupInterests()
@@ -53,6 +55,7 @@ group_achievements = api_groups.GroupAchievements()
 organization = api_organizations.Organization()
 org_users = api_organizations.OrganizationUsers()
 org_interests = api_organizations.OrganizationInterests()
+conversation = api_conversations.Conversation()
 
 meetings = api_meetings.Meeting()
 
@@ -89,6 +92,11 @@ api.add_route('/users/{user_id}/interests/{interest_id}', user_interests)
 # USER GOALS
 api.add_route('/users/{user_id}/goals/{goal_id}', user_goals)
 api.add_route('/users/{user_id}/goals', user_goals)
+
+#USER CONVERSATIONS COLLECTIONS
+api.add_route('/users/{user_id}/conversations', conversation)
+api.add_route('/users/{user_id}/conversations/{conversation_id}', conversation)
+#TODO api.add_route('/users/{user_id}/conversations/{conversation_id}/responses')
 
 # USER GROUPS
 # api.add_route('/users/{user_id}/groups/{group_id}', user_groups)
