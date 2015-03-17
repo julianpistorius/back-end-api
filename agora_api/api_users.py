@@ -85,7 +85,8 @@ class User(object):
             if validate_user_schema.validate_user(result_json):
                 self.update_user(user_result_json=result_json['user'], user_id=user_id)
                 response.status = falcon.HTTP_200
-                response.body = simplejson.dumps(result_json, encoding='utf-8')
+                # response.content_type = 'application/json'
+                # response.body = simplejson.dumps(result_json, encoding='utf-8')
             else:
                 response.status = falcon.HTTP_400
         else:
