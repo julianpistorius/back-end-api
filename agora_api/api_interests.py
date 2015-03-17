@@ -7,6 +7,7 @@ import falcon
 from agora_db.auth import Auth
 from agora_db.user import AgoraUser
 from agora_db.interest import AgoraInterest
+from validators import validate_interest_schema
 import simplejson
 from api_serializers import InterestResponder, SearchResponder
 
@@ -50,8 +51,11 @@ class Interest(object):
         """
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.create_interest(result_json['interest'])
-        response.status = falcon.HTTP_202
+        if validate_interest_schema.validate_interest(result_json):
+            self.create_interest(result_json['interest'])
+            response.status = falcon.HTTP_201
+        else:
+            response.status = falcon.HTTP_400
 
     def create_interest(self, interest_json):
         interest = AgoraInterest()

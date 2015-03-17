@@ -32,7 +32,7 @@ class AgoraUser(object):
         self.is_visible = True
         self.is_available_for_in_person = True
         # self._interests_list = None
-        self.is_admin = False
+        # self.is_admin = False
         # self.password = ''
         # self.salt = ''
         # self.permanent_web_token = ''

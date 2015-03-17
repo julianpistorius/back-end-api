@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "location": {
+      "id": "location",
+      "type": "object",
+      "properties": {
+        "formatted_address": {
+          "id": "formatted_address",
+          "type": "string"
+        },
+        "name": {
+          "id": "name",
+          "type": "string"
+        },
+        "id": {
+          "id": "id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "formatted_address",
+        "name",
+        "id"
+      ]
+    }
+  },
+  "required": [
+    "location"
+  ]
+}
