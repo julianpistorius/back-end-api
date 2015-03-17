@@ -11,7 +11,7 @@ from agora_db.location import AgoraLocation
 from agora_db.group import AgoraGroup
 from agora_db.organization import AgoraOrganization
 from agora_db.achievement import AgoraAchievement
-from schema import validate_user_schema
+from validators import validate_user_schema
 
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
     GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder
@@ -56,9 +56,9 @@ class User(object):
 
     def on_get(self, request, response, user_id=None):
         auth = user_auth(request)
-        if user_id is not None:
+        if user_id is not None:  # get the specified user
             response.data = self.get_user_json(user_id=user_id, auth_id=auth.auth_key)
-        else:
+        else:  # find by name return a list
             match = request.params['match']
             limit = int(request.params['limit'])
             search_results = AgoraUser().matched_users(match_string=match, limit=limit)
@@ -67,27 +67,15 @@ class User(object):
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
-    def on_post(self, request, response, user_id=None):
+    def on_post(self, request, response):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        if user_id is None:  # REGISTER USER -- does not create a user
-            if validate_user_schema.validate_activate_user(result_json):
-                self.register_user(result_json['user'])
-                response.status = falcon.HTTP_200
-            else:
-                response.status = falcon.HTTP_400
-        else:  # UPDATE USER DATA
-            auth = user_auth(request.auth)
-            if auth.is_authorized_user and user_id == auth.auth_key:
-                if validate_user_schema.validate_user(result_json):
-                    self.update_user(user_result_json=result_json['user'],
-                                     user_id=user_id)
-                    response.status = falcon.HTTP_201
-                    response.body = self.get_user_json(user_id=user_id, auth_id=auth.auth_key)
-                else:
-                    response.status = falcon.HTTP_400
-            else:
-                response.status = falcon.HTTP_401  # unauthorized
+        # REGISTER USER -- does not create a user
+        if validate_user_schema.validate_activate_user(result_json):
+            self.register_user(result_json['user'])
+            response.status = falcon.HTTP_200
+        else:
+            response.status = falcon.HTTP_400
 
     def on_put(self, request, response, user_id):
         auth = user_auth(request.auth)
@@ -96,7 +84,7 @@ class User(object):
             result_json = simplejson.loads(raw_json, encoding='utf-8')
             if validate_user_schema.validate_user(result_json):
                 self.update_user(user_result_json=result_json['user'], user_id=user_id)
-                response.status = falcon.HTTP_201
+                response.status = falcon.HTTP_200
                 response.body = simplejson.dumps(result_json, encoding='utf-8')
             else:
                 response.status = falcon.HTTP_400
@@ -120,17 +108,9 @@ class User(object):
         email = user_result_json['email']
         register.register_user(email=email)
 
-    #TODO not used because we create the user through activation process
-    # def create_user(self, user_result_json, auth_id):
-    #     new_user = AgoraUser()
-    #     new_user.set_user_properties(user_result_json)
-    #     new_user.create_user()
-
     def update_user(self, user_result_json, user_id):
         user = AgoraUser()
-        user.user_id = user_id
-        #TODO use user.id instead of email
-        user.get_user()
+        user.id = user_id
         user.set_user_properties(user_result_json)
         user.update_user()
 

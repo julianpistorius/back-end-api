@@ -96,17 +96,18 @@ user_schema = {
 
 #TODO return object with why json validation failed
 
-def validate_activate_user(self, activate_user):
+
+def validate_activate_user(activate_user_json):
     try:
-        validate(activate_user, activate_user_schema)
+        validate(activate_user_json, activate_user_schema)
         return True
     except:
         return False
 
 
-def validate_user(self, user):
+def validate_user(user_json):
     try:
-        validate(user, user_schema)
+        validate(user_json, user_schema)
         return True
     except:
         return False

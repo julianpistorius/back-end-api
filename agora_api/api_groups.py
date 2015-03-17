@@ -7,6 +7,7 @@ from agora_db.group import AgoraGroup
 from agora_db.auth import Auth
 from api_serializers import GroupResponder, SearchResponder
 import simplejson
+from validators import validate_group_schema
 
 
 def get_group(group_id):
@@ -36,7 +37,7 @@ class Group(object):
         #TODO get group details
         auth = user_auth(request)
         if group_id is not None:
-            pass
+            response.data = self.get_group_json(group_id=group_id, auth_id=auth.auth_key)
         else:
             match = request.params['match']
             limit = int(request.params['limit'])
@@ -47,21 +48,47 @@ class Group(object):
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
-
     def on_post(self, request, response):
-        #TODO create group
-        #TODO check against json schema -- when is best to do this?
-        pass
+        auth = user_auth(request)
+        if auth.is_authorized_user:
+            raw_json = request.stream.read()
+            result_json = simplejson.loads(raw_json, encoding='utf-8')
+            if validate_group_schema.validate_group(result_json):
+                self.create_group(result_json, auth_id=auth.auth_key)
+                response.status = falcon.HTTP_201  # created
+            else:
+                response.status = falcon.HTTP_400
+        else:
+            response.status = falcon.HTTP_401
 
-    def on_put(self, requests, response):
+    def on_put(self, request, response):
+        auth = user_auth(request)
         #TODO update group
-        #TODO check against json schema -- when is best to do this?
-        pass
+        #TODO check if the user is a moderator or creator to update this group profile
+        if auth.is_authorized_user:
+            raw_json = request.stream.read()
+            result_json = simplejson.loads(raw_json, encoding='utf-8')
+            if validate_group_schema.validate_group(result_json):
+                self.update_group(group_json=result_json, auth_id=auth.auth_key)
+            else:
+                response.status = falcon.HTTP_400
+        else:
+            response.status = falcon.HTTP_401
 
-    def get_group_json(self, group_id):
+    def get_group_json(self, group_id, auth_id):
         group_details = get_group(group_id).group_for_json()
         json = GroupResponder.respond(group_details)
         return json
+
+    def create_group(self, group_json, auth_id):
+        group = AgoraGroup()
+        group.set_group_properties(group_json['group'])
+        group.create_group()
+        # TODO link to creator
+        # TODO group location should default to the user's location(s)
+
+    def update_group(self, group_json, auth_id):
+        pass
 
 class GroupInterests(object):
     def __init__(self):
@@ -70,7 +97,7 @@ class GroupInterests(object):
     def on_post(self, request, response, group_id):
         auth = user_auth(request.headers)
         group = get_group(group_id=group_id)
-        user = get_group_user(group.creator)
+        user = get_group_user(group.group_creator)
         if auth.is_authorized_user and auth.auth_key == user.id:
             raw_json = request.stream.read()
             result_json = simplejson.loads(raw_json, encoding='utf-8')

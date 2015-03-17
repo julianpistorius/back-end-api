@@ -72,20 +72,8 @@
               }
             },
             "required": [
-              "allow_edit",
-              "is_visible",
-              "about",
-              "last_active_date",
               "name",
-              "is_tutor",
-              "mission_statement",
-              "is_owner",
-              "is_mentor",
-              "join_date",
-              "is_available",
-              "is_admin",
-              "id",
-              "allow_message"
+              "id"
             ]
           },
           "required": [
