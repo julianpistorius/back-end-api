@@ -45,7 +45,7 @@ location_users = api_locations.LocationUsers()
 location_groups = api_locations.LocationGroups()
 location_organizations = api_locations.LocationOrganizations()
 groups = api_groups.Group()
-group_users = api_groups.GroupUsers()
+# group_users = api_groups.GroupUsers()
 group_interests = api_groups.GroupInterests()
 group_goals = api_groups.GroupGoals()
 group_achievements = api_groups.GroupAchievements()
@@ -126,7 +126,6 @@ api.add_route('/organizations/{org_id}/interests', org_interests)
 api.add_route('/organizations/{org_id}/users', org_users)
 
 # ORG MEETINGS COLLECTIONS
-#TODO meetings should be added through orgs and groups not the meetings agora-db class
 api.add_route('/organizations/{org_id}/meetings', meetings)  # GET and POST
 api.add_route('/organizations/{org_id}/meetings/{meeting_id}', meetings)  # PUT
 

@@ -11,6 +11,7 @@ from agora_db.location import AgoraLocation
 from agora_db.group import AgoraGroup
 from agora_db.organization import AgoraOrganization
 from agora_db.achievement import AgoraAchievement
+from schema import validate_user_schema
 
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
     GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder
@@ -70,15 +71,21 @@ class User(object):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
         if user_id is None:  # REGISTER USER -- does not create a user
-            self.register_user(result_json['user'])
-            response.status = falcon.HTTP_200
+            if validate_user_schema.validate_activate_user(result_json):
+                self.register_user(result_json['user'])
+                response.status = falcon.HTTP_200
+            else:
+                response.status = falcon.HTTP_400
         else:  # UPDATE USER DATA
             auth = user_auth(request.auth)
             if auth.is_authorized_user and user_id == auth.auth_key:
-                self.update_user(user_result_json=result_json['user'],
-                                 user_id=user_id)
-                response.status = falcon.HTTP_201
-                response.body = self.get_user_json(user_id=user_id, auth_id=auth.auth_key)
+                if validate_user_schema.validate_user(result_json):
+                    self.update_user(user_result_json=result_json['user'],
+                                     user_id=user_id)
+                    response.status = falcon.HTTP_201
+                    response.body = self.get_user_json(user_id=user_id, auth_id=auth.auth_key)
+                else:
+                    response.status = falcon.HTTP_400
             else:
                 response.status = falcon.HTTP_401  # unauthorized
 
@@ -87,9 +94,12 @@ class User(object):
         if auth.is_authorized_user and user_id == auth.auth_key:
             raw_json = request.stream.read()
             result_json = simplejson.loads(raw_json, encoding='utf-8')
-            self.update_user(user_result_json=result_json['user'], user_id=user_id)
-            response.status = falcon.HTTP_201
-            response.body = simplejson.dumps(result_json, encoding='utf-8')
+            if validate_user_schema.validate_user(result_json):
+                self.update_user(user_result_json=result_json['user'], user_id=user_id)
+                response.status = falcon.HTTP_201
+                response.body = simplejson.dumps(result_json, encoding='utf-8')
+            else:
+                response.status = falcon.HTTP_400
         else:
             response.status = falcon.HTTP_401  # unauthorized
 
@@ -322,41 +332,41 @@ class UserGoals(object):
         #     goal.add_interest()
 
 
-class UserGroups(object):
-    def __init__(self):
-        pass
-
-    def on_get(self, request, response, user_id, group_id=None):
-        auth = user_auth(request.headers)
-        if auth.is_authorized_user and auth.auth_key == user_id:
-            if group_id is not None:
-                response.data = self.get_group_json(group_id)
-            else:
-                response.data = self.get_user_groups_json(user_id)
-            response.content_type = 'application/json'
-            response.status = falcon.HTTP_200
-
-    def on_post(self, request, response, user_id, group_id=None):
-        # user will join group
-        auth = user_auth(request.headers)
-        if auth.is_authorized_user and auth.auth_key == user_id:
-            user = get_user_by_id(user_id=user_id)
-            user.join_group(group_id=group_id)
-            response.status = falcon.HTTP_201
-            response.body = self.get_group_json(group_id=group_id)
-        else:
-            response.status = falcon.HTTP_401
-
-    def get_user_groups_json(self, user_id):
-        user_groups = get_user_by_id(user_id).user_groups_for_json()
-        json = UserResponder.respond(user_groups, linked={'groups': user_groups['groups']})
-        return json
-
-    def get_group_json(self, group_id):
-        group = get_group(id).group_for_json()
-        json = GroupResponder.respond(group, linked={'interests': group['interests'],
-                                                    'users': group['users']})
-        return json
+# class UserGroups(object):
+#     def __init__(self):
+#         pass
+#
+#     def on_get(self, request, response, user_id, group_id=None):
+#         auth = user_auth(request.headers)
+#         if auth.is_authorized_user and auth.auth_key == user_id:
+#             if group_id is not None:
+#                 response.data = self.get_group_json(group_id)
+#             else:
+#                 response.data = self.get_user_groups_json(user_id)
+#             response.content_type = 'application/json'
+#             response.status = falcon.HTTP_200
+#
+#     def on_post(self, request, response, user_id, group_id=None):
+#         # user will join group
+#         auth = user_auth(request.headers)
+#         if auth.is_authorized_user and auth.auth_key == user_id:
+#             user = get_user_by_id(user_id=user_id)
+#             user.join_group(group_id=group_id)
+#             response.status = falcon.HTTP_201
+#             response.body = self.get_group_json(group_id=group_id)
+#         else:
+#             response.status = falcon.HTTP_401
+#
+#     def get_user_groups_json(self, user_id):
+#         user_groups = get_user_by_id(user_id).user_groups_for_json()
+#         json = UserResponder.respond(user_groups, linked={'groups': user_groups['groups']})
+#         return json
+#
+#     def get_group_json(self, group_id):
+#         group = get_group(id).group_for_json()
+#         json = GroupResponder.respond(group, linked={'interests': group['interests'],
+#                                                     'users': group['users']})
+#         return json
 
 
 class UserGroupAchievements(object):
@@ -387,14 +397,6 @@ class UserLocations(object):
         pass
 
 
-class UserOrganizations(object):
-    def __int__(self):
-        pass
-
-
-class UserInterestGoals(object):
-    def __init__(self):
-        pass
 
 
 class ActivateUser(object):
@@ -406,15 +408,18 @@ class ActivateUser(object):
         response.content_type = 'application/json'
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        user_json = result_json['user']
-        email = user_json['email']
-        payload = user_json['payload']
-        try:
-            user.activate_user(payload=payload, email=email)
-            response.data = ActivatedUserResponder.respond(user.activated_user_for_json())
-            # UserProfileResponder.respond(user.user_profile_for_json())
-            response.status = falcon.HTTP_201  #created
-        except BadSignature as e:
+        if validate_user_schema.validate_activate_user(result_json):
+            user_json = result_json['user']
+            email = user_json['email']
+            payload = user_json['payload']
+            try:
+                user.activate_user(payload=payload, email=email)
+                response.data = ActivatedUserResponder.respond(user.activated_user_for_json())
+                # UserProfileResponder.respond(user.user_profile_for_json())
+                response.status = falcon.HTTP_201  #created
+            except BadSignature as e:
+                response.status = falcon.HTTP_400
+        else:
             response.status = falcon.HTTP_400
 
 # class RegisterUser(object):
