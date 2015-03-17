@@ -6,9 +6,11 @@ import settings
 from py2neo import Graph, Node, Relationship
 from interest import AgoraInterest
 from location import AgoraLocation
+from conversation import AgoraConversation
 # from py2neo_user import AgoraUser
 from agora_types import AgoraRelationship, AgoraLabel
 # from agora_db.user import AgoraUser
+
 
 class AgoraGroup(object):
     def __init__(self):
@@ -18,6 +20,7 @@ class AgoraGroup(object):
         self.mission_statement = ''
         self.is_open = None
         self.is_invite_only = False
+        self.last_updated_date = ''
         # self.meeting_location = ''
         # self.next_meeting_date = None
         # self.next_meeting_time = None
@@ -203,9 +206,9 @@ class AgoraGroup(object):
 
     def matched_groups(self, match_string, limit):
         """
-
-        :param match_string:
-        :param limit:
+        get a set of groups by name by
+        :param match_string:  partial name of group to search by
+        :param limit:  number of records to return in result set
         :return: dictionary of search results
         """
         params = {
@@ -232,12 +235,14 @@ class AgoraGroup(object):
         root['groups'] = groups_list
         return root
 
+    def add_conversation(self, subject, message):
+        convo = AgoraConversation()
+        convo.subject = subject
+        convo.message = message
+        convo.create_conversation_for_group(self.id)
 
-    # def get_group_owner(self):
-    #     user = AgoraUser()
-    #     user.id = self.creator
-    #     user.get_user()
-    #     return user
+    def update_conversation(self, subject, message, convo_id):
+        pass  #TODO add update conversation
 
     def group_for_json(self):
         # self
