@@ -3,13 +3,13 @@ import os
 from behaving import environment as benv
 from py2neo import Node, Graph, Relationship
 import settings
-from agora_db import user
+from db import user
 
 PERSONAS = {
     'user': dict(
         email='newuser@agorasociety.com',
         entity_search_route='/users?match={match}&limit={limit}',
-        search_schema='schema/user_search_results.json'
+        search_schema='schemas/user_search_results.json'
     ),
     'marnee': dict(
         email='marnee@agorasociety.com',
@@ -30,7 +30,7 @@ PERSONAS = {
         x_auth_key_good='IjA5ZGViOWY0LTZmZWItNDJlNC1iY2YyLTU1ZjgyYzI2NjMyZiI.VnlgmEXwW9eelZT5Xbs6uPtPQJE',
         x_auth_key_bad='bad',
         entity_search_route='/groups?match={match}&limit={limit}',
-        search_schema='schema/group_search_results.json'
+        search_schema='schemas/group_search_results.json'
 
     ),
     'interest': dict(
@@ -39,16 +39,16 @@ PERSONAS = {
         experience='Just adding a test interest',
         time='100 years',
         entity_search_route='/interests?match={match}&limit={limit}',
-        search_schema='schema/interest_search_results.json'
+        search_schema='schemas/interest_search_results.json'
 
     ),
     'entity_search': dict(
         user='/users?match={match}&limit={limit}',
         group='/groups?match={match}&limit={limit}',
         interest='/interests?match={match}&limit={limit}',
-        user_schema='schema/user_search_results.json',
-        interest_schema='schema/interest_search_results.json',
-        group_schema='schema/group_search_results.json'
+        user_schema='schemas/user_search_results.json',
+        interest_schema='schemas/interest_search_results.json',
+        group_schema='schemas/group_search_results.json'
     )
 }
 
