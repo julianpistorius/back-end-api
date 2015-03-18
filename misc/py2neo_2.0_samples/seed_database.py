@@ -1,11 +1,11 @@
 __author__ = 'Marnee Dearman'
-from db.user import AgoraUser
-from db.interest import AgoraInterest
-from db.labels_relationships import AgoraLabel, AgoraRelationship
-from db.group import AgoraGroup
-from db.location import AgoraLocation
-from db.goal import AgoraGoal
-from db.organization import AgoraOrganization
+from db.user import User
+from db.interest import Interest
+from db.labels_relationships import GraphLabel, GraphRelationship
+from db.group import Group
+from db.location import Location
+from db.goal import Goal
+from db.organization import Organization
 import datetime
 import settings
 from py2neo import Graph
@@ -15,13 +15,13 @@ print Graph(settings.DATABASE_URL).neo4j_version
 Graph(settings.DATABASE_URL).delete_all()
 
 #locations
-tucson = AgoraLocation()
+tucson = Location()
 tucson.name = 'Tucson'
 tucson.formatted_address = 'Tucson, AZ, USA'
 tucson.place_id = 'ChIJK-0sC0Fl1oYRFccWTTgtw3M'
 tucson.create_location()
 
-bisbee = AgoraLocation()
+bisbee = Location()
 bisbee.name = 'Bisbee'
 bisbee.formatted_address = 'Bisbee, AZ 85603, USA'
 bisbee.place_id = 'ChIJL9jhHLi00IYRGms2fEz_zGU'
@@ -29,19 +29,19 @@ bisbee.create_location()
 
 #INTERESTS
 #Kettlebells, Internet Startup, Python Programming
-interest = AgoraInterest()
+interest = Interest()
 interest.name = 'Kettlebells'
 interest.description = 'Getting strong with those cannonballs with handles'
 interest.create_interest()
 kettlebells_id = interest.id
 
-interest = AgoraInterest()
+interest = Interest()
 interest.name = 'Internet Startup'
 interest.description = 'How to build an Internet business'
 interest.create_interest()
 startup_id = interest.id
 
-interest = AgoraInterest()
+interest = Interest()
 interest.name = 'Python Programming'
 interest.description = 'Programming with the Python language'
 interest.create_interest()
@@ -50,7 +50,7 @@ python_id = interest.id
 
 #USERS
 #Marnee, Julian, Chris, Dan, Liz, Frank
-marnee = AgoraUser()
+marnee = User()
 marnee.email = 'marnee@agorasociety.com'
 marnee.name = 'Marnee'
 marnee.is_admin = True
@@ -58,7 +58,7 @@ marnee.about = 'This is about me.'
 marnee.mission_statement = 'This is my mission statement.'
 marnee.create_user()
 
-julian = AgoraUser()
+julian = User()
 julian.email = 'julian@agorasociety.com'
 julian.name = 'Julian'
 julian.is_admin = False
@@ -66,7 +66,7 @@ julian.about = 'This is about me.'
 julian.mission_statement = 'This is my mission statement.'
 julian.create_user()
 
-chris = AgoraUser()
+chris = User()
 chris.email = 'chris@agorasociety.com'
 chris.name = 'Chris'
 chris.is_admin = True
@@ -74,7 +74,7 @@ chris.about = 'This is about me.'
 chris.mission_statement = 'This is my mission statement.'
 chris.create_user()
 
-dan = AgoraUser()
+dan = User()
 dan.email = 'dan@agorasociety.com'
 dan.name = 'Dan'
 dan.is_admin = False
@@ -82,7 +82,7 @@ dan.about = 'This is about me.'
 dan.mission_statement = 'This is my mission statement.'
 dan.create_user()
 
-frank = AgoraUser()
+frank = User()
 frank.email = 'frank@agorasociety.com'
 frank.name = 'Frank'
 frank.is_admin = False
@@ -90,7 +90,7 @@ frank.about = 'This is about me.'
 frank.mission_statement = 'This is my mission statement.'
 frank.create_user()
 
-liz = AgoraUser()
+liz = User()
 liz.email = 'liz@agorasociety.com'
 liz.name = 'Liz'
 liz.is_admin = False
@@ -129,7 +129,7 @@ liz.add_interest(startup_id, experience)
 liz.add_location(tucson.place_id)
 
 #groups
-demo_day = AgoraGroup()
+demo_day = Group()
 demo_day.about = 'Demo your progress and talk about your startup'
 demo_day.mission_statement = 'Mission statement.'
 demo_day.name = 'Tucson Startup Demo Day'
@@ -153,7 +153,7 @@ chris.join_group(demo_day.id)
 frank.join_group(demo_day.id)
 liz.join_group(demo_day.id)
 
-marnee_goal = AgoraGoal()
+marnee_goal = Goal()
 marnee_goal.title = 'Launch the Agora startup.'
 marnee_goal.description = 'Make app public and get users.'
 marnee_goal.start_date = datetime.date.today()
@@ -171,7 +171,7 @@ marnee.add_goal(marnee_goal.id)
 # print marnee.get_local_users_shared_interests_near_location()
 
 #organization
-evo_fit = AgoraOrganization()
+evo_fit = Organization()
 evo_fit.name = 'Evolution Fitness Tucson'
 evo_fit.about = "Tucson's School of Strength: Personal Training, Kettlebells, Olympic Lifting, Kettlebell Training for women, Personal Trainers Tucson, Powerlifting"
 evo_fit.email = 'info@evolutionfitness.com'
