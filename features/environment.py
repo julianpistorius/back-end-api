@@ -3,7 +3,7 @@ import os
 from behaving import environment as benv
 from py2neo import Node, Graph, Relationship
 import settings
-from agora_db import user
+from db import user
 
 PERSONAS = {
     'user': dict(
