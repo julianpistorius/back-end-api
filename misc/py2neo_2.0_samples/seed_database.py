@@ -51,6 +51,7 @@ python_id = interest.id
 #USERS
 #Marnee, Julian, Chris, Dan, Liz, Frank
 marnee = User()
+marnee.call_sign = 'AWESOME'
 marnee.email = 'marnee@elmerly.com'
 marnee.name = 'Marnee'
 marnee.is_admin = True
