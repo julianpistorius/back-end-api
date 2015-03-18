@@ -83,10 +83,8 @@ class Goal(object):
         new_goal_node = Node.cast(GraphLabel.GOAL, new_goal_properties)
         try:
             self.graph_db.create(new_goal_node)
-            for interest in self.interests:
-                self.add_interest(interest['id'])
         except:
-            print sys.exc_info()
+            pass  #TODO exception handling
         return new_goal_node
 
     def update_goal(self):

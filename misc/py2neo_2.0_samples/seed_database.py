@@ -51,7 +51,7 @@ python_id = interest.id
 #USERS
 #Marnee, Julian, Chris, Dan, Liz, Frank
 marnee = User()
-marnee.email = 'marnee@agorasociety.com'
+marnee.email = 'marnee@elmerly.com'
 marnee.name = 'Marnee'
 marnee.is_admin = True
 marnee.about = 'This is about me.'
@@ -59,7 +59,7 @@ marnee.mission_statement = 'This is my mission statement.'
 marnee.create_user()
 
 julian = User()
-julian.email = 'julian@agorasociety.com'
+julian.email = 'julian@elmerly.com'
 julian.name = 'Julian'
 julian.is_admin = False
 julian.about = 'This is about me.'
@@ -67,7 +67,7 @@ julian.mission_statement = 'This is my mission statement.'
 julian.create_user()
 
 chris = User()
-chris.email = 'chris@agorasociety.com'
+chris.email = 'chris@elmerly.com'
 chris.name = 'Chris'
 chris.is_admin = True
 chris.about = 'This is about me.'
@@ -75,7 +75,7 @@ chris.mission_statement = 'This is my mission statement.'
 chris.create_user()
 
 dan = User()
-dan.email = 'dan@agorasociety.com'
+dan.email = 'dan@elmerly.com'
 dan.name = 'Dan'
 dan.is_admin = False
 dan.about = 'This is about me.'
@@ -83,7 +83,7 @@ dan.mission_statement = 'This is my mission statement.'
 dan.create_user()
 
 frank = User()
-frank.email = 'frank@agorasociety.com'
+frank.email = 'frank@elmerly.com'
 frank.name = 'Frank'
 frank.is_admin = False
 frank.about = 'This is about me.'
@@ -91,7 +91,7 @@ frank.mission_statement = 'This is my mission statement.'
 frank.create_user()
 
 liz = User()
-liz.email = 'liz@agorasociety.com'
+liz.email = 'liz@elmerly.com'
 liz.name = 'Liz'
 liz.is_admin = False
 liz.about = 'This is about me.'
@@ -154,15 +154,15 @@ frank.join_group(demo_day.id)
 liz.join_group(demo_day.id)
 
 marnee_goal = Goal()
-marnee_goal.title = 'Launch the Agora startup.'
+marnee_goal.title = 'Launch the Elmerly startup.'
 marnee_goal.description = 'Make app public and get users.'
 marnee_goal.start_date = datetime.date.today()
 marnee_goal.end_date = datetime.date.today() + datetime.timedelta(days=400)
 marnee_goal.create_goal()
 
 marnee_goal.add_interest(startup_id)
-
 marnee.add_goal(marnee_goal.id)
+
 # julian.add_goal(goal.id)
 # dan.add_goal(goal.id)
 # chris.add_goal(goal.id)
