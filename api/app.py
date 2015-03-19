@@ -3,13 +3,12 @@ __author__ = 'Marnee Dearman'
 from api import api_conversations
 
 import falcon
-# import os
-# import images
 import api_users, api_interests, api_locations, api_groups, api_organizations, api_meetings
-#import interest
+
 
 def crossdomain(req, resp):
     resp.set_header('Access-Control-Allow-Origin', '*')
+
 
 def cors_middleware(request, response, params):
     response.set_header(
@@ -46,7 +45,7 @@ activate = api_users.ApiActivateUser()
 api.add_route('/activate/', activate)  # GET users api key (x-auth-key)
 api.add_route('/users/', user)  # GET list of users by matching on name, POST to register user
 api.add_route('/users/{user_id}', user)  # GET user information
-api.add_route('/users/{user_id}/locations', user) # GET user locations, POST to add location, DELETE to remove location
+api.add_route('/users/{user_id}/locations', user)  # GET user locations, POST to add location, DELETE to remove location
 api.add_route('/users/{user_id}/locations/{location_id}', user)  # GET connections for user's location
 api.add_route('/users/{user_id}/interests', user)  # GET interests, POST to add new interest
 api.add_route('/users/{user_id}/interests/{interest_id}', user)  # GET connections for interest, PUT to update interest
@@ -79,7 +78,7 @@ api.add_route('/locations/{place_id}/interests/{interest_id}/users', location)  
 api.add_route('/locations/{place_id}/interests/{interest_id}/groups', location)  # GET search by group name
 # return connections
 api.add_route('/locations/{place_id}/interests/{interest_id}/organizations', location)  # GET search by org name
-# return connections
+# return connections/recoomendations (?)
 
 # GROUPS COLLECTIONS
 api.add_route('/groups', group)  # POST new group

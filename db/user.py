@@ -415,19 +415,25 @@ class User(object):
                                                         end_node=org.org_node)
         self.graph_db.delete(user_org_relationship)
 
-    def add_location(self, location_place_id):
+    def add_location(self, location_json):
         """
         link user to location nodes
         :param locations_place_id:
         :return:
         """
         #TODO exception handling
+        location_place_id = location_json['id']
         location = Location()
         location.place_id = location_place_id
+        location_node = location.location_node_by_place_id
+        if not location_node:
+            location.set_location_properties(location_json)
+            location.create_location()
+            location_node = location.location_node_by_place_id()
 
         user_location_relationship = Relationship(self.user_node,
                                                   GraphRelationship.LOCATED_IN,
-                                                  location.location_node_by_place_id)
+                                                  location_node)
         # try:
         self.graph_db.create_unique(user_location_relationship)
         # except:

@@ -38,7 +38,11 @@ class Location(object):
         """
         return self.graph_db.find_one(GraphLabel.LOCATION,
                                       property_key='place_id',
-                                      property_value=self.place_id)
+                                      property_value=self.id)
+
+    def set_location_properties(self, location_properties):
+        for key, value in location_properties.iteritems():
+            setattr(self, key, value)
 
     def create_location(self):
         self.id = str(uuid.uuid4())
