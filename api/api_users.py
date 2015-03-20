@@ -134,17 +134,15 @@ class ApiUserInterests(object):
 # DELETE to drop interest
 
     def on_get(self, request, response, user_id, interest_id=None):
-        # if not interest_id is None:
-        #     response.data = self.
         auth = user_auth(request.headers)
         if auth.is_authorized_user:
             if interest_id is None:
                 response.data = self.get_user_interests_responder(user_id)
-            else:
-                #get details for user's interest -- goals, groups, organizations
+            else:  # GET connections/recommendations for interest
                 pass
             response.content_type = 'application/json'
             response.status = falcon.HTTP_200
+
         else:
             response.status = falcon.HTTP_401
 
@@ -155,24 +153,31 @@ class ApiUserInterests(object):
             result_json = simplejson.loads(raw_json, encoding='utf-8')
             self.create_add_interests(result_json['interests'], user_id=user_id)
             response.status = falcon.HTTP_201
-            response.body = simplejson.dumps(result_json, encoding='utf-8')
+            response.content_type = 'application/json'
+            response.body = self.get_user_interests_responder(user_id)  # simplejson.dumps(result_json, encoding='utf-8')
         else:
             response.status = falcon.HTTP_401
 
-    def on_put(self, request, response, email):
+    def on_put(self, request, response, user_id, interest_id):
         pass
+
+    def on_delete(self, request, response, user_id, interest_id):
+        auth = user_auth(request)
+        if auth.is_authorized_user and auth.auth_key == user_id:
+            # TODO drop interest
+            response.body = self.get_user_interests_responder(user_id)
+            response.status = falcon.HTTP_200
+        else:
+            response.status = falcon.HTTP_401
 
     def get_user_interests_responder(self, user_id):
         """
 
-        :param email:
+        :param user_id:
         :return: hyp json api format
         """
         user = get_user_by_id(user_id).user_interests_for_json()
-        print user
-        #TODO try doing this by building the interests separately -- probably dont need to do this
         response = UserResponder.respond(user, linked={'interests': user['interests']})
-        # .respond(user_interests)
         return response
 
     def create_add_interests(self, interests_json, user_id):
@@ -181,22 +186,21 @@ class ApiUserInterests(object):
         for interest_dict in interests_json:
             interest = Interest()
             # interest.set_interest_attributes(interest_json)
-            interest.name = interest_dict['name']
-            interest.description = interest_dict['description']
-            interest.create_interest()
+            # interest.name = interest_dict['name']
+            # interest.description = interest_dict['description']
+            # interest.create_interest()
             rel_properties = {}
             rel_properties['experience'] = interest_dict['experience']
             rel_properties['time'] = interest_dict['time']
             user.add_interest(interest.id, rel_properties)
-        json = user.user_interests_for_json()
-        return json
-
-    # def get_user_interest_goals_groups_organizations(self, interest_id):
 
 
 class ApiUserGoals(object):
     def __init__(self):
         pass
+
+# api.add_route('/users/{user_id}/goals/{goal_id}', user)  # PUT to update goa (achieved), DELETE to drop goal
+# api.add_route('/users/{user_id}/goals', user)  # GET to get list of goals
 
     def on_get(self, request, response, email): #@, goal_id=None):
         # if not goal_id is None:
@@ -248,43 +252,6 @@ class ApiUserGoals(object):
         goal.set_goal_properties(goal_json)
 
 
-class ApiUserGroups(object):
-    def __init__(self):
-        pass
-
-    def on_get(self, request, response, user_id, group_id=None):
-        auth = user_auth(request.headers)
-        if auth.is_authorized_user and auth.auth_key == user_id:
-            if group_id is not None:
-                response.data = self.get_group_json(group_id)
-            else:
-                response.data = self.get_user_groups_json(user_id)
-            response.content_type = 'application/json'
-            response.status = falcon.HTTP_200
-
-    def on_post(self, request, response, user_id, group_id=None):
-        # user will join group
-        auth = user_auth(request.headers)
-        if auth.is_authorized_user and auth.auth_key == user_id:
-            user = get_user_by_id(user_id=user_id)
-            user.join_group(group_id=group_id)
-            response.status = falcon.HTTP_201
-            response.body = self.get_group_json(group_id=group_id)
-        else:
-            response.status = falcon.HTTP_401
-
-    def get_user_groups_json(self, user_id):
-        user_groups = get_user_by_id(user_id).user_groups_for_json()
-        json = UserResponder.respond(user_groups, linked={'groups': user_groups['groups']})
-        return json
-
-    def get_group_json(self, group_id):
-        group = get_group(id).group_for_json()
-        json = GroupResponder.respond(group, linked={'interests': group['interests'],
-                                                    'users': group['users']})
-        return json
-
-
 class ApiUserLocations(object):
     def __init__(self):
         pass
@@ -330,6 +297,44 @@ class ApiUserLocations(object):
         user_data = get_user_by_id(user_id=user_id).user_relationships_for_json(auth_id=auth_id)
         json = UserResponder.respond(user_data, linked={'locations': user_data['locations']})
         return json
+
+
+class ApiUserGroups(object):
+    def __init__(self):
+        pass
+
+    def on_get(self, request, response, user_id, group_id=None):
+        auth = user_auth(request.headers)
+        if auth.is_authorized_user and auth.auth_key == user_id:
+            if group_id is not None:
+                response.data = self.get_group_json(group_id)
+            else:
+                response.data = self.get_user_groups_json(user_id)
+            response.content_type = 'application/json'
+            response.status = falcon.HTTP_200
+
+    def on_post(self, request, response, user_id, group_id=None):
+        # user will join group
+        auth = user_auth(request.headers)
+        if auth.is_authorized_user and auth.auth_key == user_id:
+            user = get_user_by_id(user_id=user_id)
+            user.join_group(group_id=group_id)
+            response.status = falcon.HTTP_201
+            response.body = self.get_group_json(group_id=group_id)
+        else:
+            response.status = falcon.HTTP_401
+
+    def get_user_groups_json(self, user_id):
+        user_groups = get_user_by_id(user_id).user_groups_for_json()
+        json = UserResponder.respond(user_groups, linked={'groups': user_groups['groups']})
+        return json
+
+    def get_group_json(self, group_id):
+        group = get_group(id).group_for_json()
+        json = GroupResponder.respond(group, linked={'interests': group['interests'],
+                                                    'users': group['users']})
+        return json
+
 
 
 class ApiActivateUser(object):
