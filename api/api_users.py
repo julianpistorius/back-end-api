@@ -11,7 +11,7 @@ from db.location import Location
 from db.group import Group
 from db.organization import Organization
 from db.achievement import Achievement
-from validators import validate_user_schema, validate_location_schema
+from validators import validate_user_schema, validate_location_schema, validate_interest_schema
 
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
     GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder
@@ -149,17 +149,24 @@ class ApiUserInterests(object):
     def on_post(self, request, response, user_id, interest_id=None):
         auth = user_auth(request.headers)
         if auth.is_authorized_user and auth.auth_key == user_id:
+            #TODO validate interest json
             raw_json = request.stream.read()
             result_json = simplejson.loads(raw_json, encoding='utf-8')
-            self.create_add_interests(result_json['interests'], user_id=user_id)
-            response.status = falcon.HTTP_201
-            response.content_type = 'application/json'
-            response.body = self.get_user_interests_responder(user_id)  # simplejson.dumps(result_json, encoding='utf-8')
+            if validate_interest_schema.validate_interest(result_json):
+                self.add_interests(result_json['interests'], user_id=user_id)
+                response.status = falcon.HTTP_201
+                response.content_type = 'application/json'
+                response.body = self.get_user_interests_responder(user_id)  # simplejson.dumps(result_json, encoding='utf-8')
+            else:
+                response.status = falcon.HTTP_400
         else:
             response.status = falcon.HTTP_401
 
     def on_put(self, request, response, user_id, interest_id):
-        pass
+        auth = user_auth(request)
+        if auth.is_authorized_user and auth.auth_key == user_id:
+            pass  #TODO update interest rel props
+
 
     def on_delete(self, request, response, user_id, interest_id):
         auth = user_auth(request)
@@ -174,13 +181,13 @@ class ApiUserInterests(object):
         """
 
         :param user_id:
-        :return: hyp json api format
+        :return: UserResponder
         """
         user = get_user_by_id(user_id).user_interests_for_json()
         response = UserResponder.respond(user, linked={'interests': user['interests']})
         return response
 
-    def create_add_interests(self, interests_json, user_id):
+    def add_interests(self, interests_json, user_id):
         #TODO create interests in batches not just singly
         user = get_user_by_id(user_id=user_id)
         for interest_dict in interests_json:
@@ -193,6 +200,9 @@ class ApiUserInterests(object):
             rel_properties['experience'] = interest_dict['experience']
             rel_properties['time'] = interest_dict['time']
             user.add_interest(interest.id, rel_properties)
+
+    def update_interest(self, user_id, interest_id):
+        pass
 
 
 class ApiUserGoals(object):
