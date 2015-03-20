@@ -260,11 +260,19 @@ class ApiUserGoals(object):
         :param goal_id:
         :return:
         """
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.create_goal(result_json['goal'], user_id)
-        response.status = falcon.HTTP_201
-        response.body = simplejson.dumps(result_json, encoding='utf-8')
+        auth = user_auth(request)
+        if auth.is_authorized_user and user_id == auth.auth_key:
+            raw_json = request.stream.read()
+            result_json = simplejson.loads(raw_json, encoding='utf-8')
+            if validate_goals_schema.validate_goal(result_json):
+                self.create_goal(result_json['goal'], user_id)
+                response.status = falcon.HTTP_201
+                response.body = self.get_user_responder(user_id, auth.auth_key)
+                response.content_type = 'application/json'
+            else:
+                response.status = falcon.HTTP_400
+        else:
+            response.status = falcon.HTTP_401
 
     def on_put(self, request, response, user_id, goal_id):
         """
@@ -280,7 +288,10 @@ class ApiUserGoals(object):
             raw_json = request.stream.read()
             result_json = simplejson.loads(raw_json, encoding='utf-8')
             if validate_goals_schema.validate_goal(result_json):
-                pass  # update goal
+                self.update_goal(goal_id, result_json['goal'])
+                response.data = self.get_goal_responder(user_id, goal_id, auth.auth_key)
+                response.content_type = 'application/json'
+                response.status = falcon.HTTP_200
             else:
                 response.status = falcon.HTTP_400
         else:
