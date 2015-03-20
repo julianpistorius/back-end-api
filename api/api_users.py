@@ -165,7 +165,7 @@ class ApiUserInterests(object):
     def on_put(self, request, response, user_id, interest_id):
         auth = user_auth(request)
         if auth.is_authorized_user and auth.auth_key == user_id:
-            pass  #TODO update interest rel props
+            pass  #TODO update interest relationhip props
 
 
     def on_delete(self, request, response, user_id, interest_id):
