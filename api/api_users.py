@@ -12,6 +12,7 @@ from db.group import Group
 from db.organization import Organization
 from db.achievement import Achievement
 from validators import validate_user_schema, validate_location_schema, validate_interest_schema
+from validators import validate_goals_schema
 
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
     GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder
@@ -55,10 +56,11 @@ class ApiUser(object):
     def __init__(self):
         pass
 
-# api.add_route('/users/', user)  # GET list of users by matching on name, POST to register user
-# api.add_route('/users/{user_id}', user)  # GET user information
-# api.add_route('/users/{user_id}/interests', user)  # GET interests, POST to add new interest
-# api.add_route('/users/{user_id}/interests/{interest_id}', user)  # GET connections for interest, PUT to update interest
+# api.add_route('/users/', user)
+# GET list of users by matching on name,
+# POST to register user
+# api.add_route('/users/{user_id}', user)
+# GET user information
 
     def on_get(self, request, response, user_id=None):
         auth = user_auth(request)
@@ -107,9 +109,6 @@ class ApiUser(object):
                                                         'organizations': user_data['organizations']})
         return json
 
-    def get_users_json(self, match):
-        return {}
-
     def register_user(self, user_result_json):
         register = User()
         email = user_result_json['email']
@@ -149,11 +148,10 @@ class ApiUserInterests(object):
     def on_post(self, request, response, user_id, interest_id=None):
         auth = user_auth(request.headers)
         if auth.is_authorized_user and auth.auth_key == user_id:
-            #TODO validate interest json
             raw_json = request.stream.read()
             result_json = simplejson.loads(raw_json, encoding='utf-8')
             if validate_interest_schema.validate_interest(result_json):
-                self.add_interests(result_json['interests'], user_id=user_id)
+                self.add_interests(result_json['interest'], user_id=user_id)
                 response.status = falcon.HTTP_201
                 response.content_type = 'application/json'
                 response.body = self.get_user_interests_responder(user_id)  # simplejson.dumps(result_json, encoding='utf-8')
@@ -165,13 +163,22 @@ class ApiUserInterests(object):
     def on_put(self, request, response, user_id, interest_id):
         auth = user_auth(request)
         if auth.is_authorized_user and auth.auth_key == user_id:
-            pass  #TODO update interest relationhip props
-
+            raw_json = request.stream.read()
+            result_json = simplejson.loads(raw_json, encoding='utf-8')
+            if validate_interest_schema.validate_interest(result_json):
+                self.update_interest(user_id, interest_id, result_json['interest'])
+                response.status = falcon.HTTP_200
+                response.content_type = 'application/json'
+                response.body = self.get_user_interests_responder(user_id)
+            else:
+                response.status = falcon.HTTP_400
+        else:
+            response.status = falcon.HTTP_401
 
     def on_delete(self, request, response, user_id, interest_id):
         auth = user_auth(request)
         if auth.is_authorized_user and auth.auth_key == user_id:
-            # TODO drop interest
+            self.delete_interest(user_id=user_id, interest_id=interest_id)
             response.body = self.get_user_interests_responder(user_id)
             response.status = falcon.HTTP_200
         else:
@@ -188,7 +195,7 @@ class ApiUserInterests(object):
         return response
 
     def add_interests(self, interests_json, user_id):
-        #TODO create interests in batches not just singly
+        #TODO ??create interests in batches not just singly??
         user = get_user_by_id(user_id=user_id)
         for interest_dict in interests_json:
             interest = Interest()
@@ -201,65 +208,106 @@ class ApiUserInterests(object):
             rel_properties['time'] = interest_dict['time']
             user.add_interest(interest.id, rel_properties)
 
-    def update_interest(self, user_id, interest_id):
-        pass
+    def update_interest(self, user_id, interest_id, interest_rel_properties):
+        user = get_user_by_id(user_id)
+        experience_properties_dict = {}
+        experience_properties_dict['experience'] = interest_rel_properties['experience']
+        experience_properties_dict['time'] = interest_rel_properties['time']
+        user.update_interest(interest_id=interest_id, experience_properties_dict=experience_properties_dict)
+
+    def delete_interest(self, user_id, interest_id):
+        user = get_user_by_id(user_id)
+        user.delete_interest(interest_id=interest_id)
 
 
 class ApiUserGoals(object):
     def __init__(self):
         pass
 
-# api.add_route('/users/{user_id}/goals/{goal_id}', user)  # PUT to update goa (achieved), DELETE to drop goal
-# api.add_route('/users/{user_id}/goals', user)  # GET to get list of goals
+# api.add_route('/users/{user_id}/goals/{goal_id}', user)
+# GET goal to update or delete
+# PUT to update goa (achieved),
+# DELETE to drop goal
+# api.add_route('/users/{user_id}/goals', user)
+# GET to get list of goals
+# POST to add a new goal
 
-    def on_get(self, request, response, email): #@, goal_id=None):
-        # if not goal_id is None:
-        response.data = self.get_user_goals_json(email)
-        # else:
-        #     response.data = self.get_goal_json(goal_id)
-        response.content_type = 'application/json'
-        response.status = falcon.HTTP_200
+    def on_get(self, request, response, user_id, goal_id=None):
+        """
 
-    def on_post(self, request, response, email): #, goal_id=None):
+        :param request:
+        :param response:
+        :param user_id:
+        :param goal_id:
+        :return:
+        """
+        auth = user_auth(request)
+        if goal_id is None:
+            response.data = self.get_user_responder(user_id=user_id, auth_id=auth.auth_key)
+            response.content_type = 'application/json'
+            response.status = falcon.HTTP_200
+        else:  # GET the goal details for view or edit
+            response.data = self.get_goal_responder(user_id=user_id, goal_id=goal_id, auth_id=auth.auth_key)
+            response.content_type = 'application/json'
+            response.status = falcon.HTTP_200
+
+    def on_post(self, request, response, user_id, goal_id=None):
         """
         create a goal
         :param request:
         :param response:
-        :param email:
+        :param user_id:
         :param goal_id:
         :return:
         """
-        #TODO get goal interests, too
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
-        self.create_goal(result_json['goal'], email)
+        self.create_goal(result_json['goal'], user_id)
         response.status = falcon.HTTP_201
         response.body = simplejson.dumps(result_json, encoding='utf-8')
 
-    def on_put(self, request, response, email, goal_id=None):
+    def on_put(self, request, response, user_id, goal_id):
         """
         update a goal
         :param request:
         :param response:
-        :param email:
+        :param user_id:
+        :param goal_id:
         :return:
         """
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        goal = result_json['goal']
+        auth = user_auth(request)
+        if auth.is_authorized_user and user_id == auth.auth_key:
+            raw_json = request.stream.read()
+            result_json = simplejson.loads(raw_json, encoding='utf-8')
+            if validate_goals_schema.validate_goal(result_json):
+                pass  # update goal
+            else:
+                response.status = falcon.HTTP_400
+        else:
+            response.status = falcon.HTTP_401
 
-    def get_user_goals_json(self, email):
-        user_goals = get_user_by_email(email).user_goals_for_json()
-
-        json = GoalResponder.respond(user_goals,
-                                          linked={'goals': user_goals['goals']})
+    def get_user_responder(self, user_id, auth_id):
+        user_data = get_user_by_id(user_id=user_id).user_relationships_for_json(auth_id=auth_id)
+        json = UserResponder.respond(user_data, linked={'goals': user_data['goals']})
         return json
 
-    def create_goal(self, goal_json, email):
-        user = get_user_by_email(email)
-        user.get_user()
+    def create_goal(self, goal_json, user_id):
+        user = get_user_by_id(user_id)
+        user.add_goal(goal_json)
+
+    def get_goal_responder(self, user_id, goal_id, auth_id):
         goal = Goal()
-        goal.set_goal_properties(goal_json)
+        goal.id = goal_id
+        goal_data = goal.goal_for_json()
+        goal_data['allow_edit'] = (user_id == auth_id)
+        json = GoalResponder.respond(goal_data)
+        return json
+
+    def update_goal(self, goal_id, goal_properties):
+        goal = Goal()
+        goal.id = goal_id
+        goal.set_goal_properties(goal_properties)
+        goal.update_goal()
 
 
 class ApiUserLocations(object):

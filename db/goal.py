@@ -152,13 +152,4 @@ class Goal(object):
     def goal_for_json(self):
         root = {}
         root = self.goal_properties
-        root['interests'] = self.goal_interests
-        # root['id'] = self.id
-        # root['title'] = self.title
-        # root['description'] = self.description
-        # root['is_public'] = self.is_public
-        # root['start_date'] = self.start_date
-        # root['end_date'] = self.end_date
-        # root['created_date'] = self.created_date
-        # root['interests'] = self.goal_interests
         return root
