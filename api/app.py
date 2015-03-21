@@ -32,6 +32,9 @@ def cors_middleware(request, response, params):
 api = application = falcon.API(after=[crossdomain], before=[cors_middleware])
 
 user = api_users.ApiUser()
+user_location = api_users.ApiUserLocations()
+user_interests = api_users.ApiUserInterests()
+user_goals = api_users.ApiUserGoals()
 group = api_groups.ApiGroup()
 organization = api_organizations.ApiOrganization()
 interest = api_interests.ApiInterest()
@@ -45,10 +48,10 @@ activate = api_users.ApiActivateUser()
 api.add_route('/activate/', activate)  # GET users api key (x-auth-key)
 api.add_route('/users/', user)  # GET list of users by matching on name, POST to register user
 api.add_route('/users/{user_id}', user)  # GET user information
-api.add_route('/users/{user_id}/locations', user)  # GET user locations, POST to add location, DELETE to remove location
-api.add_route('/users/{user_id}/locations/{location_id}', user)  # GET connections for user's location
-api.add_route('/users/{user_id}/interests', user)  # GET interests, POST to add new interest
-api.add_route('/users/{user_id}/interests/{interest_id}', user)  # GET connections for interest, PUT to update interest
+api.add_route('/users/{user_id}/locations', user_location)  # GET user locations, POST to add location, DELETE to remove location
+api.add_route('/users/{user_id}/locations/{location_id}', user_location)  # GET connections for user's location
+api.add_route('/users/{user_id}/interests', user_interests)  # GET interests, POST to add new interest
+api.add_route('/users/{user_id}/interests/{interest_id}', user_interests)  # GET connections for interest, PUT to update interest
 
 #TODO may not need this for now
 # api.add_route('/users/{user_id}/interests/{interest_id}/goals', user_interest_goals)
@@ -56,8 +59,8 @@ api.add_route('/users/{user_id}/interests/{interest_id}', user)  # GET connectio
 # api.add_route('/users/{user_id}/interests/{interest_id}/goals', user_interest_goals)
 
 # USER COLLECTIONS
-api.add_route('/users/{user_id}/goals/{goal_id}', user)  # PUT to update goa (achieved), DELETE to drop goal
-api.add_route('/users/{user_id}/goals', user)  # GET to get list of goals
+api.add_route('/users/{user_id}/goals/{goal_id}', user_goals)  # PUT to update goa (achieved), DELETE to drop goal
+api.add_route('/users/{user_id}/goals', user_goals)  # GET to get list of goals
 api.add_route('/users/{user_id}/conversations', user)  # GET to get list of conversations.  POST to start a conversation
 api.add_route('/users/{user_id}/conversations/{conversation_id}', user)  # GET conversation and response.
 # PUT to edit original conversation topic

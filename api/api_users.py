@@ -1,21 +1,18 @@
+from db.conversation import Conversation
+
 __author__ = 'Marnee Dearman'
 import sys
 import falcon
 from itsdangerous import BadSignature, BadTimeSignature
-# import msgpack_pure
 from db.auth import Auth
 from db.user import User
 from db.interest import Interest
 from db.goal import Goal
-from db.location import Location
-from db.group import Group
-from db.organization import Organization
-from db.achievement import Achievement
 from validators import validate_user_schema, validate_location_schema, validate_interest_schema
 from validators import validate_goals_schema
 
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
-    GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder
+    GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder, ConversationResponder
 import simplejson
 
 
@@ -31,20 +28,6 @@ def get_user_by_id(user_id):
     agora_user.id = user_id
     agora_user.get_user()
     return agora_user
-
-
-def get_goal(id):
-    agora_goal = Goal()
-    agora_goal.id = id
-    agora_goal.get_goal()
-    return agora_goal
-
-
-def get_group(id):
-    agora_group = Group()
-    agora_group.id = id
-    agora_group.get_group()
-    return agora_group
 
 
 def user_auth(request):
@@ -368,42 +351,43 @@ class ApiUserLocations(object):
         return json
 
 
-class ApiUserGroups(object):
+class ApiUserConversations(object):
     def __init__(self):
         pass
 
-    def on_get(self, request, response, user_id, group_id=None):
-        auth = user_auth(request.headers)
-        if auth.is_authorized_user and auth.auth_key == user_id:
-            if group_id is not None:
-                response.data = self.get_group_json(group_id)
-            else:
-                response.data = self.get_user_groups_json(user_id)
+# api.add_route('/users/{user_id}/conversations', user)  #
+# GET to get list of conversations.
+# POST to start a conversation
+# api.add_route('/users/{user_id}/conversations/{conversation_id}', user)  #
+# GET conversation and response.
+# # PUT to edit original conversation topic
+# api.add_route('/users/{user_id}/conversations/{conversation_id}/responses', user)  #
+# POST a new response
+# api.add_route('/users/{user_id}/conversations/{conversation_id/responses/{response_id}', user)  #
+# PUT update response.
+# DELETE to drop response
+
+    def on_get(self, request, response, user_id, conversation_id=None):
+        auth = user_auth(request)
+        if conversation_id is None:  # GET list of conversations
+            response.data = self.get_user_responder(user_id, auth.auth_key)
+            response.content_type = 'application/json'
+            response.status = falcon.HTTP_200
+        else:  # GET specific conversation
+            response.data = self.get_conversation_responder(user_id, conversation_id, auth.auth_key)
             response.content_type = 'application/json'
             response.status = falcon.HTTP_200
 
-    def on_post(self, request, response, user_id, group_id=None):
-        # user will join group
-        auth = user_auth(request.headers)
-        if auth.is_authorized_user and auth.auth_key == user_id:
-            user = get_user_by_id(user_id=user_id)
-            user.join_group(group_id=group_id)
-            response.status = falcon.HTTP_201
-            response.body = self.get_group_json(group_id=group_id)
-        else:
-            response.status = falcon.HTTP_401
-
-    def get_user_groups_json(self, user_id):
-        user_groups = get_user_by_id(user_id).user_groups_for_json()
-        json = UserResponder.respond(user_groups, linked={'groups': user_groups['groups']})
+    def get_user_responder(self, user_id, auth_id):
+        user_data = get_user_by_id(user_id).user_relationships_for_json(auth_id=auth_id)
+        json = UserResponder.respond(user_data, linked={'conversations': user_data['conversations']})
         return json
 
-    def get_group_json(self, group_id):
-        group = get_group(id).group_for_json()
-        json = GroupResponder.respond(group, linked={'interests': group['interests'],
-                                                    'users': group['users']})
-        return json
-
+    def get_conversation_responder(self, user_id, conversation_id, auth_id):
+        conversation = Conversation()
+        conversation.id = conversation_id
+        convo_data = conversation.conversation_for_json()
+        return ConversationResponder.respond(convo_data, linked={'users': convo_data['users']})
 
 
 class ApiActivateUser(object):
@@ -430,6 +414,7 @@ class ApiActivateUser(object):
             response.status = falcon.HTTP_400
 
 
+
 class LocalUsersSharedInterests(object):
     def __init__(self):
         pass
@@ -450,6 +435,42 @@ class LocalUsersSharedInterests(object):
         return json
 
 
+# class ApiUserGroups(object):
+#     def __init__(self):
+#         pass
+#
+#     def on_get(self, request, response, user_id, group_id=None):
+#         auth = user_auth(request.headers)
+#         if auth.is_authorized_user and auth.auth_key == user_id:
+#             if group_id is not None:
+#                 response.data = self.get_group_json(group_id)
+#             else:
+#                 response.data = self.get_user_groups_json(user_id)
+#             response.content_type = 'application/json'
+#             response.status = falcon.HTTP_200
+#
+#     def on_post(self, request, response, user_id, group_id=None):
+#         # user will join group
+#         auth = user_auth(request.headers)
+#         if auth.is_authorized_user and auth.auth_key == user_id:
+#             user = get_user_by_id(user_id=user_id)
+#             user.join_group(group_id=group_id)
+#             response.status = falcon.HTTP_201
+#             response.body = self.get_group_json(group_id=group_id)
+#         else:
+#             response.status = falcon.HTTP_401
+#
+#     def get_user_groups_json(self, user_id):
+#         user_groups = get_user_by_id(user_id).user_groups_for_json()
+#         json = UserResponder.respond(user_groups, linked={'groups': user_groups['groups']})
+#         return json
+#
+#     def get_group_json(self, group_id):
+#         group = get_group(id).group_for_json()
+#         json = GroupResponder.respond(group, linked={'interests': group['interests'],
+#                                                     'users': group['users']})
+#         return json
+#
 
 # class RegisterUser(object):
 #     def __init__(self):

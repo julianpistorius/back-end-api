@@ -99,3 +99,37 @@ class Conversation(object):
             self.graph_db.create(response_convo_relationship)
         except:
             pass  #TODO exception handling
+
+    def get_conversation_users(self):
+        """
+        a dictionary of the users the conversation is between
+        :return:
+        """
+        rel_types = []
+        rel_types.append(GraphRelationship.STARTED)
+        rel_types.append(GraphRelationship.CREATED)
+        between_relationship = self.graph_db.match(start_node=self.conversation_node,
+                                                   rel_type=rel_types,
+                                                   end_node=None,
+                                                   bidirectional=True)
+        convo_user = {}
+        users = []
+        if between_relationship:
+            for rel in between_relationship:
+                convo_user['id'] = rel.end_node.properties['id']
+                convo_user['name'] = rel.end_node.properties['name']
+                convo_user['call_sign'] = rel.end_node.properties['call_sign']
+                users.append(convo_user)
+        return users
+
+    def get_responses(self):
+        """
+
+        :return:
+        """
+
+    def conversation_for_json(self):
+        root = {}
+        root = self.conversation_properties
+        root['users'] = self.get_conversation_users()
+        return root
