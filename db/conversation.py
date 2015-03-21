@@ -141,9 +141,8 @@ class Conversation(object):
                                                     end_node=response_node)
             response_properties = response_node.properties
             response_properties['by'] = '%s / %s' % (response_from.start_node.properties['name'],
-                                                   response_from.start_node.properties['call_sign'])
+                                                    response_from.start_node.properties['call_sign'])
             responses.append(response_properties)
-
         return responses
 
     def conversation_for_json(self):

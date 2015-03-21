@@ -387,7 +387,8 @@ class ApiUserConversations(object):
         conversation = Conversation()
         conversation.id = conversation_id
         convo_data = conversation.conversation_for_json()
-        return ConversationResponder.respond(convo_data, linked={'users': convo_data['users']})
+        return ConversationResponder.respond(convo_data, linked={'users': convo_data['users'],
+                                                                 'responses': convo_data['responses']})
 
 
 class ApiActivateUser(object):

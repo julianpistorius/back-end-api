@@ -82,6 +82,7 @@ class ConversationSchema(Schema):
     subject = fields.String()
     message = fields.String()
 
+
 class ResponseSchema(Schema):
     id = fields.String()
     message = fields.String()
@@ -280,7 +281,7 @@ ConversationResponder.LINKS = {
     }
 }
 
-ResponseResponder.LINKS - {
+ResponseResponder.LINKS = {
     'responses': {
         'responder': ResponseResponder
     }
