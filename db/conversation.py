@@ -107,7 +107,7 @@ class Conversation(object):
         """
         rel_types = []
         rel_types.append(GraphRelationship.STARTED)
-        rel_types.append(GraphRelationship.CREATED)
+        rel_types.append(GraphRelationship.WITH)
         between_relationship = self.graph_db.match(start_node=self.conversation_node,
                                                    rel_type=rel_types,
                                                    end_node=None,
@@ -127,9 +127,28 @@ class Conversation(object):
 
         :return:
         """
+        # rel_types = []
+        # rel_types.append(GraphRelationship.RESPONDED)
+        # rel_types.append(GraphRelationship.TO)
+        responses_relationship = self.graph_db.match(start_node=None,
+                                                     rel_type=GraphRelationship.TO,
+                                                     end_node=self.conversation_node)
+        responses = []
+        for rel in responses_relationship:
+            response_node = rel.start_node
+            response_from = self.graph_db.match_one(start_node=None,
+                                                    rel_type=GraphRelationship.RESPONDED,
+                                                    end_node=response_node)
+            response_properties = response_node.properties
+            response_properties['by'] = '%s / %s' % (response_from.start_node.properties['name'],
+                                                   response_from.start_node.properties['call_sign'])
+            responses.append(response_properties)
+
+        return responses
 
     def conversation_for_json(self):
         root = {}
         root = self.conversation_properties
         root['users'] = self.get_conversation_users()
+        root['responses'] = self.get_responses()
         return root
