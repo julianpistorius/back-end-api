@@ -81,12 +81,14 @@ class ConversationSchema(Schema):
     id = fields.String()
     subject = fields.String()
     message = fields.String()
+    created_date = fields.DateTime()
 
 
 class ResponseSchema(Schema):
     id = fields.String()
     message = fields.String()
     by = fields.String()
+    created_date = fields.DateTime
 
 
 class ActivatedUserSchema(Schema):
