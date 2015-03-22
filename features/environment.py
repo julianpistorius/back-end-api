@@ -7,20 +7,32 @@ from db import user
 
 PERSONAS = {
     'user': dict(
-        email='newuser@agorasociety.com',
+        email='newuser@elmerly.com',
         entity_search_route='/users?match={match}&limit={limit}',
         search_schema='schemas/user_search_results.json'
     ),
     'marnee': dict(
-        email='marnee@agorasociety.com',
+        email='marnee@elmerly.com',
         interest_route='/users/{id}/interests',
         label='USER',
         key='email',
         x_auth_key_good='IjA5ZGViOWY0LTZmZWItNDJlNC1iY2YyLTU1ZjgyYzI2NjMyZiI.VnlgmEXwW9eelZT5Xbs6uPtPQJE',
-        x_auth_user='09deb9f4-6feb-42e4-bcf2-55f82c26632f',
+        id='09deb9f4-6feb-42e4-bcf2-55f82c26632f',
         x_auth_key_bad='bad',
-        group_join_route='/users/{user_id}/groups/{group_id}'
+        group_join_route='/users/{user_id}/groups/{group_id}',
+        conversation_route='/users/{user_id}/conversations'
 
+    ),
+    'julian': dict(
+        email='julian@elmerly.com',
+        interest_route='/users/{id}/interests',
+        label='USER',
+        key='email',
+        x_auth_key_good='Ijg3MWZiYzYwLWJlYjgtNDUxMS04M2ZkLTJkOWU2MGMzMGZhOCI.B-9_JA.s_Jb4NBtk5Fwm-O4w1SNuMGBLPE',
+        id='871fbc60-beb8-4511-83fd-2d9e60c30fa8',
+        x_auth_key_bad='bad',
+        group_join_route='/users/{user_id}/groups/{group_id}',
+        conversation_route='/users/{user_id}/conversations'
     ),
     'group': dict(
         id='7e7ce64b-08d8-4df1-82ac-f0456bc7df15',
@@ -30,7 +42,8 @@ PERSONAS = {
         x_auth_key_good='IjA5ZGViOWY0LTZmZWItNDJlNC1iY2YyLTU1ZjgyYzI2NjMyZiI.VnlgmEXwW9eelZT5Xbs6uPtPQJE',
         x_auth_key_bad='bad',
         entity_search_route='/groups?match={match}&limit={limit}',
-        search_schema='schemas/group_search_results.json'
+        search_schema='schemas/group_search_results.json',
+        conversations_route='/users/{user_id}/conversations'
 
     ),
     'interest': dict(

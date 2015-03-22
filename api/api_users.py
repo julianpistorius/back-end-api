@@ -9,7 +9,7 @@ from db.user import User
 from db.interest import Interest
 from db.goal import Goal
 from validators import validate_user_schema, validate_location_schema, validate_interest_schema
-from validators import validate_goals_schema
+from validators import validate_goals_schema, validate_conversation_response_schema
 
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
     GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder, ConversationResponder
@@ -377,6 +377,50 @@ class ApiUserConversations(object):
             response.data = self.get_conversation_responder(user_id, conversation_id, auth.auth_key)
             response.content_type = 'application/json'
             response.status = falcon.HTTP_200
+
+    def on_post(self, request, response, user_id):
+        auth = user_auth(request)
+        if auth.is_authorized_user and auth.auth_key != user_id:  # start conversation with user
+            user = get_user_by_id(user_id)
+            raw_json = request.stream.read()
+            result_json = simplejson.loads(raw_json, encoding='utf-8')
+            if validate_conversation_response_schema.validate_conversation(result_json):
+                convo_id = user.create_converation_between_users(user_id_started=auth.auth_key,
+                                                                 user_id_with=user_id,
+                                                                 conversation_properties=result_json['conversation'])
+                response.data = self.get_conversation_responder(user_id=user_id,
+                                                                conversation_id=convo_id,
+                                                                auth_id=auth.auth_key)
+                response.status = falcon.HTTP_201
+                response.content_type = 'application/json'
+            else:
+                response.status = falcon.HTTP_400
+        else:
+            response.status = falcon.HTTP_401
+
+    def on_put(self, request, response, user_id, conversation_id):
+        auth = user_auth(request)
+        if auth.is_authorized_user:
+            raw_json = request.stream.read()
+            result_json = simplejson.loads(raw_json, encoding='utf-8')
+            if validate_conversation_response_schema.validate_conversation(result_json):
+                convo = Conversation()
+                convo.id = conversation_id
+                started_by_id = convo.started_by['id']
+                if auth.auth_key == started_by_id:  # allow update
+                    convo.set_conversation_properties(result_json['conversation'])
+                    convo.update_conversation()
+                    response.data = self.get_conversation_responder(user_id=user_id,
+                                                                    conversation_id=conversation_id,
+                                                                    auth_id=auth.auth_key)
+                    response.content_type = 'application/json'
+                    response.status = falcon.HTTP_200
+                else:
+                    response.status = falcon.HTTP_401
+            else:
+                response.status = falcon.HTTP_400
+        else:
+            response.status = falcon.HTTP_401
 
     def get_user_responder(self, user_id, auth_id):
         user_data = get_user_by_id(user_id).user_relationships_for_json(auth_id=auth_id)

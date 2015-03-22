@@ -17,7 +17,7 @@ def setup_user(context):
 @given(u'route to join groups')
 def setup_route(context):
     temp = context.entity['group_join_route']
-    context.route = temp.format(user_id=context.entity['x_auth_key_good'],
+    context.route = temp.format(user_id=context.entity['id'],
                                 group_id=context.group['id'])
 
 @when(u'the client requests POST to join groups route')

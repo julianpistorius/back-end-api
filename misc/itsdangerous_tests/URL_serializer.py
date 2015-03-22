@@ -6,7 +6,7 @@ import time
 
 #SERIALIZE FOR URL PAYLOAD
 s = URLSafeTimedSerializer(secret_key=settings.TOKEN_SECRET_KEY)
-id = str(uuid.uuid4())
+id = '871fbc60-beb8-4511-83fd-2d9e60c30fa8'
 payload = s.dumps(id)
 
 # print s

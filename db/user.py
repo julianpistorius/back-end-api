@@ -52,6 +52,11 @@ class User(object):
         return properties_dict
 
     def set_user_properties(self, user_properties):
+        """
+
+        :param user_properties:
+        :return:
+        """
         for key, value in user_properties.iteritems():
             setattr(self, key, value)
 
@@ -434,29 +439,29 @@ class User(object):
         # except:
         #     pass
 
-    def create_converation_between_users(self, user_id_started, user_id_with): #TODO this should go in user class
-        pass
+    def create_converation_between_users(self, user_id_started, user_id_with, conversation_properties):
         # self.id = uuid.uuid4()
-        # new_convo_node = Node.cast(GraphLabel.CONVERSATION, self.conversation_properties)
-        # try:
-        #     self.graph_db.create(new_convo_node)  # create new conversation node
-        #     user_started = User()
-        #     user_started.id = user_id_started
-        #     user_with = User()
-        #     user_with.id = user_id_with
-        #     # create started conversation relationship
-        #     user_started_relationship = Relationship(user_started.user_node,
-        #                                              GraphRelationship.STARTED,
-        #                                              self.conversation_node)
-        #     self.graph_db.create(user_started_relationship)
-        #     # create started conversation with relationship
-        #     convo_with_relationship = Relationship(self.conversation_node,
-        #                                            GraphRelationship.WITH,
-        #                                            user_with.user_node)
-        #     self.graph_db.create(convo_with_relationship)
-        #     # return new_convo_node
-        # except:
-        #     pass  #TODO add exception handling
+        conversation_properties['id'] = str(uuid.uuid4())
+        new_convo_node = Node.cast(GraphLabel.CONVERSATION, conversation_properties)
+        try:
+            convo_node, = self.graph_db.create(new_convo_node)  # create new conversation node
+            user_started = User()
+            user_started.id = user_id_started
+            user_with = User()
+            user_with.id = user_id_with
+            # create started conversation relationship
+            user_started_relationship = Relationship(user_started.user_node,
+                                                     GraphRelationship.STARTED,
+                                                     convo_node)
+            self.graph_db.create(user_started_relationship)
+            # create started conversation with relationship
+            convo_with_relationship = Relationship(convo_node,
+                                                   GraphRelationship.WITH,
+                                                   user_with.user_node)
+            self.graph_db.create(convo_with_relationship)
+            return convo_node.properties['id']
+        except:
+            pass  #TODO add exception handling
 
 
     # @staticmethod

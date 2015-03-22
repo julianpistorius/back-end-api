@@ -80,7 +80,25 @@ class Conversation(object):
         if convo_with_relationship:
             return convo_with_relationship.end_node.properties
 
+    def set_conversation_properties(self, conversation_properties):
+        """
+        set conversation properties
+        :param conversation_properties:
+        :return:
+        """
+        for key, value in conversation_properties.iteritems():
+            setattr(self, key, value)
 
+    def update_conversation(self):
+        """
+
+        :return:
+        """
+        convo = self.graph_db.find_one(GraphLabel.CONVERSATION,
+                                       property_key='id',
+                                       property_value=self.id)
+        convo.properties = self.conversation_properties
+        convo.push()
 
     def create_response(self, user_id, message):
         new_convo_response = Node.cast(GraphLabel.RESPONSE,
