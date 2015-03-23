@@ -52,6 +52,11 @@ class User(object):
         return properties_dict
 
     def set_user_properties(self, user_properties):
+        """
+
+        :param user_properties:
+        :return:
+        """
         for key, value in user_properties.iteritems():
             setattr(self, key, value)
 
@@ -253,16 +258,10 @@ class User(object):
         #TODO add exception handling
         interest = Interest()
         interest.id = interest_id
-        # interest.get_interest_by_id()
         interest_node = interest.interest_node_by_id
-        # user_interest_relationship = Relationship(start_node=self.user_node,
-        #                                           rel=GraphRelationship.INTERESTED_IN,
-        #                                           end_node=interest_node)
         user_interest_relationship = Relationship(self.user_node,
                                                   GraphRelationship.INTERESTED_IN,
                                                   interest_node)
-                                                  # properties=experience_properties_dict)
-        # user_interest_relationship.properties = experience_properties_dict
         for key, value in experience_properties_dict.iteritems():
             user_interest_relationship[key] = value
         try:
@@ -274,41 +273,41 @@ class User(object):
     def update_interest(self, interest_id, experience_properties_dict):
         interest = Interest()
         interest.id = interest_id
-        # interest.get_interest_by_id()
         interest_node = interest.interest_node_by_id
-        #TODO find out why binding does not work ask on Stack Overflow
         user_interest_relationship = self.graph_db.match_one(start_node=self.user_node,
                                                              rel_type=GraphRelationship.INTERESTED_IN,
                                                              end_node=interest_node)
-        # user_interest_relationship = Relationship(start_node=self.user_node,
-        #                                           rel=GraphRelationship.INTERESTED_IN,
-        #                                           end_node=interest_node)
-        #                                           # properties=experience_properties_dict)
-        # user_interest_relationship.properties = experience_properties_dict
         for key, value in experience_properties_dict.iteritems():
             user_interest_relationship.properties[key] = value
         user_interest_relationship.push()
 
-        # user_interest_relationship.bind(uri=Graph().uri)
-        # self.graph_db.push(user_interest_relationship)
-        # user_interest_relationship.bind(uri=self.graph_db.uri, metadata=None)
-        # user_interest_relationship.push()
+    def delete_interest(self, interest_id):
+        """
+        drop interest relationship from user given the interest_id
+        :param interest_id: str(uuid.uuid4())
+        :return:
+        """
+        #TODO exception handling
+        interest = Interest()
+        interest.id = interest_id
+        interest_node = interest.interest_node_by_id
+        user_interest_relationship = self.graph_db.match_one(start_node=self.user_node,
+                                                             rel_type=GraphRelationship.INTERESTED_IN,
+                                                             end_node=interest_node)
+        self.graph_db.delete(user_interest_relationship)
 
     def update_user(self):
         user_node = self.user_node
         user_properties = dict(self.user_properties)
         for key, value in user_properties.iteritems():
             user_node[key] = value  # user_properties[key]
-        # self.user_node.properties = self.user_properties
-        # print self.graph_db.uri
-        # user_node.bind(self.graph_db.uri)
         user_node.push()
 
     # def make_admin(self):
     #     #new_user = self.graph_db.get_or_create_indexed_node(index_name=GraphLabel.USER, key='email', value=self.email)
     #     self.user_node.add_labels(GraphLabel.ADMIN)
 
-    def add_goal(self, goal_id, goal_relationship_properties=None):
+    def add_goal(self, goal_properties):
         """
         Add goal to user
         :param goal_id: string uuid
@@ -316,7 +315,8 @@ class User(object):
         """
         #TODO exception handling
         goal = Goal()
-        goal.id = goal_id
+        goal.set_goal_properties(goal_properties=goal_properties)
+        goal.create_goal()
         # create relationship between user and interest node
         user_goal_relationship = Relationship(self.user_node,
                                               GraphRelationship.HAS_GOAL,
@@ -415,47 +415,53 @@ class User(object):
                                                         end_node=org.org_node)
         self.graph_db.delete(user_org_relationship)
 
-    def add_location(self, location_place_id):
+    def add_location(self, location_json):
         """
         link user to location nodes
         :param locations_place_id:
         :return:
         """
         #TODO exception handling
+        location_place_id = location_json['id']
         location = Location()
         location.place_id = location_place_id
+        location_node = location.location_node_by_place_id
+        if not location_node:
+            location.set_location_properties(location_json)
+            location.create_location()
+            location_node = location.location_node_by_place_id()
 
         user_location_relationship = Relationship(self.user_node,
                                                   GraphRelationship.LOCATED_IN,
-                                                  location.location_node_by_place_id)
+                                                  location_node)
         # try:
         self.graph_db.create_unique(user_location_relationship)
         # except:
         #     pass
 
-    def create_converation_between_users(self, user_id_started, user_id_with): #TODO this should go in user class
-        pass
+    def create_converation_between_users(self, user_id_started, user_id_with, conversation_properties):
         # self.id = uuid.uuid4()
-        # new_convo_node = Node.cast(GraphLabel.CONVERSATION, self.conversation_properties)
-        # try:
-        #     self.graph_db.create(new_convo_node)  # create new conversation node
-        #     user_started = User()
-        #     user_started.id = user_id_started
-        #     user_with = User()
-        #     user_with.id = user_id_with
-        #     # create started conversation relationship
-        #     user_started_relationship = Relationship(user_started.user_node,
-        #                                              GraphRelationship.STARTED,
-        #                                              self.conversation_node)
-        #     self.graph_db.create(user_started_relationship)
-        #     # create started conversation with relationship
-        #     convo_with_relationship = Relationship(self.conversation_node,
-        #                                            GraphRelationship.WITH,
-        #                                            user_with.user_node)
-        #     self.graph_db.create(convo_with_relationship)
-        #     # return new_convo_node
-        # except:
-        #     pass  #TODO add exception handling
+        conversation_properties['id'] = str(uuid.uuid4())
+        new_convo_node = Node.cast(GraphLabel.CONVERSATION, conversation_properties)
+        try:
+            convo_node, = self.graph_db.create(new_convo_node)  # create new conversation node
+            user_started = User()
+            user_started.id = user_id_started
+            user_with = User()
+            user_with.id = user_id_with
+            # create started conversation relationship
+            user_started_relationship = Relationship(user_started.user_node,
+                                                     GraphRelationship.STARTED,
+                                                     convo_node)
+            self.graph_db.create(user_started_relationship)
+            # create started conversation with relationship
+            convo_with_relationship = Relationship(convo_node,
+                                                   GraphRelationship.WITH,
+                                                   user_with.user_node)
+            self.graph_db.create(convo_with_relationship)
+            return convo_node.properties['id']
+        except:
+            pass  #TODO add exception handling
 
 
     # @staticmethod

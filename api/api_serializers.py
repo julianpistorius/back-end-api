@@ -77,6 +77,20 @@ class MeetingSchema(Schema):
     time = fields.Time()
 
 
+class ConversationSchema(Schema):
+    id = fields.String()
+    subject = fields.String()
+    message = fields.String()
+    created_date = fields.DateTime()
+
+
+class ResponseSchema(Schema):
+    id = fields.String()
+    message = fields.String()
+    by = fields.String()
+    created_date = fields.DateTime
+
+
 class ActivatedUserSchema(Schema):
     x_auth_key = fields.String()
 
@@ -128,6 +142,15 @@ class OrganizationResponder(Responder):
 class MeetingResponder(Responder):
     TYPE = 'meetings'
     SERIALIZER = MeetingSchema
+
+
+class ConversationResponder(Responder):
+    TYPE = 'conversations'
+    SERIALIZER = ConversationSchema
+
+class ResponseResponder(Responder):
+    TYPE = 'responses'
+    SERIALIZER = ResponseSchema
 
 
 SearchResponder.LINKS = {
@@ -250,6 +273,19 @@ MeetingResponder.LINKS = {
     'attendees': {
         'responder': UserResponder,
         'href': '%s/users/{users.id}'
+    }
+}
+
+ConversationResponder.LINKS = {
+    'users': {
+        'responder': UserResponder,
+        'href': '%s/users/{users.id}' % (settings.SITE_URL)
+    }
+}
+
+ResponseResponder.LINKS = {
+    'responses': {
+        'responder': ResponseResponder
     }
 }
 

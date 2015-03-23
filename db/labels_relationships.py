@@ -23,6 +23,7 @@ class GraphRelationship(object):
     TO = "TO"
     WITH = "WITH"
     RESPONDED = "RESPONDED"
+    SENT = "SENT"
 
 
 class GraphLabel(object):
@@ -40,6 +41,8 @@ class GraphLabel(object):
     MEETING = "MEETING"
     RESPONSE = "RESPONSE"
     CONVERSATION = "CONVERSATION"
+    MADE_CONTACT_WITH = "MADE_CONTACT_WITH"
+    CQ = "CQ"
 
 
 # class Relationship(Enum):
