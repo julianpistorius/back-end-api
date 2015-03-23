@@ -27,3 +27,5 @@ class Cq(object):
         """
         properties_dict = dict(self.__dict__)
         del properties_dict['graph_db']
+        return properties_dict
+
