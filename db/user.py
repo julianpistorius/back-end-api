@@ -424,7 +424,7 @@ class User(object):
         #TODO exception handling
         location_place_id = location_json['id']
         location = Location()
-        location.place_id = location_place_id
+        location.id = location_place_id
         location_node = location.location_node_by_place_id
         if not location_node:
             location.set_location_properties(location_json)

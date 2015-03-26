@@ -5,7 +5,7 @@ import datetime
 import sys
 import settings
 from py2neo import Node, Graph, Relationship, Path, Rev
-from labels_relationships import Relationship, Label
+from labels_relationships import GraphRelationship, GraphLabel
 from db.user import User
 
 

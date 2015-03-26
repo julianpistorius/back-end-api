@@ -1,4 +1,5 @@
 from db.conversation import Conversation
+from misc.decorators_experiments.authorization_decorator_class import AuthDecorator
 
 __author__ = 'Marnee Dearman'
 import sys
@@ -44,7 +45,7 @@ class ApiUser(object):
 # POST to register user
 # api.add_route('/users/{user_id}', user)
 # GET user information
-
+    @AuthDecorator
     def on_get(self, request, response, user_id=None):
         auth = user_auth(request)
         if user_id is not None:  # get the specified user
@@ -58,6 +59,9 @@ class ApiUser(object):
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
+    #TODO user a decorator to check authorization
+    #TODO use a decorator to check request object
+    @AuthDecorator
     def on_post(self, request, response):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')

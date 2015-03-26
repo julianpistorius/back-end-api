@@ -7,12 +7,12 @@ from labels_relationships import GraphRelationship, GraphLabel
 
 class Location(object):
     def __init__(self):
-        self.formatted_address = None
-        self.name = None
+        self.formatted_address = ''
+        self.name = ''
         # self.postal_code = None
         # self.country = False
         # self.locality = True
-        self.id = None  #place_id
+        self.id = ''  #place_id
         self.graph_db = Graph(settings.DATABASE_URL)
 
     @property
@@ -37,7 +37,7 @@ class Location(object):
         :return: py2neo Node
         """
         return self.graph_db.find_one(GraphLabel.LOCATION,
-                                      property_key='place_id',
+                                      property_key='id',
                                       property_value=self.id)
 
     def set_location_properties(self, location_properties):
@@ -45,7 +45,7 @@ class Location(object):
             setattr(self, key, value)
 
     def create_location(self):
-        self.id = str(uuid.uuid4())
+        # self.id = str(uuid.uuid4())
         # new_location_properties = {
         #     "formatted_address": self.formatted_address,
         #     "name": self.name,
