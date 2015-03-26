@@ -46,10 +46,12 @@ class ApiUser(object):
 # api.add_route('/users/{user_id}', user)
 # GET user information
     @AuthDecorator
-    def on_get(self, request, response, user_id=None):
+    def on_get(self, request, response, user_id=None, auth_key=None):
         auth = user_auth(request)
         if user_id is not None:  # get the specified user
+            # response.data = self.get_user_responder(user_id=user_id, auth_id=self.auth_key)
             response.data = self.get_user_responder(user_id=user_id, auth_id=auth.auth_key)
+            # response.data = self.get_user_responder(user_id=user_id, auth_id=auth_key)
         else:  # find by name return a list
             match = request.params['match']
             limit = int(request.params['limit'])
