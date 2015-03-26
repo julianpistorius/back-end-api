@@ -5,8 +5,8 @@ import uuid
 import time
 
 #SERIALIZE FOR URL PAYLOAD
-s = URLSafeTimedSerializer(secret_key=settings.TOKEN_SECRET_KEY)
-id = '871fbc60-beb8-4511-83fd-2d9e60c30fa8'
+s = URLSafeSerializer(secret_key=settings.TOKEN_SECRET_KEY)
+id = 'b808136d-148c-4206-8fa0-4cfa3eba6239'
 payload = s.dumps(id)
 
 # print s
@@ -18,7 +18,7 @@ print payload
 time.sleep(5)
 
 try:
-    id2 = s.loads(payload, max_age=6)
+    id2 = s.loads(payload)  #, max_age=6)
     print id, id2
 except BadTimeSignature:
     print 'out of time'

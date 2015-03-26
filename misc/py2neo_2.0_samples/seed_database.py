@@ -18,22 +18,30 @@ Graph(settings.DATABASE_URL).delete_all()
 tucson = Location()
 tucson.name = 'Tucson'
 tucson.formatted_address = 'Tucson, AZ, USA'
-tucson.place_id = 'ChIJK-0sC0Fl1oYRFccWTTgtw3M'
+tucson.id = 'ChIJK-0sC0Fl1oYRFccWTTgtw3M'
 tucson.create_location()
+
+tucson_json = {
+    "location": {
+        "id": "ChIJK-0sC0Fl1oYRFccWTTgtw3M",
+        "name": "Tucson",
+        "formatted_address": "Tucson, AZ, USA"
+    }
+}
 
 bisbee = Location()
 bisbee.name = 'Bisbee'
 bisbee.formatted_address = 'Bisbee, AZ 85603, USA'
-bisbee.place_id = 'ChIJL9jhHLi00IYRGms2fEz_zGU'
+bisbee.id = 'ChIJL9jhHLi00IYRGms2fEz_zGU'
 bisbee.create_location()
 
 #INTERESTS
 #Kettlebells, Internet Startup, Python Programming
 interest = Interest()
-interest.name = 'Kettlebells'
+interest.name = 'Amateur Radio'
 interest.description = 'Getting strong with those cannonballs with handles'
 interest.create_interest()
-kettlebells_id = interest.id
+amateur_radio_id = interest.id
 
 interest = Interest()
 interest.name = 'Internet Startup'
@@ -60,6 +68,7 @@ marnee.mission_statement = 'This is my mission statement.'
 marnee.create_user()
 
 julian = User()
+julian.call_sign = 'RADICAL'
 julian.email = 'julian@elmerly.com'
 julian.name = 'Julian'
 julian.is_admin = False
@@ -105,64 +114,64 @@ experience = {
 }
 
 #link to interests and locations
-marnee.add_interest(kettlebells_id, experience)
+marnee.add_interest(amateur_radio_id, experience)
 # print marnee.user_interests
 marnee.add_interest(startup_id, experience)
 marnee.add_interest(python_id, experience)
-marnee.add_location(tucson.place_id)
+marnee.add_location(tucson_json['location'])
 
-julian.add_interest(kettlebells_id, experience)
+julian.add_interest(amateur_radio_id, experience)
 julian.add_interest(startup_id, experience)
 julian.add_interest(python_id, experience)
-julian.add_location(tucson.place_id)
+julian.add_location(tucson_json['location'])
 
 chris.add_interest(startup_id, experience)
-chris.add_location(tucson.place_id)
+chris.add_location(tucson_json['location'])
 
 dan.add_interest(startup_id, experience)
-dan.add_location(tucson.place_id)
+dan.add_location(tucson_json['location'])
 
 frank.add_interest(startup_id, experience)
 frank.add_interest(python_id, experience)
-frank.add_location(tucson.place_id)
+frank.add_location(tucson_json['location'])
 
 liz.add_interest(startup_id, experience)
-liz.add_location(tucson.place_id)
+liz.add_location(tucson_json['location'])
 
 #groups
-demo_day = Group()
-demo_day.about = 'Demo your progress and talk about your startup'
-demo_day.mission_statement = 'Mission statement.'
-demo_day.name = 'Tucson Startup Demo Day'
-demo_day.meeting_location = 'Tucson Co-Lab'
-demo_day.website = 'http://www.www.com'
-demo_day.is_invite_only = True
-demo_day.next_meeting_date = datetime.date.today()
-demo_day.next_meeting_time = datetime.datetime.now().time()
-demo_day.is_open = True
-demo_day.create_group()
+# demo_day = Group()
+# demo_day.about = 'Demo your progress and talk about your startup'
+# demo_day.mission_statement = 'Mission statement.'
+# demo_day.name = 'Tucson Startup Demo Day'
+# demo_day.meeting_location = 'Tucson Co-Lab'
+# demo_day.website = 'http://www.www.com'
+# demo_day.is_invite_only = True
+# demo_day.next_meeting_date = datetime.date.today()
+# demo_day.next_meeting_time = datetime.datetime.now().time()
+# demo_day.is_open = True
+# demo_day.create_group()
 
 #add interests to group
-demo_day.add_interest(startup_id)
+# demo_day.add_interest(startup_id)
 
 #add users to group
 
-marnee.join_group(demo_day.id)
-julian.join_group(demo_day.id)
-dan.join_group(demo_day.id)
-chris.join_group(demo_day.id)
-frank.join_group(demo_day.id)
-liz.join_group(demo_day.id)
+# marnee.join_group(demo_day.id)
+# julian.join_group(demo_day.id)
+# dan.join_group(demo_day.id)
+# chris.join_group(demo_day.id)
+# frank.join_group(demo_day.id)
+# liz.join_group(demo_day.id)
 
-marnee_goal = Goal()
-marnee_goal.title = 'Launch the Elmerly startup.'
-marnee_goal.description = 'Make app public and get users.'
-marnee_goal.start_date = datetime.date.today()
-marnee_goal.end_date = datetime.date.today() + datetime.timedelta(days=400)
-marnee_goal.create_goal()
-
-marnee_goal.add_interest(startup_id)
-marnee.add_goal(marnee_goal.id)
+# marnee_goal = Goal()
+# marnee_goal.title = 'Launch the Elmerly startup.'
+# marnee_goal.description = 'Make app public and get users.'
+# marnee_goal.start_date = datetime.date.today()
+# marnee_goal.end_date = datetime.date.today() + datetime.timedelta(days=400)
+# marnee_goal.create_goal()
+#
+# marnee_goal.add_interest(startup_id)
+# marnee.add_goal(marnee_goal.id)
 
 # julian.add_goal(goal.id)
 # dan.add_goal(goal.id)
@@ -172,19 +181,19 @@ marnee.add_goal(marnee_goal.id)
 # print marnee.get_local_users_shared_interests_near_location()
 
 #organization
-evo_fit = Organization()
-evo_fit.name = 'Evolution Fitness Tucson'
-evo_fit.about = "Tucson's School of Strength: Personal Training, Kettlebells, Olympic Lifting, Kettlebell Training for women, Personal Trainers Tucson, Powerlifting"
-evo_fit.email = 'info@evolutionfitness.com'
-evo_fit.is_invite_only = True
-evo_fit.is_open = True
-evo_fit.mission_statement = 'Get Tucson fit, strong, and healthy.'
-evo_fit.website = 'http://www.evolutiontucson.com/'
-evo_fit.create_organization()
+ovarc = Organization()
+ovarc.name = 'Oro Valley Amateur Radio Club'
+ovarc.about = 'Oro Valley Amateur Radio Club'
+ovarc.email = 'club@elmerly.com'
+ovarc.is_invite_only = True
+ovarc.is_open = True
+ovarc.mission_statement = 'Advance amateur radio in southern arizona'
+ovarc.website = 'http://www.com'
+ovarc.create_organization()
 
 #add interests
-evo_fit.add_interest(kettlebells_id)
+ovarc.add_interest(amateur_radio_id)
 
 #add users to organization
-marnee.join_organization(evo_fit.id)
-julian.join_organization(evo_fit.id)
+marnee.join_organization(ovarc.id)
+julian.join_organization(ovarc.id)
