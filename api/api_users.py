@@ -1,5 +1,6 @@
 from db.conversation import Conversation
 from misc.decorators_experiments.authorization_decorator_class import AuthDecorator
+from validators.decorators.json_validator_decorator import validate_request_json
 
 __author__ = 'Marnee Dearman'
 import sys
@@ -45,8 +46,8 @@ class ApiUser(object):
 # POST to register user
 # api.add_route('/users/{user_id}', user)
 # GET user information
-    @AuthDecorator
-    def on_get(self, request, response, user_id=None, auth_key=None):
+#     @AuthDecorator
+    def on_get(self, request, response, user_id=None, **kwargs):  # , auth_key=None):
         auth = user_auth(request)
         if user_id is not None:  # get the specified user
             # response.data = self.get_user_responder(user_id=user_id, auth_id=self.auth_key)
@@ -61,10 +62,11 @@ class ApiUser(object):
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
-    #TODO user a decorator to check authorization
-    #TODO use a decorator to check request object
-    @AuthDecorator
-    def on_post(self, request, response):
+    #TODO user a decorator to check authorization??
+    #TODO use a decorator to check request object??
+    # @AuthDecorator
+    # @validate_request_json('register')
+    def on_post(self, request, response):  #, **kwargs=None):
         raw_json = request.stream.read()
         result_json = simplejson.loads(raw_json, encoding='utf-8')
         # REGISTER USER -- does not create a user
@@ -74,7 +76,8 @@ class ApiUser(object):
         else:
             response.status = falcon.HTTP_400
 
-    def on_put(self, request, response, user_id):
+    # @validate_request_json('register')
+    def on_put(self, request, response, user_id):  # , **kwargs):
         auth = user_auth(request.auth)
         if auth.is_authorized_user and user_id == auth.auth_key:
             raw_json = request.stream.read()
