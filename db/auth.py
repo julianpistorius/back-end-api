@@ -4,7 +4,7 @@ import os
 import time
 import uuid
 import simplejson
-from itsdangerous import URLSafeSerializer, URLSafeTimedSerializer, BadSignature, BadTimeSignature
+from itsdangerous import URLSafeSerializer, URLSafeTimedSerializer, BadSignature, BadTimeSignature, BadPayload
 import settings
 from db.user import User
 import sys
@@ -22,6 +22,8 @@ class Auth(object):
             user.get_user()
             self.is_authorized_user = user.id == self.auth_key  # users auth key is valid
         except BadSignature:
+            self.is_authorized_user = False
+        except BadPayload:
             self.is_authorized_user = False
         except:
             print sys.exc_info()[0]
