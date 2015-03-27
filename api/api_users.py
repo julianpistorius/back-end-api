@@ -45,11 +45,14 @@ class ApiUser(ApiBase):
             response.data = self.get_user_responder(user_id=user_id, auth_id=self.user_id)
             # response.data = self.get_user_responder(user_id=user_id, auth_id=auth_key)
         else:  # find by name return a list
-            match = request.params['match']
-            limit = int(request.params['limit'])
-            search_results = User().matched_users(match_string=match, limit=limit)
-            response.data = SearchResponder.respond(search_results,
-                                                    linked={'users': search_results['users']})
+            if len(request.params) > 0:
+                match = request.params['match']
+                limit = int(request.params['limit'])
+                search_results = User().matched_users(match_string=match, limit=limit)
+                response.data = SearchResponder.respond(search_results,
+                                                        linked={'users': search_results['users']})
+            else:
+                response.data = {}
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 

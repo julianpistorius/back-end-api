@@ -23,7 +23,7 @@ class ApiBase():
             return False
 
     def authorize_user(self, request):
-        x_auth_key = request.headers['X-Auth-Key']
+        x_auth_key = request.headers['X-AUTH-KEY']
         serializer = URLSafeSerializer(secret_key=settings.TOKEN_SECRET_KEY)
         try:
             user = User()
