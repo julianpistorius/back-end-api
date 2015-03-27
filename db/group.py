@@ -21,7 +21,7 @@ class Group(object):
         # self.next_meeting_date = None
         # self.next_meeting_time = None
         # self.creator = '' #by id
-        # self.moderators = [] #by id  #TODO change this to a relationship in the graph
+        # self.moderators = [] #by id
         self.website = ''
         self._graph_db = Graph(settings.DATABASE_URL)
 
