@@ -1,3 +1,5 @@
+from db.organization import Organization
+
 __author__ = 'marnee'
 # from abc import ABCMeta, abstractmethod
 import simplejson
@@ -75,3 +77,10 @@ class ApiBase():
         user.id = user_id
         user.get_user()
         return user
+
+    @staticmethod
+    def get_organization(org_id):
+        org = Organization()
+        org.id = org_id
+        org.get_organization()
+        return org

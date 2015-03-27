@@ -59,10 +59,17 @@ class Location(object):
         return new_location_node
 
     def get_location(self):
+        """
+        get existing location.
+        :return:  False if not found.  True if found.
+        """
         location_node = self.location_node_by_place_id
         location_properties = {}
         location_properties = dict(location_node.properties)
         if not location_node is None:
             for key, value in location_properties.iteritems():
                 setattr(self, key, value)
+            return True
+        else:
+            return False
 

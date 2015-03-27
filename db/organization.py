@@ -1,3 +1,5 @@
+from db.location import Location
+
 __author__ = 'Marnee Dearman'
 import uuid
 import settings
@@ -43,6 +45,20 @@ class Organization(object):
         return interests_list
 
     @property
+    def org_locations(self):
+        """
+        list of locations for the org
+        :return: list
+        """
+        locations = self._graph_db.match(start_node=self.org_node,
+                                         rel_type=GraphRelationship.LOCATED_IN,
+                                         end_node=None)
+        locations_list = []
+        for rel in locations:
+            locations_list.append(dict(rel.end_node.properties))
+        return locations_list
+
+    @property
     def org_members(self):
         """
         list of users.  user is a dictionary of properties
@@ -80,6 +96,25 @@ class Organization(object):
 
         return new_org_node
 
+    def add_location(self, location_dict):
+        """
+        add location relationship to organization
+        if location does not exist, create the location node and then create relationship
+        :param location_dict:  dictionary object of location to add
+        :return:
+        """
+        location = Location()
+        location.id = location_dict['id']
+        location_node = location.location_node_by_place_id
+        if not location_node:
+            location.set_location_properties(location_dict)
+            location.create_location()
+            location_node = location.location_node_by_place_id
+        try:
+            self._graph_db.create_unique(self.org_node, GraphRelationship.LOCATED_IN, location_node)
+        except:
+            pass  #TODO exception handling
+
     def add_interest(self, interest_id):
         interest = Interest()
         interest.id = interest_id
@@ -98,4 +133,5 @@ class Organization(object):
         root = dict(self.org_properties)
         root['interests'] = self.org_interests
         root['members'] = self.org_members
+        root['locations'] = self.org_locations
         return root
