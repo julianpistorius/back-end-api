@@ -2,7 +2,8 @@ __author__ = 'Marnee Dearman'
 from db.location import Location
 import simplejson
 import falcon
-from validators import validate_location_schema
+from validators.validate_location_schema import validate_location
+from base import ApiBase
 
 #TODO locations come from Google maps api
 # def get_location(name=None, postal_code=None, place_id=None):
@@ -19,28 +20,21 @@ from validators import validate_location_schema
 
 #TODO check user authorization
 
-class ApiLocation(object):
-    def __init__(self):
-        pass
-
+class ApiLocation(ApiBase):
     def on_get(self, response, request, place_id):
         #TODO return activity for location
         pass
 
     def on_post(self, request, response, user_id=None, group_id=None, organization_id=None):
         #TODO add location to user or group or organization
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        if validate_location_schema.validate_location(result_json):
+        if self.validate_json(request, validate_location):
             pass  # handle adding location to entity
         else:
             response.status = falcon.HTTP_400
 
     def on_put(self, request, response, user_id=None, group_id=None, organization_id=None):
         #TODO change location
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        if validate_location_schema.validate_location(result_json):
+        if self.validate_json(request, validate_location):
             pass
         else:
             response.status = falcon.HTTP_400

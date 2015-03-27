@@ -4,6 +4,8 @@ import simplejson
 from itsdangerous import URLSafeSerializer, URLSafeTimedSerializer, BadSignature, BadTimeSignature, BadPayload
 import settings
 from db.user import User
+from db.group import Group
+from db.meeting import Meeting
 import sys
 
 
@@ -53,4 +55,23 @@ class ApiBase():
         agora_user.get_user()
         return agora_user
 
+    @staticmethod
+    def get_meeting_by_id(meeting_id):
+        meeting = Meeting()
+        meeting.id = meeting_id
+        meeting.get_meeting()
+        return meeting
 
+    @staticmethod
+    def get_group(group_id):
+        agora_group = Group()
+        agora_group.id = group_id
+        agora_group.get_group()
+        return agora_group
+
+    @staticmethod
+    def get_group_user(user_id):
+        user = User()
+        user.id = user_id
+        user.get_user()
+        return user

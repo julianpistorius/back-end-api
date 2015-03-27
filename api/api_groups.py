@@ -2,60 +2,34 @@ __author__ = 'Marnee Dearman'
 
 import falcon
 from db.interest import Interest
-from db.user import User
-
 from db.group import Group
 from db.auth import Auth
+from base import ApiBase
 from api_serializers import GroupResponder, SearchResponder
-import simplejson
-from validators import validate_group_schema
+from validators.validate_group_schema import validate_group
 
 
-def get_group(group_id):
-    agora_group = Group()
-    agora_group.id = group_id
-    agora_group.get_group()
-    return agora_group
-
-
-def get_group_user(user_id):
-    user = User()
-    user.id = user_id
-    user.get_user()
-    return user
-
-
-def user_auth(request):
-    auth = Auth(auth_header=request.headers)
-    return auth
-
-
-class ApiGroup(object):
-    def __init__(self):
-        pass
-
+class ApiGroup(ApiBase):
     def on_get(self, request, response, group_id=None):
         #TODO get group details
-        auth = user_auth(request)
+        self.authorize_user(request)
         if group_id is not None:
-            response.data = self.get_group_json(group_id=group_id, auth_id=auth.auth_key)
+            response.data = self.get_group_json(group_id=group_id, auth_id=self.user_id)
         else:
-            match = request.params['match']
-            limit = int(request.params['limit'])
-            search_results = Group().matched_groups(match_string=match,
-                                                         limit=limit)
-            response.data = SearchResponder.respond(search_results,
-                                                    linked={'groups': search_results['groups']})
+            if len(request.params) > 0:
+                match = request.params['match']
+                limit = int(request.params['limit'])
+                search_results = Group().matched_groups(match_string=match,
+                                                             limit=limit)
+                response.data = SearchResponder.respond(search_results,
+                                                        linked={'groups': search_results['groups']})
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
     def on_post(self, request, response):
-        auth = user_auth(request)
-        if auth.is_authorized_user:
-            raw_json = request.stream.read()
-            result_json = simplejson.loads(raw_json, encoding='utf-8')
-            if validate_group_schema.validate_group(result_json):
-                self.create_group(result_json, auth_id=auth.auth_key)
+        if self.authorize_user(request):
+            if self.validate_json(request, validate_group):
+                self.create_group(self.result_json, auth_id=self.user_id)
                 response.status = falcon.HTTP_201  # created
             else:
                 response.status = falcon.HTTP_400
@@ -63,21 +37,18 @@ class ApiGroup(object):
             response.status = falcon.HTTP_401
 
     def on_put(self, request, response):
-        auth = user_auth(request)
-        #TODO update group
-        #TODO check if the user is a moderator or creator to update this group profile
-        if auth.is_authorized_user:
-            raw_json = request.stream.read()
-            result_json = simplejson.loads(raw_json, encoding='utf-8')
-            if validate_group_schema.validate_group(result_json):
-                self.update_group(group_json=result_json, auth_id=auth.auth_key)
+        # #TODO update group
+        # #TODO check if the user is a moderator or creator to update this group profile
+        if self.authorize_user(request):
+            if self.validate_json(request, validate_group):
+                self.update_group(group_json=self.result_json, auth_id=self.user_id)
             else:
                 response.status = falcon.HTTP_400
         else:
             response.status = falcon.HTTP_401
 
     def get_group_json(self, group_id, auth_id):
-        group_details = get_group(group_id).group_for_json()
+        group_details = self.get_group(group_id).group_for_json()
         json = GroupResponder.respond(group_details)
         return json
 
@@ -97,20 +68,16 @@ class GroupMembers(object):
         pass
 
 
-class GroupInterests(object):
-    def __init__(self):
-        pass
-
+class GroupInterests(ApiBase):
     def on_post(self, request, response, group_id):
-        auth = user_auth(request.headers)
-        group = get_group(group_id=group_id)
-        user = get_group_user(group.group_creator)
-        if auth.is_authorized_user and auth.auth_key == user.id:
-            raw_json = request.stream.read()
-            result_json = simplejson.loads(raw_json, encoding='utf-8')
-            self.create_add_interests(result_json['interests'], group_id)
-            response.status = falcon.HTTP_201
-            response.body = simplejson.dumps(result_json, encoding='utf-8')
+        group = self.get_group(group_id=group_id)
+        user = self.get_group_user(group.group_creator)
+        if self.authorize_user(request) and user.id == self.user_id:
+            if self.validate_json(request, validate_group):
+                self.create_add_interests(self.result_json['interests'], group_id)
+                response.status = falcon.HTTP_201
+                #TODO user reponder?
+                # response.body = simplejson.dumps(result_json, encoding='utf-8')
         else:
             response.status = falcon.HTTP_401
 

@@ -6,7 +6,6 @@ __author__ = 'Marnee Dearman'
 import sys
 import falcon
 from itsdangerous import BadSignature, BadTimeSignature
-from db.auth import Auth
 from db.user import User
 from db.interest import Interest
 from db.goal import Goal
@@ -15,7 +14,6 @@ from validators import validate_goals_schema, validate_conversation_response_sch
 from api.base import ApiBase
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
     GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder, ConversationResponder
-import simplejson
 
 
 # def get_user_by_email(email):
@@ -38,12 +36,10 @@ class ApiUser(ApiBase):
 # api.add_route('/users/{user_id}', user)
 # GET user information
 #     @AuthDecorator
-    def on_get(self, request, response, user_id=None, **kwargs):  # , auth_key=None):
+    def on_get(self, request, response, user_id=None):  # , **kwargs):  # , auth_key=None):
         self.authorize_user(request=request)
         if user_id is not None:  # get the specified user
-            # response.data = self.get_user_responder(user_id=user_id, auth_id=self.auth_key)
             response.data = self.get_user_responder(user_id=user_id, auth_id=self.user_id)
-            # response.data = self.get_user_responder(user_id=user_id, auth_id=auth_key)
         else:  # find by name return a list
             if len(request.params) > 0:
                 match = request.params['match']
@@ -51,31 +47,20 @@ class ApiUser(ApiBase):
                 search_results = User().matched_users(match_string=match, limit=limit)
                 response.data = SearchResponder.respond(search_results,
                                                         linked={'users': search_results['users']})
-            else:
-                response.data = {}
         response.content_type = 'application/json'
         response.status = falcon.HTTP_200
 
     def on_post(self, request, response):  #, **kwargs=None):
-        # raw_json = request.stream.read()
-        # result_json = simplejson.loads(raw_json, encoding='utf-8')
         if self.validate_json(request, validate_user_schema.validate_activate_user):
         # REGISTER USER -- does not create a user
-        # if validate_user_schema.validate_activate_user(result_json):
             self.register_user(self.result_json['user'])
             response.status = falcon.HTTP_200
         else:
             response.status = falcon.HTTP_400
 
-    # @validate_request_json('register')
     def on_put(self, request, response, user_id):  # , **kwargs):
-        # auth = user_auth(request.auth)
-        # if auth.is_authorized_user and user_id == auth.auth_key:
         if self.authorize_user(request=request) and user_id == self.user_id:
-            # raw_json = request.stream.read()
-            # result_json = simplejson.loads(raw_json, encoding='utf-8')
             if self.validate_json(request=request, validator=validate_user_schema.validate_user):
-            # if validate_user_schema.validate_user(result_json):
                 self.update_user(user_result_json=self.result_json['user'], user_id=user_id)
                 response.status = falcon.HTTP_200
                 response.content_type = 'application/json'
@@ -116,8 +101,6 @@ class ApiUserInterests(ApiBase):
 # DELETE to drop interest
 
     def on_get(self, request, response, user_id, interest_id=None):
-        # auth = user_auth(request.headers)
-        # if auth.is_authorized_user:
         if self.authorize_user(request=request):
             if interest_id is None:
                 response.data = self.get_user_interests_responder(user_id)
@@ -130,12 +113,7 @@ class ApiUserInterests(ApiBase):
             response.status = falcon.HTTP_401
 
     def on_post(self, request, response, user_id, interest_id=None):
-        # auth = user_auth(request.headers)
-        # if auth.is_authorized_user and auth.auth_key == user_id:
         if self.authorize_user(request=request) and user_id == self.user_id:
-            # raw_json = request.stream.read()
-            # result_json = simplejson.loads(raw_json, encoding='utf-8')
-            # if validate_interest_schema.validate_interest(result_json):
             if self.validate_json(request=request, validator=validate_interest_schema.validate_interest):
                 self.add_interests(self.result_json['interest'], user_id=user_id)
                 response.status = falcon.HTTP_201
@@ -147,13 +125,8 @@ class ApiUserInterests(ApiBase):
             response.status = falcon.HTTP_401
 
     def on_put(self, request, response, user_id, interest_id):
-        # auth = user_auth(request)
-        # if auth.is_authorized_user and auth.auth_key == user_id:
         if self.authorize_user(request=request) and user_id == self.user_id:
-            # raw_json = request.stream.read()
-            # result_json = simplejson.loads(raw_json, encoding='utf-8')
             if self.validate_json(request=request, validator=validate_interest_schema.validate_interest):
-            # if validate_interest_schema.validate_interest(result_json):
                 self.update_interest(user_id, interest_id, self.result_json['interest'])
                 response.status = falcon.HTTP_200
                 response.content_type = 'application/json'
@@ -164,8 +137,6 @@ class ApiUserInterests(ApiBase):
             response.status = falcon.HTTP_401
 
     def on_delete(self, request, response, user_id, interest_id):
-        # auth = user_auth(request)
-        # if auth.is_authorized_user and auth.auth_key == user_id:
         if self.authorize_user(request=request) and user_id == self.user_id:
             self.delete_interest(user_id=user_id, interest_id=interest_id)
             response.body = self.get_user_interests_responder(user_id)
@@ -328,12 +299,7 @@ class ApiUserLocations(ApiBase):
             pass  #TODO recommendations and connections
 
     def on_post(self, request, response, user_id):
-        # auth = user_auth(request)
-        # raw_json = request.stream.read()
-        # result_json = simplejson.loads(raw_json, encoding='utf-8')
-        # if auth.is_authorized_user and auth.auth_key == user_id:
         if self.authorize_user(request):
-            # if validate_location_schema.validate_location(result_json):
             if self.validate_json(request, validate_location_schema.validate_location):
                 user = self.get_user_by_id(user_id)
                 user.add_location(self.result_json['location'])
@@ -347,8 +313,6 @@ class ApiUserLocations(ApiBase):
             response.status = falcon.HTTP_401
 
     def on_delete(self, request, response, user_id, location_id):
-        # auth = user_auth(request)
-        # if auth.is_authorized_user and user_id == auth.auth_key:  # fulfill request
         if self.authorize_user(request) and user_id == self.user_id:
             user = self.get_user_by_id(user_id)
             pass  #TODO drop location
@@ -374,7 +338,6 @@ class ApiUserConversations(ApiBase):
 # DELETE to drop response
 
     def on_get(self, request, response, user_id, conversation_id=None):
-        # auth = user_auth(request)
         self.authorize_user(request)
         if conversation_id is None:  # GET list of conversations
             response.data = self.get_user_responder(user_id, self.user_id)
@@ -386,14 +349,8 @@ class ApiUserConversations(ApiBase):
             response.status = falcon.HTTP_200
 
     def on_post(self, request, response, user_id):
-        # auth = user_auth(request)
-        # self.authorize_user()
-        # if auth.is_authorized_user and auth.auth_key != user_id:  # start conversation with user
         if self.authorize_user(request) and user_id != self.user_id:
             user = self.get_user_by_id(user_id)
-            # raw_json = request.stream.read()
-            # result_json = simplejson.loads(raw_json, encoding='utf-8')
-            # if validate_conversation_response_schema.validate_conversation(result_json):
             if self.validate_json(request, validate_conversation_response_schema.validate_conversation):
                 convo_id = user.create_converation_between_users(user_id_started=self.user_id,
                                                                  user_id_with=user_id,
@@ -409,12 +366,7 @@ class ApiUserConversations(ApiBase):
             response.status = falcon.HTTP_401
 
     def on_put(self, request, response, user_id, conversation_id):
-        # auth = user_auth(request)
-        # if auth.is_authorized_user:
         if self.authorize_user(request):
-            # raw_json = request.stream.read()
-            # result_json = simplejson.loads(raw_json, encoding='utf-8')
-            # if validate_conversation_response_schema.validate_conversation(result_json):
             if self.validate_json(request, validate_conversation_response_schema.validate_conversation):
                 convo = Conversation()
                 convo.id = conversation_id
@@ -452,9 +404,6 @@ class ApiActivateUser(ApiBase):
     def on_post(self, request, response):
         user = User()
         response.content_type = 'application/json'
-        # raw_json = request.stream.read()
-        # result_json = simplejson.loads(raw_json, encoding='utf-8')
-        # if validate_user_schema.validate_activate_user(result_json):
         if self.validate_json(request, validate_user_schema.validate_activate_user):
             user_json = self.result_json['user']
             email = user_json['email']
@@ -462,7 +411,6 @@ class ApiActivateUser(ApiBase):
             try:
                 user.activate_user(payload=payload, email=email)
                 response.data = ActivatedUserResponder.respond(user.activated_user_for_json())
-                # UserProfileResponder.respond(user.user_profile_for_json())
                 response.status = falcon.HTTP_201  #created
             except BadSignature as e:
                 response.status = falcon.HTTP_400

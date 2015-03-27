@@ -1,25 +1,15 @@
 __author__ = 'Marnee Dearman'
-# import os
-# import time
-# import uuid
 import falcon
-# import msgpack_pure
 from db.auth import Auth
 from db.user import User
 from db.interest import Interest
-from validators import validate_interest_schema
+from base import ApiBase
+from validators.validate_interest_schema import validate_interest
 import simplejson
 from api_serializers import InterestResponder, SearchResponder
 
 
-def user_auth(request):
-    auth = Auth(auth_header=request.headers)
-    return auth
-
-
-class ApiInterest(object):
-    def __init__(self):
-        pass
+class ApiInterest(ApiBase):
 
     def on_get(self, request, response, interest_id=None):
         """
@@ -49,10 +39,8 @@ class ApiInterest(object):
         :param interest_id:
         :return:
         """
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        if validate_interest_schema.validate_interest(result_json):
-            self.create_interest(result_json['interest'])
+        if self.validate_json(request, validate_interest):
+            self.create_interest(self.result_json['interest'])
             response.status = falcon.HTTP_201
         else:
             response.status = falcon.HTTP_400
