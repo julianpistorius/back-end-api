@@ -3,7 +3,7 @@ __author__ = 'Marnee Dearman'
 from api import api_conversations
 
 import falcon
-import api_users, api_interests, api_locations, api_groups, api_organizations, api_meetings
+import api_users, api_interests, api_locations, api_groups, api_organizations, api_meetings, base
 
 
 def crossdomain(req, resp):
@@ -34,7 +34,7 @@ api = application = falcon.API(after=[crossdomain], before=[cors_middleware])
 user = api_users.ApiUser()
 user_location = api_users.ApiUserLocations()
 user_interests = api_users.ApiUserInterests()
-user_goals = api_users.ApiUserGoals()
+# user_goals = api_users.ApiUserGoals()
 group = api_groups.ApiGroup()
 organization = api_organizations.ApiOrganization()
 interest = api_interests.ApiInterest()
@@ -59,8 +59,8 @@ api.add_route('/users/{user_id}/interests/{interest_id}', user_interests)  # GET
 # api.add_route('/users/{user_id}/interests/{interest_id}/goals', user_interest_goals)
 
 # USER COLLECTIONS
-api.add_route('/users/{user_id}/goals/{goal_id}', user_goals)  # PUT to update goa (achieved), DELETE to drop goal
-api.add_route('/users/{user_id}/goals', user_goals)  # GET to get list of goals
+# api.add_route('/users/{user_id}/goals/{goal_id}', user_goals)  # PUT to update goa (achieved), DELETE to drop goal
+# api.add_route('/users/{user_id}/goals', user_goals)  # GET to get list of goals
 api.add_route('/users/{user_id}/conversations', user)  # GET to get list of conversations.  POST to start a conversation
 api.add_route('/users/{user_id}/conversations/{conversation_id}', user)  # GET conversation and response.
 # PUT to edit original conversation topic

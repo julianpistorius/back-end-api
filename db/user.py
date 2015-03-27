@@ -66,6 +66,9 @@ class User(object):
             user_properties = dict(user_node.properties)
             for key, value in user_properties.iteritems():
                 setattr(self, key, value)
+            return True
+        else:
+            return False
 
     def create_user(self, user_properties=None):
         """

@@ -1,21 +1,12 @@
 __author__ = 'Marnee Dearman'
 import falcon
 from db.organization import Organization
-from db.auth import Auth
-import simplejson
 from api_serializers import OrganizationResponder
-from validators import validate_organization_schema
+from validators.validate_organization_schema import validate_organization
+from base import ApiBase
 
 
-def user_auth(request):
-    auth = Auth(auth_header=request.headers)
-    return auth
-
-
-class ApiOrganization(object):
-    def __init__(self):
-        pass
-
+class ApiOrganization(ApiBase):
     def on_get(self, request, response, org_id=None):
         """
         get organization
@@ -38,10 +29,11 @@ class ApiOrganization(object):
         :return:
         """
         #TODO check authorizes user
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        if validate_organization_schema.validate_organization(result_json):
-            self.create_org(result_json['organization'])
+        # raw_json = request.stream.read()
+        # result_json = simplejson.loads(raw_json, encoding='utf-8')
+        # if validate_organization_schema.validate_organization(result_json):
+        if self.validate_json(request, validate_organization):
+            self.create_org(self.result_json['organization'])
             response.status = falcon.HTTP_201
         else:
             response.status = falcon.HTTP_400
@@ -54,16 +46,17 @@ class ApiOrganization(object):
         :param org_id:
         :return:
         """
-        raw_json = request.stream.read()
-        result_json = simplejson.loads(raw_json, encoding='utf-8')
-        #TODO check authorized user
-        if validate_organization_schema.validate_organization(result_json):
-            self.update_org(result_json['organization'])
+        # raw_json = request.stream.read()
+        # result_json = simplejson.loads(raw_json, encoding='utf-8')
+        # #TODO check authorized user
+        # if validate_organization_schema.validate_organization(result_json):
+        if self.validate_json(request, validate_organization):
+            self.update_org(self.result_json['organization'])
             response.status = falcon.HTTP_201
         else:
             response.status = falcon.HTTP_400
 
-    def get_org(self, org_id):
+    def get_org_responder(self, org_id):
         org = Organization()
         org.id = org_id
         org.get_organization()
