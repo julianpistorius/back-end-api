@@ -149,7 +149,7 @@ class Group(object):
 
         new_group_node = Node.cast(GraphLabel.STUDYGROUP, self.group_properties)
         try:
-            self.graph_db.create(new_group_node)
+            self._graph_db.create(new_group_node)
         except:
             pass
 
@@ -167,7 +167,7 @@ class Group(object):
                                                    GraphRelationship.INTERESTED_IN,
                                                    self.group_node)
         try:
-            self.graph_db.create(group_interest_relationship)
+            self._graph_db.create(group_interest_relationship)
         except:
             pass
 
@@ -233,7 +233,7 @@ class Group(object):
             "WHERE group.name =~ {match} " \
             "RETURN group.name as name, group.id as id " \
             "LIMIT {limit}"
-        match_results = self.graph_db.cypher.execute(statement=cypher_str, parameters=params)
+        match_results = self._graph_db.cypher.execute(statement=cypher_str, parameters=params)
         root = {}
         root['count'] = 0
         group_found = {}
@@ -253,7 +253,8 @@ class Group(object):
         convo = Conversation()
         convo.subject = subject
         convo.message = message
-        convo.create_conversation_for_group(self.id)
+        #TODO create conversation for group
+        # convo.create_conversation_for_group(self.id)
 
     def update_conversation(self, subject, message, convo_id):
         pass  #TODO add update conversation
