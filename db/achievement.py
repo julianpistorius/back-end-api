@@ -14,11 +14,11 @@ class Achievement(object):
         self.title = None
         self.is_visible = True
         self.date = None
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def achievement_node(self):
-        return self.graph_db.find_one(GraphLabel.ACHIEVEMENT,
+        return self._graph_db.find_one(GraphLabel.ACHIEVEMENT,
                                       property_key='id',
                                       property_value=self.id)
 

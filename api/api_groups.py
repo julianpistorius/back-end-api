@@ -1,9 +1,9 @@
 __author__ = 'Marnee Dearman'
 
 import falcon
+
 from db.interest import Interest
 from db.group import Group
-from db.auth import Auth
 from base import ApiBase
 from api_serializers import GroupResponder, SearchResponder
 from validators.validate_group_schema import validate_group

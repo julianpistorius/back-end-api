@@ -1,7 +1,6 @@
 __author__ = 'marnee'
 import falcon
-from db.auth import Auth
-from db.conversation import Conversation
+
 from base import ApiBase
 from validators.validate_conversation_response_schema import validate_conversation
 

@@ -1,11 +1,9 @@
 __author__ = 'Marnee Dearman'
 import falcon
-from db.auth import Auth
-from db.user import User
+
 from db.interest import Interest
 from base import ApiBase
 from validators.validate_interest_schema import validate_interest
-import simplejson
 from api_serializers import InterestResponder, SearchResponder
 
 

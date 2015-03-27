@@ -29,7 +29,7 @@ class Meeting(object):
         self.time = ''
         self.created_date = ''
         self.is_recurring = False
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def meeting_properties(self):
@@ -38,7 +38,7 @@ class Meeting(object):
         :return:
         """
         properties_dict = dict(self.__dict__)
-        del properties_dict['graph_db']
+        del properties_dict['_graph_db']
         return properties_dict
 
     @property
@@ -48,7 +48,7 @@ class Meeting(object):
         :return:
         """
         if self.id != '':
-            return self.graph_db.find_one(GraphLabel.MEETING,
+            return self._graph_db.find_one(GraphLabel.MEETING,
                                           property_key='id',
                                           property_value=self.id)
 
@@ -58,7 +58,7 @@ class Meeting(object):
 
         :return: Group() that is attached to this meeting
         """
-        meeting_group_relationship = self.graph_db.match(start_node=None,
+        meeting_group_relationship = self._graph_db.match(start_node=None,
                                                          rel_type=GraphRelationship.HAS_MEETING,
                                                          end_node=self.meeting_node)
         group = Group()
@@ -101,14 +101,14 @@ class Meeting(object):
             self.set_meeting_properties(meeting_properties)
         new_meeting_node = Node.cast(GraphLabel.MEETING, self.meeting_properties)
         try:
-            self.graph_db.create(new_meeting_node)
+            self._graph_db.create(new_meeting_node)
             group = Group()
             group.id = group_id
             group_node = group.group_node
             meeting_group_relationship = Relationship(group_node,
                                                      GraphRelationship.HAS_MEETING,
                                                      self.meeting_node)
-            self.graph_db.create_unique(meeting_group_relationship)
+            self._graph_db.create_unique(meeting_group_relationship)
         except:
             pass
         return new_meeting_node

@@ -28,7 +28,6 @@ def cors_middleware(request, response, params):
         'GET, PUT, POST, PATCH, DELETE, OPTIONS'
     )
 
-
 api = application = falcon.API(after=[crossdomain], before=[cors_middleware])
 
 user = api_users.ApiUser()

@@ -20,12 +20,12 @@ class Goal(object):
         self.is_public = True
         self.achieved = False
         # self.interests = [] #list of interest dictionaries id:value
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def goal_properties(self):
         goal_properties = dict(self.__dict__)
-        del goal_properties['graph_db']
+        del goal_properties['_graph_db']
         return goal_properties
 
     @property
@@ -34,14 +34,14 @@ class Goal(object):
         get a single goal node based on the attributes of the goal
         :return: neo4j.Node
         """
-        goal_node = self.graph_db.find_one(GraphLabel.GOAL,
+        goal_node = self._graph_db.find_one(GraphLabel.GOAL,
                                            property_key='id',
                                            property_value=self.id)
         return goal_node
 
     @property
     def goal_interests(self):
-        goal_interests = self.graph_db.match(start_node=self.goal_node,
+        goal_interests = self._graph_db.match(start_node=self.goal_node,
                                              rel_type=GraphRelationship.GOAL_FOR,
                                              end_node=None)
         goal_interests_list = []
@@ -82,7 +82,7 @@ class Goal(object):
         #     'created_date': datetime.date.today()}
         new_goal_node = Node.cast(GraphLabel.GOAL, new_goal_properties)
         try:
-            self.graph_db.create(new_goal_node)
+            self._graph_db.create(new_goal_node)
         except:
             pass  #TODO exception handling
         return new_goal_node
@@ -123,7 +123,7 @@ class Goal(object):
         goal_interest_relationship = Relationship(self.goal_node,
                                                   GraphRelationship.GOAL_FOR,
                                                   interest_node)
-        self.graph_db.create_unique(goal_interest_relationship)
+        self._graph_db.create_unique(goal_interest_relationship)
 
     def delete_all_interests(self):
         """
@@ -133,7 +133,7 @@ class Goal(object):
         goal_interests_rels = Relationship(self.goal_node,
                                            GraphRelationship.GOAL_FOR,
                                            None)
-        self.graph_db.delete(goal_interests_rels)
+        self._graph_db.delete(goal_interests_rels)
 
     def get_goal(self):
         goal_node = self.goal_node

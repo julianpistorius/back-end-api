@@ -20,7 +20,7 @@ class Cq(object):
         self.subject = ''
         self.message = ''
         self.created_date = ''
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def cq_properties(self):
@@ -29,7 +29,7 @@ class Cq(object):
         :return:
         """
         properties_dict = dict(self.__dict__)
-        del properties_dict['graph_db']
+        del properties_dict['_graph_db']
         return properties_dict
 
     @property
@@ -39,7 +39,7 @@ class Cq(object):
         :return:
         """
         if self.id != '':
-            return self.graph_db.find_one(GraphLabel.CQ,
+            return self._graph_db.find_one(GraphLabel.CQ,
                                           property_key='id',
                                           property_value=self.id)
 
@@ -49,13 +49,13 @@ class Cq(object):
         list of responses to this CQ
         :return: list of responses
         """
-        cq_response_relationship = self.graph_db.match(start_node=self.cq_node,
+        cq_response_relationship = self._graph_db.match(start_node=self.cq_node,
                                                        rel_type=GraphRelationship.TO,
                                                        end_node=None)
         response_list = []
         for rel in cq_response_relationship:
             response = rel.end_node.properties
-            user_response_relationship = self.graph_db.match_one(start_node=None,
+            user_response_relationship = self._graph_db.match_one(start_node=None,
                                                                  rel_type=GraphRelationship.RESPONDED,
                                                                  end_node=self.cq_node)
             user_node = user_response_relationship.start_node
@@ -70,13 +70,13 @@ class Cq(object):
         self.created_date = datetime.date.today()
         cq_node = Node.cast(GraphLabel.CQ,
                             self.cq_properties)
-        self.graph_db.create(cq_node)
+        self._graph_db.create(cq_node)
         user = User()
         user.id = user_id
         cq_user_relationship = Relationship(user.user_node,
                                             GraphRelationship.SENT,
                                             cq_node)
-        self.graph_db.create_unique(cq_user_relationship)
+        self._graph_db.create_unique(cq_user_relationship)
 
     def response(self, response_id):
         """
@@ -84,10 +84,10 @@ class Cq(object):
         :param response_id:
         :return:  dict with response details and a dict of the user who made the response
         """
-        response_node = self.graph_db.find_one(GraphLabel.RESPONSE,
+        response_node = self._graph_db.find_one(GraphLabel.RESPONSE,
                                                property_key='id',
                                                property_value=response_id)
-        response_user_relationship = self.graph_db.match_one(start_node=None,
+        response_user_relationship = self._graph_db.match_one(start_node=None,
                                                              rel_type=GraphRelationship.RESPONDED,
                                                              end_node=response_node)
         response_dict = {}

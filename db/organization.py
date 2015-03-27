@@ -18,23 +18,23 @@ class Organization(object):
         self.is_invite_only = False
         self.is_visible = True
         self.website = ''
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def org_node(self):
-        return self.graph_db.find_one(GraphLabel.ORGANIZATION,
+        return self._graph_db.find_one(GraphLabel.ORGANIZATION,
                                       property_key='id',
                                       property_value=self.id)
 
     @property
     def org_properties(self):
         properties_dict = dict(self.__dict__)
-        del properties_dict['graph_db']
+        del properties_dict['_graph_db']
         return  properties_dict
 
     @property
     def org_interests(self):
-        org_interests = self.graph_db.match(start_node=self.org_node,
+        org_interests = self._graph_db.match(start_node=self.org_node,
                                             rel_type=GraphRelationship.INTERESTED_IN,
                                             end_node=None)
         interests_list = []
@@ -49,7 +49,7 @@ class Organization(object):
         list of the members of the organization
         :return: list of tuple of member name, email
         """
-        org_members_nodes = self.graph_db.match(start_node=self.org_node,
+        org_members_nodes = self._graph_db.match(start_node=self.org_node,
                                                 rel_type=GraphRelationship.MEMBER_OF,
                                                 end_node=None)
         org_members_list = []
@@ -76,7 +76,7 @@ class Organization(object):
         self.id = str(uuid.uuid4())
         new_org_properties = self.org_properties
         new_org_node = Node.cast(GraphLabel.ORGANIZATION, new_org_properties)
-        self.graph_db.create(new_org_node)
+        self._graph_db.create(new_org_node)
 
         return new_org_node
 
@@ -88,7 +88,7 @@ class Organization(object):
                                                  GraphRelationship.INTERESTED_IN,
                                                  interest_node)
         try:
-            self.graph_db.create_unique(org_interest_relationship)
+            self._graph_db.create_unique(org_interest_relationship)
         except:
             pass
         return self.org_interests

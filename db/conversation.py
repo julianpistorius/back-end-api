@@ -18,7 +18,7 @@ class Conversation(object):
         self.subject = ''
         self.message = ''
         self.created_date = ''
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def conversation_properties(self):
@@ -27,7 +27,7 @@ class Conversation(object):
         :return:
         """
         properties_dict = dict(self.__dict__)
-        del properties_dict['graph_db']
+        del properties_dict['_graph_db']
         return properties_dict
 
     @property
@@ -37,7 +37,7 @@ class Conversation(object):
         :return:
         """
         if self.id != '':
-            return self.graph_db.find_one(GraphLabel.CONVERSATION,
+            return self._graph_db.find_one(GraphLabel.CONVERSATION,
                                           property_key='id',
                                           property_value=self.id)
 
@@ -47,7 +47,7 @@ class Conversation(object):
         list of responses to this conversation
         :return:
         """
-        convo_response_relationship = self.graph_db.match(start_node=None,
+        convo_response_relationship = self._graph_db.match(start_node=None,
                                                           rel_type=GraphRelationship.TO,
                                                           end_node=self.conversation_node)
         response_list = []
@@ -62,7 +62,7 @@ class Conversation(object):
         who started this conversation
         :return:
         """
-        convo_starter_relationship = self.graph_db.match_one(start_node=None,
+        convo_starter_relationship = self._graph_db.match_one(start_node=None,
                                                          rel_type=GraphRelationship.STARTED,
                                                          end_node=self.conversation_node)
         if convo_starter_relationship:
@@ -74,7 +74,7 @@ class Conversation(object):
 
         :return:
         """
-        convo_with_relationship = self.graph_db.match_one(start_node=self.conversation_node,
+        convo_with_relationship = self._graph_db.match_one(start_node=self.conversation_node,
                                                           rel_type=GraphRelationship.WITH,
                                                           end_node=None)
         if convo_with_relationship:
@@ -94,7 +94,7 @@ class Conversation(object):
 
         :return:
         """
-        convo = self.graph_db.find_one(GraphLabel.CONVERSATION,
+        convo = self._graph_db.find_one(GraphLabel.CONVERSATION,
                                        property_key='id',
                                        property_value=self.id)
         convo.properties = self.conversation_properties
@@ -106,15 +106,15 @@ class Conversation(object):
                                        created_date=datetime.datetime.now(),
                                        message=message)
         try:
-            self.graph_db.create(new_convo_response)
-            response_node = self.graph_db.find_one(GraphLabel.RESPONSE,
+            self._graph_db.create(new_convo_response)
+            response_node = self._graph_db.find_one(GraphLabel.RESPONSE,
                                                    property_key='id',
                                                    property_value=id)
 
             response_convo_relationship = Relationship(response_node,
                                                        GraphRelationship.TO,
                                                        self.conversation_node)
-            self.graph_db.create(response_convo_relationship)
+            self._graph_db.create(response_convo_relationship)
         except:
             pass  #TODO exception handling
 
@@ -126,7 +126,7 @@ class Conversation(object):
         rel_types = []
         rel_types.append(GraphRelationship.STARTED)
         rel_types.append(GraphRelationship.WITH)
-        between_relationship = self.graph_db.match(start_node=self.conversation_node,
+        between_relationship = self._graph_db.match(start_node=self.conversation_node,
                                                    rel_type=rel_types,
                                                    end_node=None,
                                                    bidirectional=True)
@@ -148,13 +148,13 @@ class Conversation(object):
         # rel_types = []
         # rel_types.append(GraphRelationship.RESPONDED)
         # rel_types.append(GraphRelationship.TO)
-        responses_relationship = self.graph_db.match(start_node=None,
+        responses_relationship = self._graph_db.match(start_node=None,
                                                      rel_type=GraphRelationship.TO,
                                                      end_node=self.conversation_node)
         responses = []
         for rel in responses_relationship:
             response_node = rel.start_node
-            response_from = self.graph_db.match_one(start_node=None,
+            response_from = self._graph_db.match_one(start_node=None,
                                                     rel_type=GraphRelationship.RESPONDED,
                                                     end_node=response_node)
             response_properties = response_node.properties

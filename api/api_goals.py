@@ -1,10 +1,10 @@
 __author__ = 'Marnee Dearman'
-from db.goal import Goal
-import simplejson
-from api_serializers import GoalResponder
 import falcon
 import simplejson
-from db.auth import Auth
+
+from db.goal import Goal
+from api_serializers import GoalResponder
+from db.archive.auth import Auth
 from validators import validate_goals_schema
 
 

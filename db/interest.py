@@ -12,18 +12,18 @@ class Interest(object):
         self.name = None
         self.id = None
         self.description = None
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def interest_properties(self):
         properties_dict = dict(self.__dict__)
-        del properties_dict['graph_db']
+        del properties_dict['_graph_db']
         return properties_dict
 
     @property
     def interest_node_by_id(self):
         if not self.id is None:
-            return self.graph_db.find_one(GraphLabel.INTEREST,
+            return self._graph_db.find_one(GraphLabel.INTEREST,
                                           property_key='id',
                                           property_value=self.id)
         else:
@@ -32,7 +32,7 @@ class Interest(object):
     @property
     def interest_node_by_name(self):
         if not self.name is None:
-            return self.graph_db.find_one(GraphLabel.INTEREST,
+            return self._graph_db.find_one(GraphLabel.INTEREST,
                                   property_key='name',
                                   property_value=self.name)
         else:
@@ -51,7 +51,7 @@ class Interest(object):
         self.id = str(uuid.uuid4())
         new_interest_node = Node.cast(GraphLabel.INTEREST, self.interest_properties)
         try:
-            self.graph_db.create(new_interest_node)
+            self._graph_db.create(new_interest_node)
         except:
             pass
 
@@ -76,7 +76,7 @@ class Interest(object):
             "WHERE interest.name =~ {match} " \
             "RETURN interest.name as name, interest.id as id " \
             "LIMIT {limit}"
-        match_results = self.graph_db.cypher.execute(statement=cypher_str, parameters=params)
+        match_results = self._graph_db.cypher.execute(statement=cypher_str, parameters=params)
         root = {}
         root['count'] = 0
         interest_found = {}
