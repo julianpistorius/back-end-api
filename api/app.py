@@ -36,6 +36,7 @@ user_interests = api_users.ApiUserInterests()
 # user_goals = api_users.ApiUserGoals()
 group = api_groups.ApiGroup()
 organization = api_organizations.ApiOrganization()
+organization_location = api_organizations.ApiOrganizationLocations()
 interest = api_interests.ApiInterest()
 location = api_locations.ApiLocation()
 # conversation = api_conversations.ApiConversation()
@@ -104,6 +105,8 @@ api.add_route('/organizations', organization)  # POST to create an organization
 api.add_route('/organizations/{org_id}', organization)  # GET all the stuff related to this org
 api.add_route('/organizations/{org_id}/interests', organization)  # GET list of interests  POST new interest
 api.add_route('/organizations/{org_id}/interests/{interest_id}', organization)  # GET interest.  PUT to update
+api.add_route('/organizations/{org_id}/locations', organization_location)
+api.add_route('/organizations/{org_id}/locations/{location_id}', organization_location)
 # DELETE to drop interest
 api.add_route('/organizations/{org_id}/members', organization)  # GET list of members
 api.add_route('/organizations/{org_id}/goals/', organization)  # GET lis of goals POST new goal

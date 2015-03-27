@@ -226,11 +226,11 @@ LocationResponder.LINKS = {
 OrganizationResponder.LINKS = {
     'interests': {
         'responder': InterestResponder,
-        'href': '%s/groups/{groups.id}/interests/{interests.id}' % (settings.SITE_URL)
+        'href': '%s/organizations/{organizations.id}/interests/{interests.id}' % (settings.SITE_URL)
     },
     'goals': {
         'responder': GoalResponder,
-        'href': '%s/groups/{groups.id}/goals/{goals.id}' % (settings.SITE_URL)
+        'href': '%s/organizations/{organizations.id}/goals/{goals.id}' % (settings.SITE_URL)
     },
     'users': {
         'responder': UserResponder,
@@ -239,6 +239,10 @@ OrganizationResponder.LINKS = {
     'groups': {
         'responder': GroupResponder,
         'href': '%s/groups/{groups.id}' % (settings.SITE_URL)
+    },
+    'locations': {
+        'responder': LocationResponder,
+        'href': '%s/organizations/{organizations.id}/locations/{locations.id}' % (settings.SITE_URL)
     }
 }
 
