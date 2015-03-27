@@ -19,7 +19,7 @@ class Response(object):
         self.id = ''
         self.message = ''
         self.sent_date = ''
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def response_properties(self):
@@ -28,7 +28,7 @@ class Response(object):
         :return:
         """
         properties_dict = dict(self.__dict__)
-        del properties_dict['graph_db']
+        del properties_dict['_graph_db']
         return properties_dict
 
     @property
@@ -38,7 +38,7 @@ class Response(object):
         :return:
         """
         if self.id != '':
-            return self.graph_db.find_one(GraphLabel.RESPONSE,
+            return self._graph_db.find_one(GraphLabel.RESPONSE,
                                           property_key='id',
                                           property_value=self.id)
 

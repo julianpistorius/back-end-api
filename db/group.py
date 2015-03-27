@@ -23,12 +23,12 @@ class Group(object):
         # self.creator = '' #by id
         # self.moderators = [] #by id  #TODO change this to a relationship in the graph
         self.website = ''
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def group_properties(self):
         properties_dict = dict(self.__dict__)
-        del properties_dict['graph_db']
+        del properties_dict['_graph_db']
         return properties_dict
 
     def set_group_properties(self, group_properties):
@@ -52,7 +52,7 @@ class Group(object):
         get a group node based on the unique id attribute
         :return: neo4j.Node
         """
-        return self.graph_db.find_one(GraphLabel.STUDYGROUP,
+        return self._graph_db.find_one(GraphLabel.STUDYGROUP,
                                       property_key='id',
                                       property_value=self.id)
 
@@ -61,7 +61,7 @@ class Group(object):
         """ get user interests
         :return: list of interests
         """
-        group_interests = self.graph_db.match(start_node=self.group_node,
+        group_interests = self._graph_db.match(start_node=self.group_node,
                                               rel_type=GraphRelationship.INTERESTED_IN,
                                               end_node=None)
         # create a list of tuples of interests and the users's relationship to them
@@ -83,7 +83,7 @@ class Group(object):
 
         :return: list of locations
         """
-        group_locations = self.graph_db.match(start_node=self.group_node,
+        group_locations = self._graph_db.match(start_node=self.group_node,
                                               rel_type=GraphRelationship.LOCATED_IN,
                                               end_node=None)
         locations_list = []
@@ -98,7 +98,7 @@ class Group(object):
 
     @property
     def group_members(self):
-        group_member_nodes = self.graph_db.match(start_node=self.group_node,
+        group_member_nodes = self._graph_db.match(start_node=self.group_node,
                                             rel_type=GraphRelationship.MEMBER_OF,
                                             end_node=None)
         members_list = []
@@ -117,7 +117,7 @@ class Group(object):
 
         :return: dictionary object with creator user information
         """
-        group_creator = self.graph_db.match(start_node=self.group_node,
+        group_creator = self._graph_db.match(start_node=self.group_node,
                                                  rel_type=GraphRelationship.CREATED,
                                                  end_node=None)
         creator_dict = {}
@@ -131,7 +131,7 @@ class Group(object):
 
         :return: list of user dictionary objects where the users are moderators
         """
-        group_moderators = self.graph_db.match(start_node=self.group_node,
+        group_moderators = self._graph_db.match(start_node=self.group_node,
                                                rel_type=GraphRelationship.MODERATES,
                                                end_node=None)
         moderators_list = []

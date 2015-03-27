@@ -13,12 +13,12 @@ class Location(object):
         # self.country = False
         # self.locality = True
         self.id = ''  #place_id
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def location_properties(self):
         props = dict(self.__dict__)
-        del props['graph_db']
+        del props['_graph_db']
         return props
 
     @property
@@ -27,7 +27,7 @@ class Location(object):
         get a location node by location name
         :return: py2neo node
         """
-        return self.graph_db.find_one(GraphLabel.LOCATION,
+        return self._graph_db.find_one(GraphLabel.LOCATION,
                                       property_key='name',
                                       property_value=self.name)
     @property
@@ -36,7 +36,7 @@ class Location(object):
         get a location node by the place_id
         :return: py2neo Node
         """
-        return self.graph_db.find_one(GraphLabel.LOCATION,
+        return self._graph_db.find_one(GraphLabel.LOCATION,
                                       property_key='id',
                                       property_value=self.id)
 
@@ -53,7 +53,7 @@ class Location(object):
         # }
         new_location_node = Node.cast(GraphLabel.LOCATION, self.location_properties)
         try:
-            self.graph_db.create(new_location_node)
+            self._graph_db.create(new_location_node)
         except:
             pass
         return new_location_node

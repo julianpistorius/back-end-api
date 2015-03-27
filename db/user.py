@@ -39,7 +39,7 @@ class User(object):
         # self.temporary_web_token = ''
         self.join_date = None
         self.last_active_date = ''
-        self.graph_db = Graph(settings.DATABASE_URL)
+        self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
     def user_properties(self):
@@ -48,7 +48,7 @@ class User(object):
         :return: dictionary of properties
         """
         properties_dict = dict(self.__dict__)
-        del properties_dict['graph_db']
+        del properties_dict['_graph_db']
         return properties_dict
 
     def set_user_properties(self, user_properties):
@@ -83,7 +83,7 @@ class User(object):
             self.set_user_properties(user_properties)
         new_user_node = Node.cast(GraphLabel.USER, self.user_properties)
         try:
-            self.graph_db.create(new_user_node)
+            self._graph_db.create(new_user_node)
         except:
             pass
             # print 'node probably found.  see message'
@@ -97,11 +97,11 @@ class User(object):
         :return: py2neo Node
         """
         if self.email != '':
-            return self.graph_db.find_one(GraphLabel.USER,
+            return self._graph_db.find_one(GraphLabel.USER,
                                           property_key='email',
                                           property_value=self.email)
         elif self.id != '':
-            return self.graph_db.find_one(GraphLabel.USER,
+            return self._graph_db.find_one(GraphLabel.USER,
                                           property_key='id',
                                           property_value=self.id)
 
@@ -113,7 +113,7 @@ class User(object):
         """ get user interests
         :return: dictionary of interests
         """
-        user_interests = self.graph_db.match(start_node=self.user_node,
+        user_interests = self._graph_db.match(start_node=self.user_node,
                                              rel_type=GraphRelationship.INTERESTED_IN,
                                              end_node=None)
         #create a list of tuples of interests and the users's relationship to them
@@ -130,7 +130,7 @@ class User(object):
         :return: list of interests
         """
         #TODO do not need a list of interests -- HATEOAS -- MMD 3/8/2015
-        user_goals = self.graph_db.match(start_node=self.user_node, rel_type=GraphRelationship.HAS_GOAL,
+        user_goals = self._graph_db.match(start_node=self.user_node, rel_type=GraphRelationship.HAS_GOAL,
                                          end_node=None)
         goals_list = []
         goal_interests_list = []
@@ -154,7 +154,7 @@ class User(object):
         :return: list of tuples of the groups
         """
         #TODO add list of related interests
-        user_groups = self.graph_db.match(start_node=self.user_node, rel_type=GraphRelationship.STUDIES_WITH,
+        user_groups = self._graph_db.match(start_node=self.user_node, rel_type=GraphRelationship.STUDIES_WITH,
                                           end_node=None)
         # create a list of tuples of interests and the users's relationship to them
         groups_list = []
@@ -176,7 +176,7 @@ class User(object):
 
         :return:
         """
-        user_orgs = self.graph_db.match(start_node=self.user_node,
+        user_orgs = self._graph_db.match(start_node=self.user_node,
                                         rel_type=GraphRelationship.MEMBER_OF,
                                         end_node=None)
         orgs_list = []
@@ -198,7 +198,7 @@ class User(object):
 
         :return:
         """
-        user_locations = self.graph_db.match(start_node=self.user_node,
+        user_locations = self._graph_db.match(start_node=self.user_node,
                                         rel_type=GraphRelationship.LOCATED_IN,
                                         end_node=None)
 
@@ -268,7 +268,7 @@ class User(object):
         for key, value in experience_properties_dict.iteritems():
             user_interest_relationship[key] = value
         try:
-            self.graph_db.create_unique(user_interest_relationship)
+            self._graph_db.create_unique(user_interest_relationship)
         except:
             pass
         return self.user_interests
@@ -277,7 +277,7 @@ class User(object):
         interest = Interest()
         interest.id = interest_id
         interest_node = interest.interest_node_by_id
-        user_interest_relationship = self.graph_db.match_one(start_node=self.user_node,
+        user_interest_relationship = self._graph_db.match_one(start_node=self.user_node,
                                                              rel_type=GraphRelationship.INTERESTED_IN,
                                                              end_node=interest_node)
         for key, value in experience_properties_dict.iteritems():
@@ -294,10 +294,10 @@ class User(object):
         interest = Interest()
         interest.id = interest_id
         interest_node = interest.interest_node_by_id
-        user_interest_relationship = self.graph_db.match_one(start_node=self.user_node,
+        user_interest_relationship = self._graph_db.match_one(start_node=self.user_node,
                                                              rel_type=GraphRelationship.INTERESTED_IN,
                                                              end_node=interest_node)
-        self.graph_db.delete(user_interest_relationship)
+        self._graph_db.delete(user_interest_relationship)
 
     def update_user(self):
         user_node = self.user_node
@@ -325,7 +325,7 @@ class User(object):
                                               GraphRelationship.HAS_GOAL,
                                               goal.goal_node)
 
-        self.graph_db.create_unique(user_goal_relationship)
+        self._graph_db.create_unique(user_goal_relationship)
         #TODO set properties on the relationship -- may use a unique id as the key
         return self.user_goals
 
@@ -336,11 +336,11 @@ class User(object):
         # have to remove all relationships before deleteing a node
         goal.delete_all_interests()
         goal_node = goal.goal_node
-        user_goal_rel = self.graph_db.match_one(start_node=user_node,
+        user_goal_rel = self._graph_db.match_one(start_node=user_node,
                                                 rel_type=GraphRelationship.HAS_GOAL,
                                                 end_node=goal_node)
-        self.graph_db.delete(user_goal_rel)
-        self.graph_db.delete(goal_node)
+        self._graph_db.delete(user_goal_rel)
+        self._graph_db.delete(goal_node)
 
     def join_group(self, group_id, group_relationship_properties=None):
         """
@@ -362,7 +362,7 @@ class User(object):
         for key, value in join_properties.iteritems():
             user_group_relationship[key] = value
         try:
-            self.graph_db.create_unique(user_group_relationship)
+            self._graph_db.create_unique(user_group_relationship)
         except:
             pass
         #TODO set properties on the relationsip
@@ -377,11 +377,11 @@ class User(object):
         #TODO exception handling
         group = Group()
         group.id = group_id
-        user_group_relationship = self.graph_db.match_one(start_node=self.user_node,
+        user_group_relationship = self._graph_db.match_one(start_node=self.user_node,
                                                           rel_type=GraphRelationship.MEMBER_OF,
                                                           end_node=group.group_node)
 
-        self.graph_db.delete(user_group_relationship)
+        self._graph_db.delete(user_group_relationship)
 
     def delete_group(self, group_id):
         pass
@@ -400,7 +400,7 @@ class User(object):
                                              GraphRelationship.MEMBER_OF,
                                              org.org_node)
         try:
-            self.graph_db.create_unique(user_org_relationship)
+            self._graph_db.create_unique(user_org_relationship)
         except:
             print sys.exc_info()[0]
 
@@ -413,10 +413,10 @@ class User(object):
         #TODO exception handling
         org = Organization()
         org.id = organization_id
-        user_org_relationship = self.graph_db.match_one(start_node=self.user_node,
+        user_org_relationship = self._graph_db.match_one(start_node=self.user_node,
                                                         rel_type=GraphRelationship.MEMBER_OF,
                                                         end_node=org.org_node)
-        self.graph_db.delete(user_org_relationship)
+        self._graph_db.delete(user_org_relationship)
 
     def add_location(self, location_json):
         """
@@ -438,7 +438,7 @@ class User(object):
                                                   GraphRelationship.LOCATED_IN,
                                                   location_node)
         # try:
-        self.graph_db.create_unique(user_location_relationship)
+        self._graph_db.create_unique(user_location_relationship)
         # except:
         #     pass
 
@@ -447,7 +447,7 @@ class User(object):
         conversation_properties['id'] = str(uuid.uuid4())
         new_convo_node = Node.cast(GraphLabel.CONVERSATION, conversation_properties)
         try:
-            convo_node, = self.graph_db.create(new_convo_node)  # create new conversation node
+            convo_node, = self._graph_db.create(new_convo_node)  # create new conversation node
             user_started = User()
             user_started.id = user_id_started
             user_with = User()
@@ -456,12 +456,12 @@ class User(object):
             user_started_relationship = Relationship(user_started.user_node,
                                                      GraphRelationship.STARTED,
                                                      convo_node)
-            self.graph_db.create(user_started_relationship)
+            self._graph_db.create(user_started_relationship)
             # create started conversation with relationship
             convo_with_relationship = Relationship(convo_node,
                                                    GraphRelationship.WITH,
                                                    user_with.user_node)
-            self.graph_db.create(convo_with_relationship)
+            self._graph_db.create(convo_with_relationship)
             return convo_node.properties['id']
         except:
             pass  #TODO add exception handling
@@ -483,7 +483,7 @@ class User(object):
             "WHERE user.name =~ {match} " \
             "RETURN user.name as name, user.id as id " \
             "LIMIT {limit}"
-        match_results = self.graph_db.cypher.execute(statement=cypher_str, parameters=params)
+        match_results = self._graph_db.cypher.execute(statement=cypher_str, parameters=params)
         root = {}
         root['count'] = 0
         user_found = {}
