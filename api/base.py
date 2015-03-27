@@ -43,17 +43,17 @@ class ApiBase():
 
     @staticmethod
     def get_user_by_id(user_id):
-        agora_user = User()
-        agora_user.id = user_id
-        agora_user.get_user()
-        return agora_user
+        user = User()
+        user.id = user_id
+        user.get_user()
+        return user
 
     @staticmethod
     def get_user_by_email(email):
-        agora_user = User()
-        agora_user.email = email
-        agora_user.get_user()
-        return agora_user
+        user = User()
+        user.email = email
+        user.get_user()
+        return user
 
     @staticmethod
     def get_meeting_by_id(meeting_id):
@@ -64,10 +64,10 @@ class ApiBase():
 
     @staticmethod
     def get_group(group_id):
-        agora_group = Group()
-        agora_group.id = group_id
-        agora_group.get_group()
-        return agora_group
+        group = Group()
+        group.id = group_id
+        group.get_group()
+        return group
 
     @staticmethod
     def get_group_user(user_id):
