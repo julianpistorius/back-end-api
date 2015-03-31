@@ -11,7 +11,7 @@ import settings
 from py2neo import Graph
 
 print "with defaullt"
-print Gtaph().neo4j_version
+print Graph().neo4j_version
 print "with settings"
 print Graph(settings.DATABASE_URL).neo4j_version
 
