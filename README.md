@@ -17,3 +17,9 @@ with a Neo4j graph database
 http://neo4j.com/
 
 Behave for BDD
+
+Documentation
+
+API documentation is hosted on Apiary and is a work in progress.  It is probably not accurate as of 3/31/2015
+
+http://docs.elmerly.apiary.io/#
