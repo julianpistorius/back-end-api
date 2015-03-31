@@ -10,6 +10,9 @@ import datetime
 import settings
 from py2neo import Graph
 
+print "with defaullt"
+print Gtaph().neo4j_version
+print "with settings"
 print Graph(settings.DATABASE_URL).neo4j_version
 
 Graph(settings.DATABASE_URL).delete_all()
