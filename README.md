@@ -1,3 +1,5 @@
+[![Build Status](https://api.shippable.com/projects/551af13b5ab6cc1352b17986/badge?branchName=master)](https://app.shippable.com/projects/551af13b5ab6cc1352b17986/builds/latest)
+
 # back-end-api
 Repo for the Elmerly back-end API.  
 http://elmerly.com
