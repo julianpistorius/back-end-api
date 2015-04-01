@@ -44,6 +44,16 @@ interest.create_interest()
 amateur_radio_id = interest.id
 
 interest = Interest()
+interest.name = 'Motorcyles'
+interest.create_interest()
+interest_moto_id = interest.id
+
+interest = Interest()
+interest.name = 'Cooking'
+interest.create_interest()
+cooking_id = interest.id
+
+interest = Interest()
 interest.name = 'Internet Startup'
 interest.description = 'How to build an Internet business'
 interest.create_interest()
@@ -123,9 +133,12 @@ marnee.add_location(tucson_json['location'])
 julian.add_interest(amateur_radio_id, experience)
 julian.add_interest(startup_id, experience)
 julian.add_interest(python_id, experience)
+julian.add_interest(interest_moto_id, experience)
 julian.add_location(tucson_json['location'])
 
 chris.add_interest(startup_id, experience)
+chris.add_interest(cooking_id, experience)
+chris.add_interest(amateur_radio_id, experience)
 chris.add_location(tucson_json['location'])
 
 dan.add_interest(startup_id, experience)
@@ -133,6 +146,8 @@ dan.add_location(tucson_json['location'])
 
 frank.add_interest(startup_id, experience)
 frank.add_interest(python_id, experience)
+frank.add_interest(amateur_radio_id, experience)
+frank.add_interest(cooking_id, experience)
 frank.add_location(tucson_json['location'])
 
 liz.add_interest(startup_id, experience)
