@@ -1,5 +1,4 @@
 from db.conversation import Conversation
-from misc.decorators_experiments.authorization_decorator_class import AuthDecorator
 from validators.decorators.json_validator_decorator import validate_request_json
 
 __author__ = 'Marnee Dearman'

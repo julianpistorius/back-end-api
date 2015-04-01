@@ -9,10 +9,8 @@ from goal import Goal
 from group import Group
 from location import Location
 from organization import Organization
-# from simplecrypt import encrypt, decrypt
-# from py2neo import neo4j
+from cq import Cq
 from labels_relationships import GraphRelationship, GraphLabel
-# import time
 from itsdangerous import URLSafeSerializer, URLSafeTimedSerializer, BadSignature, BadTimeSignature
 from services import notifications
 
@@ -425,6 +423,7 @@ class User(object):
         :return:
         """
         #TODO exception handling
+        #TODO do in location and pass in the node from the actual object (better pattern)
         location_place_id = location_json['id']
         location = Location()
         location.id = location_place_id
@@ -441,6 +440,9 @@ class User(object):
         self._graph_db.create_unique(user_location_relationship)
         # except:
         #     pass
+
+    def create_cq(self, cq_dict, cq_interests_dict=None):
+        Cq.create_cq(user_node=self.user_node, cq_dict=cq_dict)
 
     def create_converation_between_users(self, user_id_started, user_id_with, conversation_properties):
         # self.id = uuid.uuid4()
