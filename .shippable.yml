@@ -15,4 +15,6 @@ before_script:
     - mkdir -p shippable/codecoverage
 # command to run tests, e.g. python setup.py test
 script:
+    - python --version
     - python misc/py2neo_2.0_samples/seed_database.py test
+    - behave -f progress --junit --tags=~@xfail features/
