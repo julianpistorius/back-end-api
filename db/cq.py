@@ -1,10 +1,7 @@
-from db.user import User
-
 __author__ = 'marnee'
 
 import uuid
 import datetime
-import sys
 import settings
 from py2neo import Node, Graph, Relationship, Path, Rev
 from labels_relationships import GraphRelationship, GraphLabel
@@ -65,18 +62,38 @@ class Cq(object):
 
         return response_list
 
-    def create_cq(self, user_id):
-        self.id = str(uuid.uuid4())
-        self.created_date = datetime.date.today()
+    @staticmethod
+    def create_cq(user_node, cq_dict):
+        cq_dict['id'] = str(uuid.uuid4())
+        cq_dict['created_date'] = datetime.date.today()
         cq_node = Node.cast(GraphLabel.CQ,
-                            self.cq_properties)
-        self._graph_db.create(cq_node)
-        user = User()
-        user.id = user_id
-        cq_user_relationship = Relationship(user.user_node,
-                                            GraphRelationship.SENT,
-                                            cq_node)
-        self._graph_db.create_unique(cq_user_relationship)
+                            cq_dict)
+        cq_node, = Graph(settings.DATABASE_URL).create(cq_node)
+        cq_relationship = Relationship(user_node,
+                                       GraphRelationship.SENT,
+                                       cq_node)
+        Graph(settings.DATABASE_URL).create_unique(cq_relationship)
+
+    @staticmethod
+    def most_recent_cqs():
+        params = {
+
+        }
+        cypher_str = ""
+        match_results = Graph(settings.DATABASE_URL).cypher.execute(statement=cypher_str,
+                                                                    parameters=params)
+        cq_list = []
+        cq = {}
+        for item in match_results:
+            cq['id'] = item.id
+            cq['subject'] = item.subject
+            cq['message'] = item.message
+            cq['created_date'] = item.created_date
+            cq_list.append(cq)
+        root = {}
+        root['cqs'] = cq_list
+        return root
+
 
     def response(self, response_id):
         """
