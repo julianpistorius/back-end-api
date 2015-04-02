@@ -73,6 +73,7 @@ class Cq(object):
                                        GraphRelationship.SENT,
                                        cq_node)
         Graph(settings.DATABASE_URL).create_unique(cq_relationship)
+        return cq_node
 
     @staticmethod
     def most_recent_cqs():

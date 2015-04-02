@@ -442,7 +442,9 @@ class User(object):
         #     pass
 
     def create_cq(self, cq_dict, cq_interests_dict=None):
-        Cq.create_cq(user_node=self.user_node, cq_dict=cq_dict)
+        cq_node = Cq.create_cq(user_node=self.user_node, cq_dict=cq_dict)
+        return cq_node
+
 
     def create_converation_between_users(self, user_id_started, user_id_with, conversation_properties):
         # self.id = uuid.uuid4()

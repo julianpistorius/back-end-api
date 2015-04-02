@@ -1,31 +1,16 @@
-from db.conversation import Conversation
-
 __author__ = 'Marnee Dearman'
+from db.conversation import Conversation
 import sys
 import falcon
 from itsdangerous import BadSignature, BadTimeSignature
 from db.user import User
 from db.interest import Interest
-from db.goal import Goal
 from validators import validate_user_schema, validate_location_schema, validate_interest_schema
 from validators import validate_goals_schema, validate_conversation_response_schema
 from api.base import ApiBase
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
     GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder, ConversationResponder
 
-
-# def get_user_by_email(email):
-#     agora_user = User()
-#     agora_user.email = email
-#     agora_user.get_user()
-#     return agora_user
-#
-#
-# def get_user_by_id(user_id):
-#     agora_user = User()
-#     agora_user.id = user_id
-#     agora_user.get_user()
-#     return agora_user
 
 class ApiUser(ApiBase):
 # api.add_route('/users/', user)
