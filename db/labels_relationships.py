@@ -24,6 +24,7 @@ class GraphRelationship(object):
     WITH = "WITH"
     RESPONDED = "RESPONDED"
     SENT = "SENT"
+    ON = "ON"
 
 
 class GraphLabel(object):

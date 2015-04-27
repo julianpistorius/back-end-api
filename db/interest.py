@@ -31,7 +31,7 @@ class Interest(object):
 
     @property
     def interest_node_by_name(self):
-        if not self.name is None:
+        if self.name is not None:
             return self._graph_db.find_one(GraphLabel.INTEREST,
                                   property_key='name',
                                   property_value=self.name)
@@ -99,8 +99,8 @@ class Interest(object):
         """
         interest_node = self.interest_node_by_name
 
-        if not interest_node is None:
-            interest_attributes = self.interest_properties
+        if interest_node is not None:
+            interest_attributes = dict(interest_node.properties)
             for key, value in interest_attributes.iteritems():
                 setattr(self, key, value)
         return interest_node

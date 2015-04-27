@@ -5,6 +5,8 @@ import datetime
 import settings
 from py2neo import Node, Graph, Relationship, Path, Rev
 from labels_relationships import GraphRelationship, GraphLabel
+from db.interest import Interest
+from py2neo.ext.calendar import GregorianCalendar
 
 
 class Cq(object):
@@ -16,7 +18,8 @@ class Cq(object):
         self.id = ''
         self.subject = ''
         self.message = ''
-        self.created_date = ''
+        self.created_time = ''
+        self.last_updated_time = ''
         self._graph_db = Graph(settings.DATABASE_URL)
 
     @property
@@ -63,17 +66,53 @@ class Cq(object):
         return response_list
 
     @staticmethod
-    def create_cq(user_node, cq_dict):
+    def create_cq(user_node, cq_dict, cq_interests_dict):
+        """
+        create the CQ node and link to the user and interests, also adds the date graph
+        :param user_node:
+        :param cq_dict:
+        :param cq_interests_dict:
+        :return:
+        """
+        graph = Graph(settings.DATABASE_URL)
         cq_dict['id'] = str(uuid.uuid4())
-        cq_dict['created_date'] = datetime.date.today()
+        cq_dict['created_time'] = datetime.datetime.now().time()
+        cq_dict['last_updated_time'] = datetime.datetime.now().time()
         cq_node = Node.cast(GraphLabel.CQ,
                             cq_dict)
-        cq_node, = Graph(settings.DATABASE_URL).create(cq_node)
+        cq_node, = graph.create(cq_node)
         cq_relationship = Relationship(user_node,
                                        GraphRelationship.SENT,
                                        cq_node)
         Graph(settings.DATABASE_URL).create_unique(cq_relationship)
+
+        for key, value in cq_interests_dict.iteritems():
+            interest = Interest()
+            interest.id = value
+            cq_interest_relationship = Relationship(cq_node,
+                                                    GraphRelationship.INTERESTED_IN,
+                                                    interest.interest_node_by_id)
+            graph.create_unique(cq_interest_relationship)
+
+        calendar = GregorianCalendar(graph)
+        cur_date = datetime.date.today()
+        cq_on = Relationship(cq_node,
+                             GraphRelationship.ON,
+                             calendar.date(cur_date.year, cur_date.month, cur_date.day).day)
+        graph.create_unique(cq_on)
         return cq_node
+
+    @staticmethod
+    def update_cq(user_node, cq_dict, cq_interests_dict):
+        """
+
+        :param user_node:
+        :param cq_dict:
+        :param cq_interests_dict:
+        :return:
+        """
+        #TODO:  update node -- find out how to change the date graph
+        pass
 
     @staticmethod
     def most_recent_cqs():

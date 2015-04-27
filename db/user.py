@@ -59,14 +59,18 @@ class User(object):
             setattr(self, key, value)
 
     def get_user(self):
+        """
+
+        :return:
+        """
         user_node = self.user_node
         if user_node is not None:
             user_properties = dict(user_node.properties)
             for key, value in user_properties.iteritems():
                 setattr(self, key, value)
-            return True
+            return user_node
         else:
-            return False
+            return None
 
     def create_user(self, user_properties=None):
         """
@@ -442,8 +446,13 @@ class User(object):
         #     pass
 
     def create_cq(self, cq_dict, cq_interests_dict=None):
-        cq_node = Cq.create_cq(user_node=self.user_node, cq_dict=cq_dict)
+        cq_node = Cq.create_cq(user_node=self.user_node, cq_dict=cq_dict, cq_interests_dict=cq_interests_dict)
         return cq_node
+
+    def update_cq(self, cq_dict, cq_interests_dict=None):
+        # cq_node =
+        #TODO:  update cq, see TODO on cq class
+        pass
 
 
     def create_converation_between_users(self, user_id_started, user_id_with, conversation_properties):
