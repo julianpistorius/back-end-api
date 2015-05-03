@@ -111,6 +111,20 @@ class User(object):
         #                                                      key='email', value=self.email)
 
     @property
+    def user_cqs(self):
+        """
+        get list of cqs for the user
+        :return: list of cqs
+        """
+        user_cqs = self._graph_db.match(start_node=self.user_node,
+                                        rel_type=GraphRelationship.SENT,
+                                        end_node=None)
+        cqs_list = []
+        for rel in user_cqs:
+            cqs_list.append(dict(rel.end_node.properties))
+        return cqs_list
+
+    @property
     def user_interests(self):
         """ get user interests
         :return: dictionary of interests
@@ -512,14 +526,15 @@ class User(object):
         root['users'] = users_list
         return root
 
-    def register_user(self, email):
+    @staticmethod
+    def register_user(email):
         verification_email = notifications.Notifications()
         verification_email.recipients = [email]
         s = URLSafeTimedSerializer(secret_key=settings.TOKEN_SECRET_KEY)
         payload = s.dumps(email)
         verification_email.subject = settings.ACTIVATION_SUBJECT
         verification_email.message = settings.ACTIVATION_MESSAGE
-        verification_email.url = self.construct_verification_url(payload=payload)
+        verification_email.url = User.construct_verification_url(payload=payload)
         verification_email.send_by_gmail()
 
     def activate_user(self, payload, email):
@@ -528,7 +543,7 @@ class User(object):
         if email == payload_email:
             self.email = email
             self.get_user()
-            self.permanent_web_token = self.create_web_token()
+            self.permanent_web_token = User.create_web_token(self.id)
             if self.id == '':
                 self.create_user()
             else:
@@ -542,13 +557,14 @@ class User(object):
         user_node['last_active_date'] = self.last_active_date
         user_node.push()
 
-
-    def construct_verification_url(self, payload):
+    @staticmethod
+    def construct_verification_url( payload):
         return settings.SITE_URL + settings.ACTIVATION_ROUTE + "/%s" % payload
 
-    def create_web_token(self):
+    @staticmethod
+    def create_web_token(id):
         s = URLSafeSerializer(secret_key=settings.TOKEN_SECRET_KEY)
-        return s.dumps(self.id)
+        return s.dumps(id)
 
     def user_relationships_for_json(self, auth_id):
         root = self.user_profile_for_json()
@@ -566,6 +582,14 @@ class User(object):
     def user_profile_for_json(self):
         root = self.user_properties
         return root
+
+    def user_cqs_for_json(self):
+        root = {}
+        root['__class'] = self.__class__.__name__
+        root['id'] = self.id
+        root['email'] = self.email
+        root['cqs'] = self.user_cqs
+
 
     def user_interests_for_json(self):
         root = {}

@@ -1,3 +1,7 @@
+import datetime
+import uuid
+from db.user import User
+
 __author__ = 'Marnee Dearman'
 import os
 from behaving import environment as benv
@@ -5,11 +9,41 @@ from py2neo import Node, Graph, Relationship
 import settings
 from db import user
 
+ROUTES_SCHEMAS = {
+    'routes': dict(
+        entity_search_route='/users?match={match}&limit={limit}',
+        group_join_route='/users/{user_id}/groups/{group_id}',
+        conversation_route='/users/{user_id}/conversations',
+        interest_route='/users/{id}/interests',
+        cq_route=''
+    ),
+    'schemas': dict(
+        search_schema='schemas/user_search_results.json',
+        user_schema='schemas/user_search_results.json',
+        interest_schema='schemas/interest_search_results.json'
+    )
+}
+
 PERSONAS = {
     'user': dict(
         email='newuser@elmerly.com',
         entity_search_route='/users?match={match}&limit={limit}',
         search_schema='schemas/user_search_results.json'
+    ),
+    'authorized_user_a': dict(
+        email='authorized_user_a@elmerly.com',
+        id='',
+        x_auth_key='',
+    ),
+    'authorized_user_b': dict(
+        email='authorized_user_b@elmerly.com',
+        id='',
+        x_auth_key='',
+    ),
+    'unauthorized_user': dict(
+        email='unauthorized_user@elmerly.com',
+        x_auth_key='IjA5ZGViOWY0LTZmZWItNDJlNC1iY2YyLTU1ZjgyYzI2NjMyZiI.VnlgmEXwW9eelZT5Xbs6uPtPQJE',
+        id='09deb9f4-6feb-42e4-bcf2-55f82c26632f'
     ),
     'marnee': dict(
         email='marnee@elmerly.com',
@@ -65,13 +99,16 @@ PERSONAS = {
     )
 }
 
+graph_db = Graph(settings.DATABASE_URL)
+
+
 def before_all(context):
     # import falcon_test
     # context.attachment_dir = os.path.join(os.path.dirname(falcon_test.__file__), 'tests/data')
     # context.sms_path = os.path.join(os.path.dirname(falcon_test.__file__), '../../var/sms/')
     # context.mail_path = os.path.join(os.path.dirname(falcon_test.__file__), '../../var/mail/')
     # clear database
-    graph_db = Graph(settings.DATABASE_URL)
+
     # graph_db.delete_all()
     new_user_node = graph_db.find_one('USER',
                                       property_key='email',
@@ -86,6 +123,7 @@ def before_all(context):
         graph_db.delete(relationship)
     graph_db.delete(interest_node)
     context.base_url = "http://localhost:8000"
+    create_user_a_b()
     benv.before_all(context)
 
 
@@ -103,7 +141,48 @@ def after_feature(context, feature):
 
 def before_scenario(context, scenario):
     benv.before_scenario(context, scenario)
+    context.routes = ROUTES_SCHEMAS['routes']
+    context.schemas = ROUTES_SCHEMAS['schemas']
     context.personas = PERSONAS
+
 
 def after_scenario(context, scenario):
     benv.after_scenario(context, scenario)
+
+
+def create_user_a_b():
+    # create or get authorized users a and b
+    email_a = 'authorized_user_a@elmerly.com'
+    email_b = 'authorized_user_b@elmerly.com'
+    user = graph_db.find_one('USER',
+                      property_key='email',
+                      property_value=email_a)
+    if user is not None:
+        user_node = Node.cast('USER',
+                                  email=email_a,
+                                  join_date=datetime.date.today(),
+                                  last_active_date=datetime.date.today(),
+                                  id=str(uuid.uuid4()),
+                                  call_sign='AUTHA1',
+                                  name='authorized_user_a')
+        graph_db.create(user_node)
+        id = user_node.properties['id']
+        PERSONAS['authorized_user_a']['id'] = id
+        PERSONAS['authorized_user_a']['x_auth_key'] = User.create_web_token(id)
+
+    user = graph_db.find_one('USER',
+                      property_key='email',
+                      property_value=email_b)
+    if user is not None:
+        user_node = Node.cast('USER',
+                                  email=email_b,
+                                  join_date=datetime.date.today(),
+                                  last_active_date=datetime.date.today(),
+                                  id=str(uuid.uuid4()),
+                                  call_sign='AUTHB1',
+                                  name='authorized_user_b')
+        graph_db.create(user_node)
+        id = user_node.properties['id']
+        PERSONAS['authorized_user_a']['id'] = id
+        PERSONAS['authorized_user_a']['x_auth_key'] = User.create_web_token(id)
+

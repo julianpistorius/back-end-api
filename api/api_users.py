@@ -63,9 +63,8 @@ class ApiUser(ApiBase):
         return json
 
     def register_user(self, user_result_json):
-        register = User()
         email = user_result_json['email']
-        register.register_user(email=email)
+        User.register_user(email=email)
 
     def update_user(self, user_result_json, user_id):
         user = User()
@@ -305,6 +304,23 @@ class ApiUserLocations(ApiBase):
         json = UserResponder.respond(user_data, linked={'locations': user_data['locations']})
         return json
 
+
+class ApiUserCqs(ApiBase):
+# api.add_route('/users/{user_id}/cqs', user_cqs)  # GET cqs for user.  POST new cq
+# api.add_route('/users/{user_id}/cqs/{cq_id}', user_cqs)  # GET cq.  PUT update CQ.  DELETE drop cq
+
+    def on_get(self, request, response, user_id, cq_id=None):
+        self.authorize_user(request)
+        if cq_id is None:  # GET list of cqs
+            response.data = self.get_user_responder(user_id, auth_id=self.user_id)
+            response.content_type = 'application/json'
+            response.status = falcon.HTTP_200
+        else:
+            pass
+
+    def get_user_responder(self, user_id, auth_id):
+        user_data = self.get_user_by_id(user_id=user_id).user_cqs_for_json()
+        return UserResponder.respond(user_data, linked={'cqs': user_data['cqs']})
 
 class ApiUserConversations(ApiBase):
 

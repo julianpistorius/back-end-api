@@ -33,6 +33,8 @@ api = application = falcon.API(after=[crossdomain], before=[cors_middleware])
 user = api_users.ApiUser()
 user_location = api_users.ApiUserLocations()
 user_interests = api_users.ApiUserInterests()
+user_converations = api_users.ApiUserConversations()
+user_cqs = api_users.ApiUserCqs()
 # user_goals = api_users.ApiUserGoals()
 group = api_groups.ApiGroup()
 organization = api_organizations.ApiOrganization()
@@ -52,6 +54,8 @@ api.add_route('/users/{user_id}/locations', user_location)  # GET user locations
 api.add_route('/users/{user_id}/locations/{location_id}', user_location)  # GET connections for user's location
 api.add_route('/users/{user_id}/interests', user_interests)  # GET interests, POST to add new interest
 api.add_route('/users/{user_id}/interests/{interest_id}', user_interests)  # GET connections for interest, PUT to update interest
+api.add_route('/users/{user_id}/cqs', user_cqs)  # GET cqs for user.  POST new cq
+api.add_route('/users/{user_id}/cqs/{cq_id}', user_cqs)  # GET cq.  PUT update CQ.  DELETE drop cq
 
 #TODO may not need this for now
 # api.add_route('/users/{user_id}/interests/{interest_id}/goals', user_interest_goals)
