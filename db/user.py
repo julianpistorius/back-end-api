@@ -459,8 +459,9 @@ class User(object):
         # except:
         #     pass
 
-    def create_cq(self, cq_dict, cq_interests_dict=None):
-        cq_node = Cq.create_cq(user_node=self.user_node, cq_dict=cq_dict, cq_interests_dict=cq_interests_dict)
+    def create_cq(self, cq_dict, cq_interests_list=None):
+        cq_node = Cq.create_cq(user_node=self.user_node, cq_dict=cq_dict,
+                               cq_interests_list=cq_interests_list)
         return cq_node
 
     def update_cq(self, cq_dict, cq_interests_dict=None):
@@ -468,6 +469,8 @@ class User(object):
         #TODO:  update cq, see TODO on cq class
         pass
 
+    def delete_cq(self, cq_id):
+        Cq.delete_cq(self.user_node, cq_id)
 
     def create_converation_between_users(self, user_id_started, user_id_with, conversation_properties):
         # self.id = uuid.uuid4()

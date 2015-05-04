@@ -6,7 +6,7 @@ from itsdangerous import BadSignature, BadTimeSignature
 from db.user import User
 from db.interest import Interest
 from validators import validate_user_schema, validate_location_schema, validate_interest_schema
-from validators import validate_goals_schema, validate_conversation_response_schema
+from validators import validate_goals_schema, validate_conversation_response_schema, validate_cq_schema
 from api.base import ApiBase
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
     GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder, ConversationResponder
@@ -162,104 +162,6 @@ class ApiUserInterests(ApiBase):
         user.delete_interest(interest_id=interest_id)
 
 
-# class ApiUserGoals(ApiBase):
-#TODO add a later feature
-# api.add_route('/users/{user_id}/goals/{goal_id}', user)
-# GET goal to update or delete
-# PUT to update goa (achieved),
-# DELETE to drop goal
-# api.add_route('/users/{user_id}/goals', user)
-# GET to get list of goals
-# POST to add a new goal
-
-    # def on_get(self, request, response, user_id, goal_id=None):
-    #     """
-    #
-    #     :param request:
-    #     :param response:
-    #     :param user_id:
-    #     :param goal_id:
-    #     :return:
-    #     """
-    #     # auth = user_auth(request)
-    #     self.authorize_user(request=request)
-    #     if goal_id is None:
-    #         response.data = self.get_user_responder(user_id=user_id, auth_id=self.user_id)
-    #         response.content_type = 'application/json'
-    #         response.status = falcon.HTTP_200
-    #     else:  # GET the goal details for view or edit
-    #         response.data = self.get_goal_responder(user_id=user_id, goal_id=goal_id, auth_id=self..auth_key)
-    #         response.content_type = 'application/json'
-    #         response.status = falcon.HTTP_200
-    #
-    # def on_post(self, request, response, user_id, goal_id=None):
-    #     """
-    #     create a goal
-    #     :param request:
-    #     :param response:
-    #     :param user_id:
-    #     :param goal_id:
-    #     :return:
-    #     """
-    #     # auth = user_auth(request)
-    #     # if auth.is_authorized_user and user_id == auth.auth_key:
-    #         raw_json = request.stream.read()
-    #         result_json = simplejson.loads(raw_json, encoding='utf-8')
-    #         if validate_goals_schema.validate_goal(result_json):
-    #             self.create_goal(result_json['goal'], user_id)
-    #             response.status = falcon.HTTP_201
-    #             response.body = self.get_user_responder(user_id, auth.auth_key)
-    #             response.content_type = 'application/json'
-    #         else:
-    #             response.status = falcon.HTTP_400
-    #     else:
-    #         response.status = falcon.HTTP_401
-    #
-    # def on_put(self, request, response, user_id, goal_id):
-    #     """
-    #     update a goal
-    #     :param request:
-    #     :param response:
-    #     :param user_id:
-    #     :param goal_id:
-    #     :return:
-    #     """
-    #     auth = user_auth(request)
-    #     if auth.is_authorized_user and user_id == auth.auth_key:
-    #         raw_json = request.stream.read()
-    #         result_json = simplejson.loads(raw_json, encoding='utf-8')
-    #         if validate_goals_schema.validate_goal(result_json):
-    #             self.update_goal(goal_id, result_json['goal'])
-    #             response.data = self.get_goal_responder(user_id, goal_id, auth.auth_key)
-    #             response.content_type = 'application/json'
-    #             response.status = falcon.HTTP_200
-    #         else:
-    #             response.status = falcon.HTTP_400
-    #     else:
-    #         response.status = falcon.HTTP_401
-    #
-    # def get_user_responder(self, user_id, auth_id):
-    #     user_data = get_user_by_id(user_id=user_id).user_relationships_for_json(auth_id=auth_id)
-    #     json = UserResponder.respond(user_data, linked={'goals': user_data['goals']})
-    #     return json
-    #
-    # def create_goal(self, goal_json, user_id):
-    #     user = get_user_by_id(user_id)
-    #     user.add_goal(goal_json)
-    #
-    # def get_goal_responder(self, user_id, goal_id, auth_id):
-    #     goal = Goal()
-    #     goal.id = goal_id
-    #     goal_data = goal.goal_for_json()
-    #     goal_data['allow_edit'] = (user_id == auth_id)
-    #     json = GoalResponder.respond(goal_data)
-    #     return json
-    #
-    # def update_goal(self, goal_id, goal_properties):
-    #     goal = Goal()
-    #     goal.id = goal_id
-    #     goal.set_goal_properties(goal_properties)
-    #     goal.update_goal()
 
 
 class ApiUserLocations(ApiBase):
@@ -281,11 +183,10 @@ class ApiUserLocations(ApiBase):
             pass  #TODO recommendations and connections
 
     def on_post(self, request, response, user_id):
-        if self.authorize_user(request):
+        if self.authorize_user(request) and user_id == self.user_id:
             if self.validate_json(request, validate_location_schema.validate_location):
                 user = self.get_user_by_id(user_id)
                 user.add_location(self.result_json['location'])
-                response.data = self.get_user_responder(user_id=user_id, auth_id=self.user_id)
                 response.data = self.get_user_responder(user_id=user_id, auth_id=self.user_id)
                 response.content_type = 'application/json'
                 response.status = falcon.HTTP_201
@@ -317,6 +218,41 @@ class ApiUserCqs(ApiBase):
             response.status = falcon.HTTP_200
         else:
             pass
+
+    def on_post(self, request, response, user_id):  # POST create new CQ
+        if self.authorize_user(request) and user_id == self.user_id:
+            if self.validate_json(request, validate_cq_schema.validate_cq):
+                user = self.get_user_by_id(user_id)
+                user.create_cq(self.result_json['cq'], self.result_json['interests'])
+                response.data = self.get_user_responder(user_id=user_id, auth_id=self.user_id)
+                response.content_type = 'application/json'
+                response.status = falcon.HTTP_201
+            else:
+                response.status = falcon.HTTP_400
+        else:
+            response.status = falcon.HTTP_401
+
+    def on_put(self, request, response, user_id, cq_id):  # PUT update cq
+        if self.authorize_user(request) and user_id == self.user_id:
+            if self.validate_json(request, validate_cq_schema.validate_cq):
+                user = self.get_user_by_id(user_id)
+                user.update_cq(self.result_json['cq'], self.result_json['interests'])
+                response.data = self.get_user_responder(user_id=user_id, auth_id=self.user_id)
+                response.content_type = 'application/json'
+                response.status = falcon.HTTP_201
+            else:
+                response.status = falcon.HTTP_400
+        else:
+            response.status = falcon.HTTP_401
+
+    def on_delete(self, request, response, user_id, cq_id):
+        if self.authorize_user(request) and user_id == self.user_id:
+            User.delete_cq(cq_id=cq_id)
+            response.data = self.get_user_responder(user_id, auth_id=self.user_id)
+            response.content_type = 'application/json'
+            response.status = falcon.HTTP_200
+        else:
+            response.status = falcon.HTTP_401
 
     def get_user_responder(self, user_id, auth_id):
         user_data = self.get_user_by_id(user_id=user_id).user_cqs_for_json()
@@ -481,3 +417,103 @@ class LocalUsersSharedInterests(ApiBase):
 #         result_json = simplejson.loads(raw_json, encoding='utf-8')
 #         user.register_user(result_json['email'])
 #         response.status = falcon.HTTP_202  # ok
+
+
+# class ApiUserGoals(ApiBase):
+#TODO add a later feature
+# api.add_route('/users/{user_id}/goals/{goal_id}', user)
+# GET goal to update or delete
+# PUT to update goa (achieved),
+# DELETE to drop goal
+# api.add_route('/users/{user_id}/goals', user)
+# GET to get list of goals
+# POST to add a new goal
+
+    # def on_get(self, request, response, user_id, goal_id=None):
+    #     """
+    #
+    #     :param request:
+    #     :param response:
+    #     :param user_id:
+    #     :param goal_id:
+    #     :return:
+    #     """
+    #     # auth = user_auth(request)
+    #     self.authorize_user(request=request)
+    #     if goal_id is None:
+    #         response.data = self.get_user_responder(user_id=user_id, auth_id=self.user_id)
+    #         response.content_type = 'application/json'
+    #         response.status = falcon.HTTP_200
+    #     else:  # GET the goal details for view or edit
+    #         response.data = self.get_goal_responder(user_id=user_id, goal_id=goal_id, auth_id=self..auth_key)
+    #         response.content_type = 'application/json'
+    #         response.status = falcon.HTTP_200
+    #
+    # def on_post(self, request, response, user_id, goal_id=None):
+    #     """
+    #     create a goal
+    #     :param request:
+    #     :param response:
+    #     :param user_id:
+    #     :param goal_id:
+    #     :return:
+    #     """
+    #     # auth = user_auth(request)
+    #     # if auth.is_authorized_user and user_id == auth.auth_key:
+    #         raw_json = request.stream.read()
+    #         result_json = simplejson.loads(raw_json, encoding='utf-8')
+    #         if validate_goals_schema.validate_goal(result_json):
+    #             self.create_goal(result_json['goal'], user_id)
+    #             response.status = falcon.HTTP_201
+    #             response.body = self.get_user_responder(user_id, auth.auth_key)
+    #             response.content_type = 'application/json'
+    #         else:
+    #             response.status = falcon.HTTP_400
+    #     else:
+    #         response.status = falcon.HTTP_401
+    #
+    # def on_put(self, request, response, user_id, goal_id):
+    #     """
+    #     update a goal
+    #     :param request:
+    #     :param response:
+    #     :param user_id:
+    #     :param goal_id:
+    #     :return:
+    #     """
+    #     auth = user_auth(request)
+    #     if auth.is_authorized_user and user_id == auth.auth_key:
+    #         raw_json = request.stream.read()
+    #         result_json = simplejson.loads(raw_json, encoding='utf-8')
+    #         if validate_goals_schema.validate_goal(result_json):
+    #             self.update_goal(goal_id, result_json['goal'])
+    #             response.data = self.get_goal_responder(user_id, goal_id, auth.auth_key)
+    #             response.content_type = 'application/json'
+    #             response.status = falcon.HTTP_200
+    #         else:
+    #             response.status = falcon.HTTP_400
+    #     else:
+    #         response.status = falcon.HTTP_401
+    #
+    # def get_user_responder(self, user_id, auth_id):
+    #     user_data = get_user_by_id(user_id=user_id).user_relationships_for_json(auth_id=auth_id)
+    #     json = UserResponder.respond(user_data, linked={'goals': user_data['goals']})
+    #     return json
+    #
+    # def create_goal(self, goal_json, user_id):
+    #     user = get_user_by_id(user_id)
+    #     user.add_goal(goal_json)
+    #
+    # def get_goal_responder(self, user_id, goal_id, auth_id):
+    #     goal = Goal()
+    #     goal.id = goal_id
+    #     goal_data = goal.goal_for_json()
+    #     goal_data['allow_edit'] = (user_id == auth_id)
+    #     json = GoalResponder.respond(goal_data)
+    #     return json
+    #
+    # def update_goal(self, goal_id, goal_properties):
+    #     goal = Goal()
+    #     goal.id = goal_id
+    #     goal.set_goal_properties(goal_properties)
+    #     goal.update_goal()

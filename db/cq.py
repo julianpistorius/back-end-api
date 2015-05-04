@@ -66,12 +66,12 @@ class Cq(object):
         return response_list
 
     @staticmethod
-    def create_cq(user_node, cq_dict, cq_interests_dict):
+    def create_cq(user_node, cq_dict, cq_interests_list):
         """
         create the CQ node and link to the user and interests, also adds the date graph
         :param user_node:
         :param cq_dict:
-        :param cq_interests_dict:
+        :param cq_interests_list:
         :return:
         """
         graph = Graph(settings.DATABASE_URL)
@@ -86,9 +86,9 @@ class Cq(object):
                                        cq_node)
         Graph(settings.DATABASE_URL).create_unique(cq_relationship)
 
-        for key, value in cq_interests_dict.iteritems():
+        for interest_id in cq_interests_list:
             interest = Interest()
-            interest.id = value
+            interest.id = interest_id
             cq_interest_relationship = Relationship(cq_node,
                                                     GraphRelationship.INTERESTED_IN,
                                                     interest.interest_node_by_id)
@@ -113,6 +113,17 @@ class Cq(object):
         """
         #TODO:  update node -- find out how to change the date graph
         pass
+
+    @staticmethod
+    def delete_cq(user_node, cq_id):
+        cq = Cq()
+        cq.id = cq_id
+        graph = Graph(settings.DATABASE_URL)
+        cq_rel = graph.match_one(start_node=user_node,
+                        rel_type=GraphRelationship.SENT,
+                        end_node=cq.cq_node)
+        graph.delete(cq_rel, cq.cq_node)
+        # graph.delete(cq.cq_node)
 
     @staticmethod
     def most_recent_cqs():
