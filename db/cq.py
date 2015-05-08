@@ -4,6 +4,7 @@ import uuid
 import datetime
 import settings
 from py2neo import Node, Graph, Relationship, Path, Rev
+from py2neo.ext.calendar import GregorianCalendar
 from labels_relationships import GraphRelationship, GraphLabel
 from db.interest import Interest
 from py2neo.ext.calendar import GregorianCalendar
@@ -20,7 +21,28 @@ class Cq(object):
         self.message = ''
         self.created_time = ''
         self.last_updated_time = ''
+        self.date = ''
         self._graph_db = Graph(settings.DATABASE_URL)
+        self._calendar = GregorianCalendar(self._graph_db)
+
+    @property
+    def get_cq(self):
+        """
+
+        :return:
+        """
+        cq_node = self.cq_node
+        if cq_node is not None:
+            cq_properties = dict(cq_node.properties)
+            for key, value in cq_properties.iteritems():
+                setattr(self, key, value)
+
+        #TODO get cq date graph properties
+        #TODO get the date graph
+        cq_date_graph = self._graph_db.match_one(start_node=self.cq_node,
+                                                 rel_type=GraphRelationship.ON)
+        return cq_node
+
 
     @property
     def cq_properties(self):
@@ -30,6 +52,7 @@ class Cq(object):
         """
         properties_dict = dict(self.__dict__)
         del properties_dict['_graph_db']
+
         return properties_dict
 
     @property
@@ -64,6 +87,14 @@ class Cq(object):
             response_list.append(response)
 
         return response_list
+
+    def get_date_graph(self):
+        # match  (calendar)-[:YEAR]->(y)-[:MONTH]->(m)-[:DAY]->(d:Day)<-[on:ON]-(cq:CQ)<-[s:SENT]-(u:USER)
+        # return u, s, cq, on, d, m, y, calendar
+        cypher_str = ""
+        params = {}
+        match_results = Graph(settings.DATABASE_URL).cypher.execute(statement=cypher_str,
+                                                                    parameters=params)
 
     @staticmethod
     def create_cq(user_node, cq_dict, cq_interests_list):
@@ -145,6 +176,11 @@ class Cq(object):
         root['cqs'] = cq_list
         return root
 
+    # @staticmethod
+    # def cq_date(cq_node):
+    #     #TODO cq_date
+    #     pass
+
 
     def response(self, response_id):
         """
@@ -165,4 +201,6 @@ class Cq(object):
 
     @staticmethod
     def cq_for_json(cq_id):
-        pass
+        cq = Cq()
+        cq.id = cq_id
+        cq_node = cq.cq_node
