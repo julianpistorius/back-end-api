@@ -22,6 +22,22 @@ class UserSchema(Schema):
     allow_message = fields.Boolean()
 
 
+class CqSchema(Schema):
+    id = fields.String()
+    subject = fields.String()
+    message = fields.String()
+    date = fields.Date()
+    time = fields.Time()
+
+
+class ResponseSchema(Schema):
+    id = fields.String()
+    message = fields.String()
+    by = fields.String()
+    date = fields.Date()
+    time = fields.Time()
+
+
 class InterestSchema(Schema):
     # interests = fields.List(fields)
     name = fields.String()
@@ -84,11 +100,7 @@ class ConversationSchema(Schema):
     created_date = fields.DateTime()
 
 
-class ResponseSchema(Schema):
-    id = fields.String()
-    message = fields.String()
-    by = fields.String()
-    created_date = fields.DateTime
+
 
 
 class ActivatedUserSchema(Schema):
@@ -102,6 +114,16 @@ class ResultsSchema(Schema):
 class UserResponder(Responder):
     TYPE = 'users'
     SERIALIZER = UserSchema
+
+
+class CqResponder(Responder):
+    TYPE = 'cqs'
+    SERIALIZER = CqSchema
+
+
+class ResponseResponder(Responder):
+    TYPE = 'responses'
+    SERIALIZER = ResponseSchema
 
 
 class SearchResponder(Responder):
@@ -148,9 +170,6 @@ class ConversationResponder(Responder):
     TYPE = 'conversations'
     SERIALIZER = ConversationSchema
 
-class ResponseResponder(Responder):
-    TYPE = 'responses'
-    SERIALIZER = ResponseSchema
 
 
 SearchResponder.LINKS = {
@@ -290,6 +309,13 @@ ConversationResponder.LINKS = {
 ResponseResponder.LINKS = {
     'responses': {
         'responder': ResponseResponder
+    }
+}
+
+CqResponder.LINKS = {
+    'responses': {
+        'responder': ResponseResponder,
+        'href': '%s/users/{user.id}/responses/{response_id}' % (settings.SITE_URL)
     }
 }
 

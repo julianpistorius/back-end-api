@@ -162,3 +162,7 @@ class Cq(object):
         response_dict['response'] = response_node.auto_sync_properties
         response_dict['user'] = response_user_relationship.start_node.properties
         return response_dict
+
+    @staticmethod
+    def cq_for_json(cq_id):
+        pass

@@ -5,11 +5,12 @@ import falcon
 from itsdangerous import BadSignature, BadTimeSignature
 from db.user import User
 from db.interest import Interest
+from db.cq import Cq
 from validators import validate_user_schema, validate_location_schema, validate_interest_schema
 from validators import validate_goals_schema, validate_conversation_response_schema, validate_cq_schema
 from api.base import ApiBase
 from api_serializers import UserResponder, LocationResponder, OrganizationResponder,\
-    GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder, ConversationResponder
+    GoalResponder, GroupResponder, ActivatedUserResponder, SearchResponder, ConversationResponder, CqResponder
 
 
 class ApiUser(ApiBase):
@@ -216,8 +217,10 @@ class ApiUserCqs(ApiBase):
             response.data = self.get_user_responder(user_id, auth_id=self.user_id)
             response.content_type = 'application/json'
             response.status = falcon.HTTP_200
-        else:
-            pass
+        else:  # GET CQ with cq responder
+            response.data = self.get_cq_responder(cq_id=cq_id, auth_id=self.user_id)
+            response.content_type = 'application/json'
+            response.status = falcon.HTTP_200
 
     def on_post(self, request, response, user_id):  # POST create new CQ
         if self.authorize_user(request) and user_id == self.user_id:
@@ -257,6 +260,10 @@ class ApiUserCqs(ApiBase):
     def get_user_responder(self, user_id, auth_id):
         user_data = self.get_user_by_id(user_id=user_id).user_cqs_for_json()
         return UserResponder.respond(user_data, linked={'cqs': user_data['cqs']})
+
+    def get_cq_responder(self, cq_id, auth_id):
+        cq_data = Cq.cq_for_json(cq_id=cq_id)
+        return CqResponder.respond(cq_data, linked={'responses': cq_data['responses']})
 
 class ApiUserConversations(ApiBase):
 
