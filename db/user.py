@@ -500,7 +500,7 @@ class User(object):
     # @staticmethod
     def matched_users(self, match_string, limit):
         """
-
+        get a graph of users that match on the name ir the call sign
         :param match_string:
         :param limit:
         :return: dictionary of search results
