@@ -100,9 +100,6 @@ class ConversationSchema(Schema):
     created_date = fields.DateTime()
 
 
-
-
-
 class ActivatedUserSchema(Schema):
     x_auth_key = fields.String()
 
