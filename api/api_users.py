@@ -28,7 +28,7 @@ class ApiUser(ApiBase):
             if len(request.params) > 0:
                 match = request.params['match']
                 limit = int(request.params['limit'])
-                search_results = User().matched_users(match_string=match, limit=limit)
+                search_results = User.matched_users(match_string=match, limit=limit)
                 response.data = SearchResponder.respond(search_results,
                                                         linked={'users': search_results['users']})
         response.content_type = 'application/json'

@@ -497,14 +497,15 @@ class User(object):
             pass  #TODO add exception handling
 
 
-    # @staticmethod
-    def matched_users(self, match_string, limit):
+    @staticmethod
+    def matched_users(match_string, limit):
         """
         get a graph of users that match on the name ir the call sign
         :param match_string:
         :param limit:
         :return: dictionary of search results
         """
+        graph = Graph(settings.DATABASE_URL)
         params = {
             'match': '(?i)%s.*' % match_string,
             'limit': limit
@@ -513,7 +514,7 @@ class User(object):
             "WHERE user.name =~ {match} or user.call_sign =~ {match} " \
             "RETURN user.name as name, user.id as id, user.call_sign as call_sign " \
             "LIMIT {limit}"
-        match_results = self._graph_db.cypher.execute(statement=cypher_str, parameters=params)
+        match_results = graph.cypher.execute(statement=cypher_str, parameters=params)
         root = {}
         root['count'] = 0
         user_found = {}
