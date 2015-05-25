@@ -510,8 +510,8 @@ class User(object):
             'limit': limit
         }
         cypher_str = "MATCH (user:USER ) " \
-            "WHERE user.name =~ {match} " \
-            "RETURN user.name as name, user.id as id " \
+            "WHERE user.name =~ {match} or user.call_sign =~ {match} " \
+            "RETURN user.name as name, user.id as id, user.call_sign as call_sign " \
             "LIMIT {limit}"
         match_results = self._graph_db.cypher.execute(statement=cypher_str, parameters=params)
         root = {}
@@ -521,6 +521,7 @@ class User(object):
         for item in match_results:
             user_found['id'] = item.id
             user_found['name'] = item.name
+            user_found['call_sign'] = item.call_sign
             # self.id = item['id']
             # self.get_user()
             # users_list.append(dict(self.user_properties))

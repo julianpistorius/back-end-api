@@ -22,6 +22,13 @@ class UserSchema(Schema):
     allow_message = fields.Boolean()
 
 
+class UserSearchSchema(Schema):
+    id = fields.String()
+    name = fields.String()
+    call_sign = fields.String()
+    last_active_date = fields.Date()
+
+
 class CqSchema(Schema):
     id = fields.String()
     subject = fields.String()
@@ -108,9 +115,17 @@ class ResultsSchema(Schema):
     count = fields.Integer()
 
 
+# RESPONDERS
+
+
 class UserResponder(Responder):
     TYPE = 'users'
     SERIALIZER = UserSchema
+
+
+class UserSearchResponder(Responder):
+    TYPE = 'users'
+    SERIALIZER = UserSearchSchema
 
 
 class CqResponder(Responder):
@@ -171,7 +186,7 @@ class ConversationResponder(Responder):
 
 SearchResponder.LINKS = {
     'users': {
-        'responder': UserResponder,
+        'responder': UserSearchResponder,
         'href': '%s/users/{users.id}' % (settings.SITE_URL)
     },
     'interests': {
