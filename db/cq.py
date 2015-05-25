@@ -40,7 +40,8 @@ class Cq(object):
         #TODO get cq date graph properties
         #TODO get the date graph
         cq_date_graph = self._graph_db.match_one(start_node=self.cq_node,
-                                                 rel_type=GraphRelationship.ON)
+                                                 rel_type=GraphRelationship.ON,
+                                                 end_node=None)
         return cq_node
 
 
@@ -88,13 +89,23 @@ class Cq(object):
 
         return response_list
 
-    def get_date_graph(self):
+    @staticmethod
+    def get_date_string(id):
         # match  (calendar)-[:YEAR]->(y)-[:MONTH]->(m)-[:DAY]->(d:Day)<-[on:ON]-(cq:CQ)<-[s:SENT]-(u:USER)
         # return u, s, cq, on, d, m, y, calendar
-        cypher_str = ""
-        params = {}
+        cypher_str = "match  (calendar)-[:YEAR]->(y)-[:MONTH]" \
+                     "->(m)-[:DAY]->(d:Day)" \
+                     "<-[on:ON]-(cq:CQ {id: {id}})<-[s:SENT]-(u:USER)"
+        cypher_str += "return u, s, cq, on, d, m, y, calendar"
+        params = {
+            'id': id
+        }
         match_results = Graph(settings.DATABASE_URL).cypher.execute(statement=cypher_str,
                                                                     parameters=params)
+        date_str = ""
+        for item in match_results:
+            date_str += "%s/%s/%s" % (item['d'], item['m'], item['y'])
+        return date_str
 
     @staticmethod
     def create_cq(user_node, cq_dict, cq_interests_list):
@@ -176,12 +187,6 @@ class Cq(object):
         root['cqs'] = cq_list
         return root
 
-    # @staticmethod
-    # def cq_date(cq_node):
-    #     #TODO cq_date
-    #     pass
-
-
     def response(self, response_id):
         """
         response dictionary details including user details
@@ -204,3 +209,10 @@ class Cq(object):
         cq = Cq()
         cq.id = cq_id
         cq_node = cq.cq_node
+        root = {}
+        root['id'] = cq_id
+        root['date'] = cq.get_date_string(cq_id)
+        for key, value in cq_node.properties.iteritems():
+            root['key'] = value
+        return root
+
