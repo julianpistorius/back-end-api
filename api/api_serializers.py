@@ -33,8 +33,8 @@ class CqSchema(Schema):
     id = fields.String()
     subject = fields.String()
     message = fields.String()
-    date = fields.Date()
-    time = fields.Time()
+    date = fields.String()
+    time = fields.String()
 
 
 class ResponseSchema(Schema):
@@ -297,6 +297,10 @@ UserResponder.LINKS = {
     'organizations': {
         'responder': OrganizationResponder,
         'href': '%s/organizations/{organization.id}' % (settings.SITE_URL)
+    },
+    'cqs': {
+        'responder': CqResponder,
+        'href': '%s/cq/{cq.id}' % (settings.SITE_URL)
     }
 }
 

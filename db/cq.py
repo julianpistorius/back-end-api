@@ -102,10 +102,11 @@ class Cq(object):
         }
         match_results = Graph(settings.DATABASE_URL).cypher.execute(statement=cypher_str,
                                                                     parameters=params)
-        date_str = ""
+        date_str = ''
         for item in match_results:
-            date_str += "%s/%s/%s" % (item['d'], item['m'], item['y'])
-        return date_str
+            date_str =  item['d'].properties['key']  # "%s/%s/%s" % (item['d'], item['m'], item['y'])
+        return datetime.datetime.strptime(date_str, "%Y-%m-%d").strftime("%B %d %Y")
+        # return date.strftime("%B %d %Y")
 
     @staticmethod
     def create_cq(user_node, cq_dict, cq_interests_list):

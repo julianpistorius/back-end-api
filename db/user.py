@@ -120,8 +120,14 @@ class User(object):
                                         rel_type=GraphRelationship.SENT,
                                         end_node=None)
         cqs_list = []
+        # TODO get the date and time
         for rel in user_cqs:
-            cqs_list.append(dict(rel.end_node.properties))
+            cq_dict = dict(rel.end_node.properties)
+            cq_dict['date'] = Cq.get_date_string(cq_dict['id'])
+            time = datetime.datetime.strptime(cq_dict['last_updated_time'], '%H:%M:%S.%f').strftime("%I:%M %p")
+            # time = time.strftime("%I:%M %p")
+            cq_dict['time'] = time
+            cqs_list.append(cq_dict)
         return cqs_list
 
     @property
@@ -594,6 +600,7 @@ class User(object):
         root['id'] = self.id
         root['email'] = self.email
         root['cqs'] = self.user_cqs
+        return root
 
 
     def user_interests_for_json(self):
