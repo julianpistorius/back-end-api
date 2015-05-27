@@ -25,6 +25,8 @@ class GraphRelationship(object):
     RESPONDED = "RESPONDED"
     SENT = "SENT"
     ON = "ON"
+    JOINED = "JOINED"
+    ACTIVE = "ACTIVE"
 
 
 class GraphLabel(object):

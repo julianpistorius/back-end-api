@@ -4,6 +4,7 @@ import datetime
 import sys
 import settings
 from py2neo import Node, Graph, Relationship, Path, Rev
+from py2neo.ext.calendar import GregorianCalendar
 from interest import Interest
 from goal import Goal
 from group import Group
@@ -78,19 +79,30 @@ class User(object):
         :return: node
         """
         #TODO exception handling
+        #TODO set the calendar graph for join date and last active date
         self.join_date = datetime.date.today()
         self.last_active_date = self.join_date
+
         self.id = str(uuid.uuid4())
         if user_properties is not None:
             self.set_user_properties(user_properties)
         new_user_node = Node.cast(GraphLabel.USER, self.user_properties)
         try:
             self._graph_db.create(new_user_node)
+            self.create_date_graph(self.join_date, GraphRelationship.JOINED)
+            self.create_date_graph(self.last_active_date, GraphRelationship.ACTIVE)
         except:
             pass
             # print 'node probably found.  see message'
             # print sys.exc_info()
         return new_user_node
+
+    def create_date_graph(self, date, relationship):
+        calendar = GregorianCalendar(self._graph_db)
+        date_relationship = Relationship(self.user_node,
+                                 relationship,
+                                 calendar.date(date.year, date.month, date.day).day)
+        self._graph_db.create_unique(date_relationship)
 
     @property
     def user_node(self):
@@ -563,10 +575,18 @@ class User(object):
             raise BadSignature('bad email')
 
     def update_last_active_date(self):
+        """
+
+        :return:
+        """
+        #TODO update the calendar graph
         self.last_active_date = datetime.date.today()
         user_node = self.user_node
         user_node['last_active_date'] = self.last_active_date
         user_node.push()
+        # user_date_graph = self._graph_db.match_one(start_node=self.user_node,
+        #                                            rel_type=GraphRelationship.ACTIVE,
+        #                                            end_node=)
 
     @staticmethod
     def construct_verification_url( payload):
