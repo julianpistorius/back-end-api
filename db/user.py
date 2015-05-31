@@ -128,18 +128,36 @@ class User(object):
         get list of cqs for the user
         :return: list of cqs
         """
-        user_cqs = self._graph_db.match(start_node=self.user_node,
-                                        rel_type=GraphRelationship.SENT,
-                                        end_node=None)
+        cypher = "match  (calendar)-[:YEAR]->(y)-[:MONTH]->(m)-[:DAY]->(d:Day)" \
+                 "<-[on:ON]-(cq:CQ)<-[s:SENT]-(u:USER {id:{id}}) " \
+                 "return d, cq " \
+                "order by d.key desc, cq.last_updated_time desc"
+        params = {
+            'id': self.id
+        }
+        user_cqs = self._graph_db.cypher.execute(statement=cypher,
+                                                 parameters=params)
+        #
+        # user_cqs = self._graph_db.match(start_node=self.user_node,
+        #                                 rel_type=GraphRelationship.SENT,
+        #                                 end_node=None)
+
         cqs_list = []
         # TODO get the date and time
-        for rel in user_cqs:
-            cq_dict = dict(rel.end_node.properties)
-            cq_dict['date'] = Cq.get_date_string(cq_dict['id'])
-            time = datetime.datetime.strptime(cq_dict['last_updated_time'], '%H:%M:%S.%f').strftime("%I:%M %p")
-            # time = time.strftime("%I:%M %p")
-            cq_dict['time'] = time
+        for cq in user_cqs:
+            cq_dict = dict(cq['cq'].properties)
+            cq_dict['date'] = datetime.datetime.strptime(cq['d'].properties['key'], "%Y-%m-%d").strftime("%B %d %Y")
+            cq_dict['time'] = datetime.datetime.strptime(cq['cq'].properties['last_updated_time'],
+                                                         '%H:%M:%S.%f').strftime("%I:%M %p")
             cqs_list.append(cq_dict)
+
+        # for rel in user_cqs:
+        #     cq_dict = dict(rel.end_node.properties)
+        #     cq_dict['date'] = Cq.get_date_string(cq_dict['id'])
+        #     time = datetime.datetime.strptime(cq_dict['last_updated_time'], '%H:%M:%S.%f').strftime("%I:%M %p")
+        #     # time = time.strftime("%I:%M %p")
+        #     cq_dict['time'] = time
+        #     cqs_list.append(cq_dict)
         return cqs_list
 
     @property

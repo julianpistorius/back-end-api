@@ -35,8 +35,7 @@ cq_schema = {
       },
       "required": [
         "subject",
-        "message",
-        "interests"
+        "message"
       ]
     }
   },

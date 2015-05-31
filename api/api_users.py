@@ -226,8 +226,12 @@ class ApiUserCqs(ApiBase):
         if self.authorize_user(request) and user_id == self.user_id:
             if self.validate_json(request, validate_cq_schema.validate_cq):
                 user = self.get_user_by_id(user_id)
-                user.create_cq(self.result_json['cq'], self.result_json['interests'])
-                response.data = self.get_user_responder(user_id=user_id, auth_id=self.user_id)
+                cq_node = None
+                if 'interests' in self.result_json:
+                    cq_node = user.create_cq(self.result_json['cq'], self.result_json['interests'])
+                else:
+                    cq_node = user.create_cq(self.result_json['cq'])
+                response.data =  self.get_user_responder(user_id, auth_id=self.user_id)
                 response.content_type = 'application/json'
                 response.status = falcon.HTTP_201
             else:

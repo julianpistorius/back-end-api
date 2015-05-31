@@ -89,23 +89,23 @@ class Cq(object):
 
         return response_list
 
-    @staticmethod
-    def get_date_string(id):
-        # match  (calendar)-[:YEAR]->(y)-[:MONTH]->(m)-[:DAY]->(d:Day)<-[on:ON]-(cq:CQ)<-[s:SENT]-(u:USER)
-        # return u, s, cq, on, d, m, y, calendar
-        cypher_str = "match  (calendar)-[:YEAR]->(y)-[:MONTH]" \
-                     "->(m)-[:DAY]->(d:Day)" \
-                     "<-[on:ON]-(cq:CQ {id: {id}})<-[s:SENT]-(u:USER)"
-        cypher_str += "return u, s, cq, on, d, m, y, calendar"
-        params = {
-            'id': id
-        }
-        match_results = Graph(settings.DATABASE_URL).cypher.execute(statement=cypher_str,
-                                                                    parameters=params)
-        date_str = ''
-        for item in match_results:
-            date_str =  item['d'].properties['key']  # "%s/%s/%s" % (item['d'], item['m'], item['y'])
-        return datetime.datetime.strptime(date_str, "%Y-%m-%d").strftime("%B %d %Y")
+    # @staticmethod
+    # def get_date_string(id):
+    #     # match  (calendar)-[:YEAR]->(y)-[:MONTH]->(m)-[:DAY]->(d:Day)<-[on:ON]-(cq:CQ)<-[s:SENT]-(u:USER)
+    #     # return u, s, cq, on, d, m, y, calendar
+    #     cypher_str = "match  (calendar)-[:YEAR]->(y)-[:MONTH]" \
+    #                  "->(m)-[:DAY]->(d:Day)" \
+    #                  "<-[on:ON]-(cq:CQ {id: {id}})<-[s:SENT]-(u:USER)"
+    #     cypher_str += "return d"
+    #     params = {
+    #         'id': id
+    #     }
+    #     match_results = Graph(settings.DATABASE_URL).cypher.execute(statement=cypher_str,
+    #                                                                 parameters=params)
+    #     date_str = ''
+    #     for item in match_results:
+    #         date_str = item['d'].properties['key']  # "%s/%s/%s" % (item['d'], item['m'], item['y'])
+    #     return datetime.datetime.strptime(date_str, "%Y-%m-%d").strftime("%B %d %Y")
         # return date.strftime("%B %d %Y")
 
     @staticmethod
@@ -129,13 +129,14 @@ class Cq(object):
                                        cq_node)
         Graph(settings.DATABASE_URL).create_unique(cq_relationship)
 
-        for interest_id in cq_interests_list:
-            interest = Interest()
-            interest.id = interest_id
-            cq_interest_relationship = Relationship(cq_node,
-                                                    GraphRelationship.INTERESTED_IN,
-                                                    interest.interest_node_by_id)
-            graph.create_unique(cq_interest_relationship)
+        if cq_interests_list is not None:
+            for interest_id in cq_interests_list:
+                interest = Interest()
+                interest.id = interest_id
+                cq_interest_relationship = Relationship(cq_node,
+                                                        GraphRelationship.INTERESTED_IN,
+                                                        interest.interest_node_by_id)
+                graph.create_unique(cq_interest_relationship)
 
         calendar = GregorianCalendar(graph)
         cur_date = datetime.date.today()
@@ -154,7 +155,7 @@ class Cq(object):
         :param cq_interests_dict:
         :return:
         """
-        #TODO:  update node -- find out how to change the date graph
+        #TODO:  update the date graph
         pass
 
     @staticmethod
